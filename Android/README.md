@@ -1,4 +1,4 @@
-# EdithWebView-Android-SDK
+# LiveHelp-Android-SDK
 
 智能客服Android sdk接入文档
 
