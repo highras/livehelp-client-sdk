@@ -37,11 +37,11 @@
      */
 
 4.客服接口说明:(需要初始化完成后)
-	1.启用faq页面
+	# 1.启用faq页面
 		CustomerData.getInstance().faqShow();
-    2.启用robot页面
+    # 2.启用robot页面
         CustomerData.getInstance().robotShow();
-    3.拉取是否有未读
+    # 3.拉取是否有未读
         getUnreadMsg(IUnreadCallback callback); //callback未读回调函数
 
 
