@@ -8,13 +8,13 @@
 	网络权限,如果已经有,则不需要添加该配置
 	<uses-permission android:name="android.permission.INTERNET" />
 
-.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
+2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
 
 3.SDK初始化(须在app启动的时候调用):
 	import com.ilivedata.customer;
 
 	初始化的接口:
-	1. CustomerData.getInstance().init(Context context,String _domain, int appId, String appKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
+	CustomerData.getInstance().init(Context context,String _domain, int appId, String appKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
     /**
      * @context    应用的applicationcontext
      * @param _domain  后台配置的项目域名
