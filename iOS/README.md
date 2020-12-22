@@ -37,7 +37,7 @@ SDK支持
                                     tags:(NSArray<NSString*> * _Nullable)tags               //客诉标签(来自控制台标签)
                                     vipLevel:(NSInteger)vipLevel                            //玩家VIP等级
                                     custom:(NSDictionary * _Nullable)custom                 //自定义参数
-                                    domain:(NSString * _Nonnull)domain                      //公司域名(与控制台一致)
+                                    domain:(NSString * _Nonnull)domain                      //公司域名(与控制台一致)  必传
                                     pushDeviceToken:(NSString * _Nullable)pushDeviceToken;  //推送token
                                     
     2.faq调用
