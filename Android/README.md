@@ -16,11 +16,11 @@
 	初始化的接口:
 	CustomerData.getInstance().init(Context context,String _domain, int appId, String appKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
     /**
-     * @context    应用的applicationcontext
-     * @param _domain  后台配置的项目域名
-     * @param appId    项目id
-     * @param appKey    项目key
-     * @param userId    用户id
+     * @context    应用的applicationcontext（必传）
+     * @param _domain  后台配置的项目域名（必传）
+     * @param appId    项目id（必传）
+     * @param appKey    项目key（必传）
+     * @param userId    用户id（必传）
      * @param userName  用户名称
      * @param gameLanguage  系统语言
      * @param gameId    游戏应用商店ID
