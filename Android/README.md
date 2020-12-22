@@ -1,18 +1,14 @@
-# LiveHelp-Android-SDK
+# 智能客服Android sdk接入文档
 
-智能客服Android sdk接入文档
+### 版本支持
+最低支持android4.4 （api19）
 
+### 接入
 1.在Android工程的AndroidManifest.xml，增加需要的配置：
-	<uses-sdk android:minSdkVersion="19" />
-	# 网络权限,如果已经有,则不需要添加该配置
+	网络权限,如果已经有,则不需要添加该配置
 	<uses-permission android:name="android.permission.INTERNET" />
-	# 增加activity
-	<activity
-        android:name="com.ilivedata.edith.webview.WebViewActivity"
-        android:configChanges="screenSize|keyboardHidden|orientation">
-    </activity>
 
-2.将liveHelp-android.jar包拷贝到工程app中的libs文件夹下.
+.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
 
 3.SDK初始化(须在app启动的时候调用):
 	import com.ilivedata.customer;
@@ -27,8 +23,8 @@
      * @param userId    用户id
      * @param userName  用户名称
      * @param gameLanguage  系统语言
-     * @param gameId    //游戏应用商店ID
-     * @param serverId  //当前区服ID
+     * @param gameId    游戏应用商店ID
+     * @param serverId  当前区服ID
      * @param networkType   网络类型
      * @param vipLevel  vip等级
      * @param tags      客诉标签(来自控制台标签)
@@ -43,6 +39,3 @@
         CustomerData.getInstance().robotShow();
 - 拉取是否有未读
         getUnreadMsg(IUnreadCallback callback); //callback未读回调函数
-
-
-
