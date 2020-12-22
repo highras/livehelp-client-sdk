@@ -34,8 +34,8 @@
 
 4.客服接口说明:(需要初始化完成后)
 - 启用faq页面
-	    CustomerData.getInstance().faqShow();
+	    CustomerData.getInstance().faqShow(Activity currentActivity);
 - 启用robot页面
-        CustomerData.getInstance().robotShow();
+        CustomerData.getInstance().robotShow(Activity currentActivity);
 - 拉取是否有未读
         getUnreadMsg(IUnreadCallback callback); //callback未读回调函数
