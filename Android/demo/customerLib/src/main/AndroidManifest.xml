@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ilivedata.customer">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+        <activity android:name=".RobotActivity"></activity>
+        <activity android:name=".ManualActivity" />
+        <activity
+            android:name=".FAQBody"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".FAQsecond" />
+        <activity
+            android:name=".FAQsecond"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".FAQUnit" />
+        <activity
+            android:name=".FAQUnit"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+    </application>
+
+</manifest>
