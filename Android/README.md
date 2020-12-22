@@ -22,7 +22,7 @@
      * @param appKey    项目key（必传）
      * @param userId    用户id（必传）
      * @param userName  用户名称
-     * @param gameLanguage  系统语言
+     * @param gameLanguage  系统语言(必传)
      * @param gameId    游戏应用商店ID
      * @param serverId  当前区服ID
      * @param networkType   网络类型
