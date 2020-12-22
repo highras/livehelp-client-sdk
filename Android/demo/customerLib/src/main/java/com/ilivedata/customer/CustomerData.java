@@ -94,7 +94,7 @@ public class CustomerData {
     private  String m_serverId;
     private  String[] m_tags;
     private  int m_vipLevel;
-    private  Activity m_activity;
+    private  Context appContext;
     private Map<String, String> m_NonceMap = new HashMap<String, String>();
     private Map<String, String> m_customData;
     private String m_session;
@@ -161,12 +161,12 @@ public class CustomerData {
         }
     }
 
-    public  void faqShow(){
-        FAQUnit.show();
+    public  void faqShow(Activity activity){
+        FAQUnit.show(activity);
     }
 
-    public  void robotShow(){
-        RobotActivity.show(true);
+    public  void robotShow(Activity activity){
+        RobotActivity.show(activity, true);
     }
 
     public void getUnreadMsg(final IUnreadCallback callback){
@@ -283,7 +283,7 @@ public class CustomerData {
             Log.e("customsdk","param init error");
             return false;
         }
-        m_activity = (Activity) context;
+        appContext = context;
         m_appId = appId;
         m_appKey = appKey;
         m_uId = userId;
@@ -623,7 +623,7 @@ public class CustomerData {
         return m_session;
     }
 
-    public synchronized Activity getActivity() { return m_activity; }
+    public synchronized Context getContext() { return appContext; }
 
     public synchronized boolean getShow() {
         boolean flag = m_isShow;
@@ -639,7 +639,7 @@ public class CustomerData {
         //当前应用pid
         int pid = android.os.Process.myPid();
         //任务管理类
-        ActivityManager manager = (ActivityManager) m_activity.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager manager = (ActivityManager) appContext.getSystemService(Context.ACTIVITY_SERVICE);
         //遍历所有应用
         List<ActivityManager.RunningAppProcessInfo> infos = manager.getRunningAppProcesses();
         for (ActivityManager.RunningAppProcessInfo info : infos) {
@@ -656,7 +656,7 @@ public class CustomerData {
      */
     public String getAppVersion(String packname){
         //包管理操作管理类
-        PackageManager pm = m_activity.getPackageManager();
+        PackageManager pm = appContext.getPackageManager();
         PackageInfo packinfo = null;
         try {
             packinfo = pm.getPackageInfo(packname, 0);
@@ -674,7 +674,7 @@ public class CustomerData {
      */
     public String getAppName(String packname){
         //包管理操作管理类
-        PackageManager pm = m_activity.getPackageManager();
+        PackageManager pm = appContext.getPackageManager();
         ApplicationInfo info = null;
         try {
             info = pm.getApplicationInfo(packname, 0);
@@ -693,10 +693,10 @@ public class CustomerData {
     }
 
     public String getDataTotalSize(){
-        StatFs sf = new StatFs(m_activity.getCacheDir().getAbsolutePath());
+        StatFs sf = new StatFs(appContext.getCacheDir().getAbsolutePath());
         long blockSize = sf.getBlockSize();
         long totalBlocks = sf.getBlockCount();
-        return Formatter.formatFileSize(m_activity, blockSize*totalBlocks);
+        return Formatter.formatFileSize(appContext, blockSize*totalBlocks);
     }
 
     synchronized JSONObject sendUserDataToJS_infoeditor()
@@ -730,10 +730,10 @@ public class CustomerData {
             int bettrystatus = 0;
             BatteryManager batteryManager;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                batteryManager = m_activity.getSystemService(BatteryManager.class);
+                batteryManager = appContext.getSystemService(BatteryManager.class);
             }
             else{
-                batteryManager = (BatteryManager)m_activity.getSystemService(Context.BATTERY_SERVICE);
+                batteryManager = (BatteryManager)appContext.getSystemService(Context.BATTERY_SERVICE);
             }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -775,7 +775,7 @@ public class CustomerData {
             otherJson.put("networkType",m_networkType);
             otherJson.put("platform","ANDROID");
             otherJson.put("sdkVersion","1.0.0");
-            Locale locale = m_activity.getResources().getConfiguration().locale;
+            Locale locale = appContext.getResources().getConfiguration().locale;
             String language = locale.getLanguage();
             if (!locale.getCountry() .equals(""))
                 language = language + "_" + locale.getCountry();
@@ -895,6 +895,6 @@ public class CustomerData {
 
     // 获取设备id
     private String getDeviceId() {
-        return Settings.Secure.getString(m_activity.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return Settings.Secure.getString(appContext.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 }

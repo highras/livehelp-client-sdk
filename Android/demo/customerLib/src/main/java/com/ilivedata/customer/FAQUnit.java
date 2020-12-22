@@ -280,22 +280,22 @@ public class FAQUnit extends Activity {
             showResponse();
     }
 
-    public static void show() {
+    public static void show(Activity activity) {
         CustomerData tmpData = CustomerData.getInstance();
-        Activity activity = tmpData.getActivity();
-        if (activity == null){
+        Context appcontext = tmpData.getContext();
+        if (appcontext == null){
             Log.e("kefu","activity not set");
             return;
         }
         try {
-            File dir = activity.getApplicationContext().getFilesDir();
+            File dir = appcontext.getFilesDir();
             if (tmpData.FAQfile == null)
                 tmpData.FAQfile = new File(dir.getAbsolutePath() + "/FAQfile");
             if (!tmpData.FAQfile.exists())
                 tmpData.FAQfile.createNewFile();
             tmpData.readObject();
 
-            Intent intent = new Intent(activity, FAQUnit.class);
+            Intent intent = new Intent(appcontext, FAQUnit.class);
             activity.startActivity(intent);
             }
         catch (Exception ex){

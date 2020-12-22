@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -495,20 +496,20 @@ public class RobotActivity extends Activity {
     }
 
     //发起跳转的Activity
-    public static void show(boolean landScape) {
+    public static void show(Activity activity, boolean landScape) {
         boolean show = CustomerData.getInstance().getShow();
         if(show)
         {
             System.out.println("start webview failed，webviewActivity have showed!!!");
             return;
         }
-        Activity activity = CustomerData.getInstance().getActivity();
-        if(activity == null)
+        Context appContext = CustomerData.getInstance().getContext();
+        if(appContext == null)
         {
             Log.e("kefu","start webview failed，app activity not set");
             return;
         }
-        Intent intent = new Intent(activity, RobotActivity.class);
+        Intent intent = new Intent(appContext, RobotActivity.class);
         intent.putExtra("webview_landscape", landScape);
         activity.startActivity(intent);
     }
