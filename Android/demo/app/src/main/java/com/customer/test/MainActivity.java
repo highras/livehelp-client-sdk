@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         ll = CustomerData.getInstance();
 //        ll.init(testXContext,sdomain,80900005, "nQVi/NlbIF8wEiHCxZL+YvWUB0atgEe/x8DWAauPnR4=", userId,"tom",slang,"", "","", 0, null,null,"");
-        ll.init(getApplicationContext(),sdomain,80900001, "61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=", userId,"tom","kk","", "","", 0, null,null,"");
+        ll.init(getApplicationContext(),sdomain,80900001, "61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=", userId,"tom",slang,"", "","", 0, null,null,"");
 //        ll.init(90900003, "vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0=", userId,"tom",slang,"232", "34543","wifi", 2, new String[]{"1","2"},new HashMap<String, String>());
 //        hasInit = true;
         ll.getUnreadMsg(new IUnreadCallback() {
