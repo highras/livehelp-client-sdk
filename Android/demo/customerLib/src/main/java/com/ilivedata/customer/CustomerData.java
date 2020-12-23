@@ -206,6 +206,10 @@ public class CustomerData {
                             }
                         }
                     }
+                    else
+                    {
+                        Log.e("customsdk", "getUnreadMsg http return error " + code);
+                    }
                 } catch (Exception ex) {
                     Log.e("customsdk", "getUnreadMsg error " + ex.getMessage());
                 }
@@ -249,11 +253,12 @@ public class CustomerData {
                         if (respondsDta.has("data")){
                             JSONObject responds1 =  respondsDta.getJSONObject("data");
                             if (responds1.has("greeting")){
-                                m_greeting = responds1.getString("unread");
+                                m_greeting = responds1.getString("greeting");
                             }
                         }
                     }
                     else {
+                        Log.e("customsdk", "getUnread http return error " + code);
                     }
                 } catch (Exception ex) {
                     Log.e("customsdk", "getUnread error " + ex.getMessage());
