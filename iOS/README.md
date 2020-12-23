@@ -43,27 +43,29 @@ SDK支持
     2.faq调用
                                    
     if ([FPCustomerManager shareInstance].initFinish) {
+    
         FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:[FPFaqTypeViewController new]];
         nav.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:nav animated:YES completion:nil];
+        
     }
     
     3.智能机器人调用
 
     if ([FPCustomerManager shareInstance].initFinish) {
     
-    FPCustomerSmartServiceViewController * vc = [FPCustomerSmartServiceViewController
-                                                 initWithAppId:[FPCustomerManager shareInstance].appId
-                                                 appKey:[FPCustomerManager shareInstance].appKey
-                                                 userId:[FPCustomerManager shareInstance].userId
-                                                 userName:[FPCustomerManager shareInstance].userName
-                                                 gameId:[FPCustomerManager shareInstance].gameId
-                                                 gameLang:[FPCustomerManager shareInstance].gameLanguage
-                                                 vipLevel:[FPCustomerManager shareInstance].vipLevel];
+        FPCustomerSmartServiceViewController * vc = [FPCustomerSmartServiceViewController
+                                                     initWithAppId:[FPCustomerManager shareInstance].appId
+                                                     appKey:[FPCustomerManager shareInstance].appKey
+                                                     userId:[FPCustomerManager shareInstance].userId
+                                                     userName:[FPCustomerManager shareInstance].userName
+                                                     gameId:[FPCustomerManager shareInstance].gameId
+                                                     gameLang:[FPCustomerManager shareInstance].gameLanguage
+                                                     vipLevel:[FPCustomerManager shareInstance].vipLevel];
     
-    FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:vc];
-    nav.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:nav animated:YES completion:nil];
+        FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:vc];
+        nav.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:nav animated:YES completion:nil];
     
     }
     
