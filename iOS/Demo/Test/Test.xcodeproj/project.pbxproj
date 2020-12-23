@@ -16,8 +16,8 @@
 		5617801624D82D4E00814B65 /* TestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617801524D82D4E00814B65 /* TestTests.m */; };
 		5617802124D82D4E00814B65 /* TestUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617802024D82D4E00814B65 /* TestUITests.m */; };
 		5617805C24D82E0600814B65 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5617805A24D82E0600814B65 /* TestViewController.m */; };
-		56184C4C25665C99005F5EA5 /* Data in Resources */ = {isa = PBXBuildFile; fileRef = 56184C4B25665C99005F5EA5 /* Data */; };
-		56DA3EFE25909905001926C2 /* FPCustomerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56DA3EFD25909905001926C2 /* FPCustomerSDK.framework */; };
+		56184C4C25665C99005F5EA5 /* FPCustomerSDKResource in Resources */ = {isa = PBXBuildFile; fileRef = 56184C4B25665C99005F5EA5 /* FPCustomerSDKResource */; };
+		56DA3F0825934DF9001926C2 /* FPCustomerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56DA3F0725934DF9001926C2 /* FPCustomerSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +55,8 @@
 		5617802224D82D4E00814B65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5617805A24D82E0600814B65 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		5617805B24D82E0600814B65 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		56184C4B25665C99005F5EA5 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
-		56DA3EFD25909905001926C2 /* FPCustomerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FPCustomerSDK.framework; sourceTree = "<group>"; };
+		56184C4B25665C99005F5EA5 /* FPCustomerSDKResource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FPCustomerSDKResource; sourceTree = "<group>"; };
+		56DA3F0725934DF9001926C2 /* FPCustomerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FPCustomerSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56DA3EFE25909905001926C2 /* FPCustomerSDK.framework in Frameworks */,
+				56DA3F0825934DF9001926C2 /* FPCustomerSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,8 +88,8 @@
 		56177FEA24D82D4C00814B65 = {
 			isa = PBXGroup;
 			children = (
-				56DA3EFD25909905001926C2 /* FPCustomerSDK.framework */,
-				56184C4B25665C99005F5EA5 /* Data */,
+				56DA3F0725934DF9001926C2 /* FPCustomerSDK.framework */,
+				56184C4B25665C99005F5EA5 /* FPCustomerSDKResource */,
 				56177FF524D82D4C00814B65 /* Test */,
 				5617801424D82D4E00814B65 /* TestTests */,
 				5617801F24D82D4E00814B65 /* TestUITests */,
@@ -247,7 +247,7 @@
 			files = (
 				5617800924D82D4D00814B65 /* LaunchScreen.storyboard in Resources */,
 				5617800624D82D4D00814B65 /* Assets.xcassets in Resources */,
-				56184C4C25665C99005F5EA5 /* Data in Resources */,
+				56184C4C25665C99005F5EA5 /* FPCustomerSDKResource in Resources */,
 				5617800124D82D4C00814B65 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

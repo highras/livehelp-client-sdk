@@ -127,30 +127,6 @@
     }];
     
 }
-//-(void)manualClick{
-//
-//
-//
-//
-//    if ([FPCustomerManager shareInstance].initFinish) {
-//
-//        FPCustomerServiceViewController * vc = [FPCustomerServiceViewController
-//                                                initWithAppId:[FPCustomerManager shareInstance].appId
-//                                                appKey:[FPCustomerManager shareInstance].appKey
-//                                                userId:[FPCustomerManager shareInstance].userId
-//                                                userName:[FPCustomerManager shareInstance].userName
-//                                                gameId:[FPCustomerManager shareInstance].gameId
-//                                                gameLang:[FPCustomerManager shareInstance].gameLanguage
-//                                                vipLevel:[FPCustomerManager shareInstance].vipLevel
-//                                                ];
-//
-//
-//
-//        FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:vc];
-//        nav.modalPresentationStyle = UIModalPresentationFullScreen;
-//        [self presentViewController:nav animated:YES completion:nil];
-//    }
-//}
 -(void)smartClick{
     
     if ([FPCustomerManager shareInstance].initFinish) {
