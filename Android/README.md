@@ -3,10 +3,14 @@
 ### 版本支持
 最低支持android4.4 （api19）
 
-### 接入
-1.在Android工程的AndroidManifest.xml，增加需要的配置：
-	网络权限,如果已经有,则不需要添加该配置
-	<uses-permission android:name="android.permission.INTERNET" />
+### 接入 
+1.在Android工程的AndroidManifest.xml，增加需要的配置：<br/>
+* 网络权限,如果已经有,则不需要添加该配置
+    `<uses-permission android:name="android.permission.INTERNET" />`<br/>
+* sdk内部ui使用约束布局 如果没有请在build.gradle中引用<br/>
+    dependencies {
+        implementation`'androidx.constraintlayout:constraintlayout:1.1.3'`
+  
 
 2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
 
