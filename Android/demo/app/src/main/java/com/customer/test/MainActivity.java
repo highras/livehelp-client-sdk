@@ -16,7 +16,6 @@ import com.ilivedata.customer.IUnreadCallback;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
-    Activity mactivity;
     CustomerData ll;
     EditText appidText ,userIdText ,langText,domainText;
 
@@ -32,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.robot:
                     initCustome();
-                    ll.robotShow(mactivity);
+                    ll.robotShow(MainActivity.this);
                     break;
                 case R.id.faq:
                     initCustome();
-                    ll.faqShow(mactivity);
+                    ll.faqShow(MainActivity.this);
                     break;
             }
         }
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mactivity = (Activity) this;
 
         TestButtonListener testButtonListener = new TestButtonListener();
         for (String name : buttonNames) {
