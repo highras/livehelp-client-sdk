@@ -69,7 +69,7 @@ public class FAQBody extends Activity {
                 responseReader.close();
                 tt = new JSONObject(sb.toString());
             } else {
-                Log.e("kefu", "post url failed:" + resultCode);
+                Log.e("customService", "post url failed:" + resultCode);
             }
         }
         catch (Exception ex)
@@ -103,8 +103,7 @@ public class FAQBody extends Activity {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("kefu",e.getMessage());
+                    Log.e("customService","clickHelpful error " + e.getMessage());
                 }
             }
         }).start();

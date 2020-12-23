@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -220,7 +221,7 @@ public class ManualActivity extends Activity {
             showPostResponseJs(sb.toString(), responseCode);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("customService", "postQuest error " + e.getMessage());
         }
     }
     //初始化WebView

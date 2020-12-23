@@ -148,12 +148,11 @@ public class FAQUnit extends Activity {
                         }
                         showResponse();
                     } else {
-                        Log.e("kefu","faq return code is:" + code);
+                        Log.e("customService","faq return code is:" + code);
                     }
                     connection.disconnect();
                 } catch (Exception e) {
-                    Log.e("kefu","faq return code Exception:" + e.getMessage());
-                    e.printStackTrace();
+                    Log.e("customService","faq return code Exception:" + e.getMessage());
                 }
             }
         }).start();
@@ -284,7 +283,7 @@ public class FAQUnit extends Activity {
         CustomerData tmpData = CustomerData.getInstance();
         Context appcontext = tmpData.getContext();
         if (appcontext == null){
-            Log.e("kefu","activity not set");
+            Log.e("customService","activity not set");
             return;
         }
         try {

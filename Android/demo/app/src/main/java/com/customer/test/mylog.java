@@ -5,6 +5,6 @@ import android.util.Log;
 
 public class mylog {
     public static void log(String msg){
-        Log.i("kefu",msg);
+        Log.i("customService",msg);
     }
 }

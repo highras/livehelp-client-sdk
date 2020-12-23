@@ -289,13 +289,12 @@ public class RobotActivity extends Activity {
                         }
                         else
                         {
-                            Log.e("kefu","post return error :" + responseCode);
+                            Log.e("customService","post return error :" + responseCode);
                             return new WebResourceResponse("text/html", "utf-8", connection.getErrorStream());
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("kefu","post robot error :" + e.getMessage());
+                        Log.e("customService","post robot error :" + e.getMessage());
                     }
                 }
                 return null;
@@ -506,7 +505,7 @@ public class RobotActivity extends Activity {
         Context appContext = CustomerData.getInstance().getContext();
         if(appContext == null)
         {
-            Log.e("kefu","start webview failed，app activity not set");
+            Log.e("customService","start webview failed，app activity not set");
             return;
         }
         Intent intent = new Intent(appContext, RobotActivity.class);

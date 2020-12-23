@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: ./app/libs/liveHelp-android.aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/231e6cd0585597b59003e0ae80572837/jetified-liveHelp-android/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/231e6cd0585597b59003e0ae80572837/jetified-liveHelp-android/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/231e6cd0585597b59003e0ae80572837/jetified-liveHelp-android/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

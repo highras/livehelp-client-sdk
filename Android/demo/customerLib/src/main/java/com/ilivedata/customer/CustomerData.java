@@ -26,6 +26,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -134,11 +135,9 @@ public class CustomerData {
             objectOutputStream.writeObject(FAQFileMap);
             outStream.close();
         } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-
+            Log.e("customService", "writeObject error " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("customService", "writeObject error " + e.getMessage());
         }
     }
 
@@ -151,13 +150,11 @@ public class CustomerData {
             objectInputStream.close();
         }
         catch (FileNotFoundException e) {
-            e.printStackTrace();
-
+            Log.e("customService", "readObject error " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
-
+            Log.e("customService", "readObject error " + e.getMessage());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Log.e("customService", "readObject error " + e.getMessage());
         }
     }
 
@@ -173,6 +170,7 @@ public class CustomerData {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                boolean flag = false;
                 try {
                     String realUrl = m_unreadURL + "?appId=" + m_appId + "&deviceToken=" + deviceToken + "&language=" + m_Lang + "&platform=ANDROID" +  "&userId=" + m_uId;
 
@@ -201,12 +199,17 @@ public class CustomerData {
                         }
                         reader.close();
                         JSONObject respondsDta = new JSONObject(builder.toString());
-                        boolean flag =  respondsDta.getJSONObject("data").getBoolean("unread");
-                        callback.getMsg(flag);
+                        if (respondsDta.has("data")){
+                            JSONObject responds1 =  respondsDta.getJSONObject("data");
+                            if (responds1.has("unread")){
+                                flag = responds1.getBoolean("unread");
+                            }
+                        }
                     }
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    Log.e("customService", "getUnreadMsg error " + ex.getMessage());
                 }
+                callback.getMsg(flag);
             }
         }).start();
     }
@@ -243,10 +246,17 @@ public class CustomerData {
                         }
                         reader.close();
                         JSONObject respondsDta = new JSONObject(builder.toString());
-                        m_greeting = respondsDta.getJSONObject("data").getString("greeting");
+                        if (respondsDta.has("data")){
+                            JSONObject responds1 =  respondsDta.getJSONObject("data");
+                            if (responds1.has("greeting")){
+                                m_greeting = responds1.getString("unread");
+                            }
+                        }
+                    }
+                    else {
                     }
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    Log.e("customService", "getUnread error " + ex.getMessage());
                 }
             }
         }).start();
@@ -263,7 +273,7 @@ public class CustomerData {
     }
 
     /**
-     * @context    应用的
+     * @context    应用的appliaction(必传)
      * @param _domain  后台配置的项目域名(必传)
      * @param appId    项目id(必传)
      * @param appKey    项目key(必传)
@@ -703,7 +713,6 @@ public class CustomerData {
     {
         JSONObject  obt = new JSONObject();;
         try {
-
             JSONObject appJson = new JSONObject();
             JSONObject hardwareJson = new JSONObject();
             JSONObject otherJson = new JSONObject();
@@ -760,7 +769,7 @@ public class CustomerData {
                     break;
             }
 
-            String freeSize = getAvailableInternalSize()/1024/1024/1024  + "GB";
+            String freeSize = String.valueOf(getAvailableInternalSize());
             String totalSize = getDataTotalSize();
             hardwareJson.put("deviceModel",getSystemModel());
             hardwareJson.put("batteryLevel",batteryLevel);
@@ -792,7 +801,7 @@ public class CustomerData {
         }
         catch (JSONException e)
         {
-            e.printStackTrace();
+            Log.e("customService", "sendUserDataToJS_infoeditor error " + e.getMessage());
         }
         return obt;
     }
