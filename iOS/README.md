@@ -41,7 +41,9 @@ SDK支持
                             custom:(NSDictionary * _Nullable)custom                        //自定义参数
                             domain:(NSString * _Nonnull)domain                             //公司域名(与控制台一致)     必传
                    pushDeviceToken:(NSString * _Nullable)pushDeviceToken;                  //推送token
-                                    
+            
+            
+            
     2.faq调用
                                    
     if ([FPCustomerManager shareInstance].initFinish) {
@@ -51,6 +53,8 @@ SDK支持
         [self presentViewController:nav animated:YES completion:nil];
         
     }
+    
+    
     
     3.智能机器人调用
 
