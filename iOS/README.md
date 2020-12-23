@@ -35,9 +35,9 @@ SDK支持
                           userName:(NSString * _Nullable)userName                          //玩家游戏名称
                           serverId:(NSString * _Nullable)serverId                          //当前区服ID
                        networkType:(NSString * _Nullable)networkType                       //网络类型
-                              tags:(NSArray<NSString*> * _Nullable)tags                    //客诉标签(来自控制台标签)
+                              tags:(NSArray<NSString*> * _Nullable)tags                    //标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置)
                           vipLevel:(NSInteger)vipLevel                                     //玩家VIP等级
-                            custom:(NSDictionary * _Nullable)custom                        //自定义参数
+                            custom:(NSDictionary * _Nullable)custom                        //自定义参数,传入信息会显示在控制台的客诉详情中
                             domain:(NSString * _Nonnull)domain                             //公司域名(与控制台一致)     必传
                    pushDeviceToken:(NSString * _Nullable)pushDeviceToken;                  //推送token
             
