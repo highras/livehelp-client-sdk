@@ -8,7 +8,7 @@
 	网络权限,如果已经有,则不需要添加该配置
 	<uses-permission android:name="android.permission.INTERNET" />
 
-将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
+2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
 
 3.SDK初始化(须在app启动的时候调用):
 	import com.ilivedata.customer;
