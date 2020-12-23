@@ -17,8 +17,10 @@ SDK支持
    
    *  拖入Data文件夹放根目录 （点击 create folder references ） 不要改名字！
     
-   *  info.plist 添加  Privacy - Photo Library Usage Description  相册权限
-                 添加  Privacy - Camera Usage Description  相机权限
+   *  info.plist 
+   
+           添加  Privacy - Photo Library Usage Description  相册权限       
+           添加  Privacy - Camera Usage Description  相机权限
          
     
 接口
