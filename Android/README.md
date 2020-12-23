@@ -18,12 +18,12 @@
 	import com.ilivedata.customer;
 
 	初始化的接口:
-	CustomerData.getInstance().init(Context context,String _domain, int appId, String appKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
+	CustomerData.getInstance().init(Context context,String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
     /**
      * @context    应用的applicationcontext（必传）
      * @param _domain  后台配置的项目域名（必传）
-     * @param appId    项目id（必传）
-     * @param appKey    项目key（必传）
+     * @param projectId    项目id（必传）
+     * @param projectKey    项目key（必传）
      * @param userId    用户id（必传）
      * @param userName  用户名称
      * @param gameLanguage 游戏语言(语言编码采用ISO 639-1标准) 
