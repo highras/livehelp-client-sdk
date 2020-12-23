@@ -29,12 +29,3 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 //    implementation 'androidx.appcompat:appcompat:1.1.0'
 }
-
-//生成jar包
-task makeJar(type: Copy) {
-    delete 'build/outputs/liveHelp-android.jar'
-    from('build/intermediates/packaged-classes/release/') //jar文件来源
-    into('build/libs/') //生成路径
-    include('classes.jar')
-    rename('classes.jar', 'liveHelp-android.jar') //命名为network.jar
-}

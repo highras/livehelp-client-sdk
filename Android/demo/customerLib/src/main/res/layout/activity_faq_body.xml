@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     tools:context=".FAQBody">
 
 
@@ -76,6 +75,9 @@
         android:id="@+id/bodyShow"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/helpfuLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

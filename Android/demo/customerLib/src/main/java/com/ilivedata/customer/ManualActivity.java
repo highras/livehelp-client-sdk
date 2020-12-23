@@ -221,7 +221,7 @@ public class ManualActivity extends Activity {
             showPostResponseJs(sb.toString(), responseCode);
 
         } catch (Exception e) {
-            Log.e("customService", "postQuest error " + e.getMessage());
+            Log.e("customsdk", "postQuest error " + e.getMessage());
         }
     }
     //初始化WebView

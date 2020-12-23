@@ -35,7 +35,7 @@ public class FAQsecond extends Activity {
         });
         List<String> list=new ArrayList<>();
         //新增加adapter适配器
-        ArrayAdapter adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+        ArrayAdapter adapter=new ArrayAdapter<String>(this,R.layout.myitem,list);
 
         if (instan.faqMap.containsKey(title)) {
             for (String key : instan.faqMap.get(title).keySet())

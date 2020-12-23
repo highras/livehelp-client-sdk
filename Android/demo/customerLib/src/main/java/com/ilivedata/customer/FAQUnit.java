@@ -148,11 +148,11 @@ public class FAQUnit extends Activity {
                         }
                         showResponse();
                     } else {
-                        Log.e("customService","faq return code is:" + code);
+                        Log.e("customsdk","faq return code is:" + code);
                     }
                     connection.disconnect();
                 } catch (Exception e) {
-                    Log.e("customService","faq return code Exception:" + e.getMessage());
+                    Log.e("customsdk","faq return code Exception:" + e.getMessage());
                 }
             }
         }).start();
@@ -283,7 +283,7 @@ public class FAQUnit extends Activity {
         CustomerData tmpData = CustomerData.getInstance();
         Context appcontext = tmpData.getContext();
         if (appcontext == null){
-            Log.e("customService","activity not set");
+            Log.e("customsdk","activity not set");
             return;
         }
         try {

@@ -135,9 +135,9 @@ public class CustomerData {
             objectOutputStream.writeObject(FAQFileMap);
             outStream.close();
         } catch (FileNotFoundException e) {
-            Log.e("customService", "writeObject error " + e.getMessage());
+            Log.e("customsdk", "writeObject error " + e.getMessage());
         } catch (IOException e) {
-            Log.e("customService", "writeObject error " + e.getMessage());
+            Log.e("customsdk", "writeObject error " + e.getMessage());
         }
     }
 
@@ -150,11 +150,11 @@ public class CustomerData {
             objectInputStream.close();
         }
         catch (FileNotFoundException e) {
-            Log.e("customService", "readObject error " + e.getMessage());
+            Log.e("customsdk", "readObject error " + e.getMessage());
         } catch (IOException e) {
-            Log.e("customService", "readObject error " + e.getMessage());
+            Log.e("customsdk", "readObject error " + e.getMessage());
         } catch (ClassNotFoundException e) {
-            Log.e("customService", "readObject error " + e.getMessage());
+            Log.e("customsdk", "readObject error " + e.getMessage());
         }
     }
 
@@ -207,7 +207,7 @@ public class CustomerData {
                         }
                     }
                 } catch (Exception ex) {
-                    Log.e("customService", "getUnreadMsg error " + ex.getMessage());
+                    Log.e("customsdk", "getUnreadMsg error " + ex.getMessage());
                 }
                 callback.getMsg(flag);
             }
@@ -256,7 +256,7 @@ public class CustomerData {
                     else {
                     }
                 } catch (Exception ex) {
-                    Log.e("customService", "getUnread error " + ex.getMessage());
+                    Log.e("customsdk", "getUnread error " + ex.getMessage());
                 }
             }
         }).start();
@@ -801,7 +801,7 @@ public class CustomerData {
         }
         catch (JSONException e)
         {
-            Log.e("customService", "sendUserDataToJS_infoeditor error " + e.getMessage());
+            Log.e("customsdk", "sendUserDataToJS_infoeditor error " + e.getMessage());
         }
         return obt;
     }

@@ -31,7 +31,7 @@ public class FAQBody extends Activity {
 
     String stampToDate(long time) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time_Date = sdf.format(new Date(time));
+        String time_Date = sdf.format(new  Date(time));
         return time_Date;
     }
 
@@ -69,7 +69,7 @@ public class FAQBody extends Activity {
                 responseReader.close();
                 tt = new JSONObject(sb.toString());
             } else {
-                Log.e("customService", "post url failed:" + resultCode);
+                Log.e("customsdk", "post url failed:" + resultCode);
             }
         }
         catch (Exception ex)
@@ -103,7 +103,7 @@ public class FAQBody extends Activity {
                         }
                     }
                 } catch (Exception e) {
-                    Log.e("customService","clickHelpful error " + e.getMessage());
+                    Log.e("customsdk","clickHelpful error " + e.getMessage());
                 }
             }
         }).start();
@@ -143,6 +143,7 @@ public class FAQBody extends Activity {
         postInitBody();
 
         String viewData = info.body.replace("<img","<img style=\"max-width:100%;height:auto\"");//图片适应宽度
+        webView.getSettings().setTextZoom(100);
         webView.loadData(viewData, "text/html", "utf-8");
         contactUs = findViewById(R.id.contactus);
         textno = findViewById(R.id.textno);
@@ -151,8 +152,8 @@ public class FAQBody extends Activity {
         TextView time = findViewById(R.id.modifyTime);
         TextView title = findViewById(R.id.title);
 
-        time.setText(stampToDate(info.modifyTime));
-        title.setText(secondTitle);
+        time.setText("\t\t" + stampToDate(info.modifyTime));
+        title.setText("\t\t" + secondTitle);
 
 //        contactUs.setText(remind.ContactUs);
 
