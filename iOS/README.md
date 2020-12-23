@@ -15,7 +15,7 @@ SDK支持
 
    *  引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
    
-   *  拖入Data文件夹放根目录 （点击 create folder references ） 不要改名字！
+   *  拖入 FPCustomerSDKResource 文件夹放根目录 （点击 create folder references ） 不要改名字！
     
    *  info.plist 
    
