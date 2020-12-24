@@ -26,7 +26,7 @@
      * @param projectKey    项目key（必传）
      * @param userId    用户id（必传）
      * @param userName  用户名称
-     * @param gameLanguage 游戏语言(必传) [支持语言](https://docs.ilivedata.com/alt/language/)
+     * @param gameLanguage 游戏语言(必传)
      * @param gameId    游戏应用商店ID
      * @param serverId  当前区服ID
      * @param networkType   网络类型
@@ -35,7 +35,7 @@
      * @param customData 自定义参数,传入信息会显示在控制台的客诉详情中
      * @param _deviceToken 推送token(可以再控制台设置推送)
      */
-
+备注：游戏语言详见[支持语言](https://docs.ilivedata.com/alt/language/
 4.客服接口说明:(需要初始化完成后)
 - 启用faq页面
 	    void CustomerData.getInstance().faqShow(Activity currentActivity);
