@@ -10,12 +10,12 @@ import android.widget.EditText;
 import android.provider.Settings.Secure;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ilivedata.customer.CustomerData;
-import com.ilivedata.customer.IUnreadCallback;
+import com.ilivedata.customer.*;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
+    Activity mactivity;
     CustomerData ll;
     EditText appidText ,userIdText ,langText,domainText;
 
@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.robot:
                     initCustome();
-                    ll.robotShow(MainActivity.this);
+                    ll.robotShow(mactivity);
                     break;
                 case R.id.faq:
                     initCustome();
-                    ll.faqShow(MainActivity.this);
+                    ll.faqShow(mactivity);
                     break;
             }
         }
@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         ll = CustomerData.getInstance();
+        slang = "zh-CN";
 //        ll.init(testXContext,sdomain,80900005, "nQVi/NlbIF8wEiHCxZL+YvWUB0atgEe/x8DWAauPnR4=", userId,"tom",slang,"", "","", 0, null,null,"");
-        ll.init(getApplicationContext(),sdomain,80900001, "61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=", userId,"tom",slang,"", "","", 0, null,null,"");
+        ll.init(getApplicationContext(),sdomain,80900007, "tULfZtCz0tFuxxAYxbC34Vv4Z8rOfrIMLbb+cCDIf6Q=", userId,"tom",slang,"", "","", 0, null,null,"");
 //        ll.init(90900003, "vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0=", userId,"tom",slang,"232", "34543","wifi", 2, new String[]{"1","2"},new HashMap<String, String>());
 //        hasInit = true;
         ll.getUnreadMsg(new IUnreadCallback() {
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mactivity = (Activity) this;
 
         TestButtonListener testButtonListener = new TestButtonListener();
         for (String name : buttonNames) {

@@ -26,6 +26,9 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebStorage;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -139,6 +142,15 @@ public class CustomerData {
         } catch (IOException e) {
             Log.e("customsdk", "writeObject error " + e.getMessage());
         }
+    }
+
+    void webSeting(WebView viewset){
+        viewset.setHorizontalScrollBarEnabled(false);//水平不显示
+        viewset.setVerticalScrollBarEnabled(false); //垂直不显示
+        viewset.getSettings().setJavaScriptEnabled(true);
+        viewset.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        viewset.getSettings().setSupportZoom(true);
+        viewset.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 
     public void readObject(){
@@ -430,119 +442,6 @@ public class CustomerData {
 //        }
         jj.height = heigh;
         view.setLayoutParams(jj);
-    }
-
-    void adjustRobotHeight(Context context, View  view) {
-        int statusBarHeight = getStatusBarHeight(context);
-        int availableHeight = getScreenInfo(context).heightPixels;
-        int realHeight = getRealScreenInfo(context).heightPixels;
-        int navagarHeight = getNavigationBarHeight(context);
-        boolean navagarShow = false;
-        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-//        int heigh = availableHeight;
-        int guding = dp2px(context, 15);
-
-        if (navagarHeight != 0 && realHeight - availableHeight > statusBarHeight)
-            navagarShow = true;
-
-        if (navagarHeight == 0 && availableHeight + statusBarHeight > realHeight) { //三星s10
-            guding += 45;
-        }
-
-        guding += navagarHeight;
-
-//        if (realHeight - availableHeight == navagarHeight + statusBarHeight)
-//            guding += 50;
-//
-//        if (realHeight - availableHeight == navagarHeight){ //华为平板带虚拟按键
-//
-//        }
-//
-        if (navagarShow)
-            guding += navagarHeight;
-        if (navagarShow && realHeight - availableHeight == navagarHeight)
-            guding -= statusBarHeight;
-
-        jj.bottomMargin = guding;
-//        jj.height = heigh;
-        view.setLayoutParams(jj);
-    }
-
-
-    void adjustHeigh(Context context, View  view){
-        int statusBarHeight = getStatusBarHeight(context);
-        int availableHeight = getScreenInfo(context).heightPixels;
-        int realHeight = getRealScreenInfo(context).heightPixels;
-        int navagarHeight = getNavigationBarHeight(context);
-        int finalHeight = 0;
-
-
-        if (statusBarHeight == realHeight-availableHeight) //实际高度 - 可用高度 == 状态栏高度
-        {
-            finalHeight = availableHeight  -dp2px(context,35);
-        }
-        else if (navagarHeight != 0 && realHeight - availableHeight == navagarHeight) //实际高度 - 可用高度 == 虚拟按键高度（华为平板)
-        {
-            finalHeight = availableHeight  -dp2px(context,35) - statusBarHeight;
-        }
-        else if (realHeight == availableHeight){
-            finalHeight = availableHeight  -dp2px(context,35) - statusBarHeight;
-        }
-        else if (realHeight - statusBarHeight -navagarHeight == availableHeight) //实际高度 - 可用高度 == 虚拟按键高度 + 状态栏高度
-        {
-            finalHeight = availableHeight  -dp2px(context,35);
-        }
-        else{
-            finalHeight = availableHeight - statusBarHeight - dp2px(context,35);
-        }
-        if (finalHeight != 0)
-        {
-            ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams )view.getLayoutParams();
-            jj.height = finalHeight;
-            view.setLayoutParams(jj);
-        }
-
-    }
-
-    void adjustHeighMarge(Context context, View  view){
-        int statusBarHeight = getStatusBarHeight(context);
-        int availableHeight = getScreenInfo(context).heightPixels;
-        int realHeight = getRealScreenInfo(context).heightPixels;
-        int navagarHeight = getNavigationBarHeight(context);
-        boolean navagarShow = false;
-        int heigh = 0;
-
-        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams )view.getLayoutParams();
-
-        if (navagarHeight != 0 && realHeight - availableHeight > statusBarHeight)
-        {
-            navagarShow = true;
-            heigh = navagarHeight;
-        }
-
-        if (navagarHeight != 0 && (realHeight - availableHeight) == (statusBarHeight + navagarHeight))
-        {
-            if (statusBarHeight > navagarHeight) {
-                navagarShow = true;
-                heigh = statusBarHeight;
-            }
-        }
-
-
-//        if (navagarHeight != 0 && realHeight - availableHeight == navagarHeight) //实际高度 - 可用高度 == 虚拟按键高度（华为平板)
-//        {
-//            navagarShow = true;
-//        }
-//        else if (realHeight - statusBarHeight -navagarHeight == availableHeight) //实际高度 - 可用高度 == 虚拟按键高度 + 状态栏高度
-//        {
-//            navagarShow =  true;
-//        }
-        if (navagarShow)
-        {
-            jj.bottomMargin = heigh;
-            view.setLayoutParams(jj);
-        }
-
     }
 
     synchronized String getManualURL() {

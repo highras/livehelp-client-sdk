@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -75,6 +76,7 @@ public class RobotActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_robot);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
         getData();
         setFinishOnTouchOutside(false);
@@ -86,10 +88,6 @@ public class RobotActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (m_webView != null){
-            instan.adjustRobotHeight(this,m_webView);
-//            instan.adjustViewHeight(this,m_webView,true);
-        }
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -187,17 +185,8 @@ public class RobotActivity extends Activity {
         });
 
         m_webView = findViewById(R.id.robotwebview);
+        instan.webSeting(m_webView);
 
-//        instan.adjustHeighMarge(this,m_webView);
-        instan.adjustRobotHeight(this,m_webView);
-//        instan.adjustViewHeight(this,m_webView,true);
-
-        m_webView.setHorizontalScrollBarEnabled(false);//水平不显示
-        m_webView.setVerticalScrollBarEnabled(false); //垂直不显示
-        m_webView.getSettings().setJavaScriptEnabled(true);
-        m_webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        m_webView.getSettings().setSupportZoom(true);
-        m_webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         m_webView.addJavascriptInterface(new WebAppInterface(), "edithData");
 
         // 设置支持https

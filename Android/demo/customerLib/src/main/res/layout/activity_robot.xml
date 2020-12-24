@@ -5,13 +5,14 @@
     android:id="@+id/manrobot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".RobotActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="#20B2AA"
+        android:layout_height="45dp"
+        android:background="#4abee5"
         android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +20,8 @@
 
         <ImageView
             android:id="@+id/robotBack"
-            android:layout_width="35dp"
-            android:layout_height="25dp"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
             android:scaleType="fitCenter"
             android:src="@drawable/icbacknew"
             android:layout_marginTop="4dp"
@@ -30,9 +31,10 @@
         <ImageView
             android:id="@+id/gotoManual"
             android:layout_width="35dp"
-            android:layout_height="25dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginRight="15dp"
             android:scaleType="fitCenter"
             android:src="@drawable/kefu"
             app:layout_constraintEnd_toEndOf="parent"

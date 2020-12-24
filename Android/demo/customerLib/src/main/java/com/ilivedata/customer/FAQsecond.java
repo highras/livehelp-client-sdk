@@ -25,7 +25,7 @@ public class FAQsecond extends Activity {
         final CustomerData  instan = CustomerData.getInstance();
         final String title = getIntent().getStringExtra("title");
 
-        ListView titile = findViewById(R.id.title);
+        ListView ListTitle = findViewById(R.id.title);
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,10 +40,10 @@ public class FAQsecond extends Activity {
         if (instan.faqMap.containsKey(title)) {
             for (String key : instan.faqMap.get(title).keySet())
                 adapter.add(key);
-            titile.setAdapter(adapter);
+            ListTitle.setAdapter(adapter);
         }
 
-        titile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ListTitle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 String item = (String) parent.getAdapter().getItem(position);

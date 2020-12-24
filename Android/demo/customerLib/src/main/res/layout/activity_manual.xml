@@ -11,15 +11,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/titile"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="#20B2AA"
+        android:layout_height="45dp"
+        android:background="#4abee5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/goback"
-            android:layout_width="35dp"
-            android:layout_height="25dp"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
             android:scaleType="fitCenter"
             android:layout_marginTop="4dp"
             android:src="@drawable/icbacknew"
