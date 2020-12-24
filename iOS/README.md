@@ -7,12 +7,13 @@ SDK 接入说明
 
 SDK支持
 -
+   *  采用Objective-C语言开发
    *  包含armv7,armv7s,arm64,i386,x86_64指令集, 可运行真机 + 模拟器 
 
 集成依赖
 -
 
-   *  引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
+   *  拖入FPCustomerSDK.framework 引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
    
    *  拖入 FPCustomerSDKResource 文件夹放根目录 （点击 create folder references ） 不要改名字！
     
