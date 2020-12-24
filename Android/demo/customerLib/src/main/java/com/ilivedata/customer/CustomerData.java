@@ -280,8 +280,8 @@ public class CustomerData {
     /**
      * @context    应用的appliaction(必传)
      * @param _domain  后台配置的项目域名(必传)
-     * @param appId    项目id(必传)
-     * @param appKey    项目key(必传)
+     * @param projectId    项目id(必传)
+     * @param projectKey    项目key(必传)
      * @param userId    用户id(必传)
      * @param userName  用户名称
      * @param gameLanguage  控制台配置的语言(必传)
@@ -293,14 +293,14 @@ public class CustomerData {
      * @param customData 自定义参数
      * @param _deviceToken 推送token
      */
-    public synchronized boolean init(Context context, String _domain, int appId, String appKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken) {
-        if (context == null || _domain.isEmpty() || appId == 0 || gameLanguage.isEmpty() || appKey.isEmpty() || userId.isEmpty() ) {
+    public synchronized boolean init(Context context, String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken) {
+        if (context == null || _domain.isEmpty() || projectId == 0 || gameLanguage.isEmpty() || projectKey.isEmpty() || userId.isEmpty() ) {
             Log.e("customsdk","param init error");
             return false;
         }
         appContext = context;
-        m_appId = appId;
-        m_appKey = appKey;
+        m_appId = projectId;
+        m_appKey = projectKey;
         m_uId = userId;
         m_Lang = gameLanguage;
         m_vipLevel = vipLevel;
@@ -410,22 +410,61 @@ public class CustomerData {
     }
 
 
+    void adjustViewHeight(Context context, View  view, boolean isRobot) {
+        int statusBarHeight = getStatusBarHeight(context);
+        int availableHeight = getScreenInfo(context).heightPixels;
+        int realHeight = getRealScreenInfo(context).heightPixels;
+        int navagarHeight = getNavigationBarHeight(context);
+        boolean navagarShow = false;
+        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        int heigh = availableHeight - dp2px(context,45) - dp2px(context, 15); //返回控件高度
+        if (!isRobot)
+            heigh = availableHeight - dp2px(context,45); //返回控件高度
+
+        if (navagarHeight == 0 || realHeight - availableHeight == statusBarHeight) //没有虚拟按键
+        {
+
+        }
+//        else if (realHeight - availableHeight == navagarHeight) {//华为平板
+//            heigh =
+//        }
+        jj.height = heigh;
+        view.setLayoutParams(jj);
+    }
+
     void adjustRobotHeight(Context context, View  view) {
         int statusBarHeight = getStatusBarHeight(context);
         int availableHeight = getScreenInfo(context).heightPixels;
         int realHeight = getRealScreenInfo(context).heightPixels;
         int navagarHeight = getNavigationBarHeight(context);
         boolean navagarShow = false;
-        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams )view.getLayoutParams();
-        int guding = dp2px(context,15);
+        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+//        int heigh = availableHeight;
+        int guding = dp2px(context, 15);
 
         if (navagarHeight != 0 && realHeight - availableHeight > statusBarHeight)
             navagarShow = true;
 
+        if (navagarHeight == 0 && availableHeight + statusBarHeight > realHeight) { //三星s10
+            guding += 45;
+        }
+
+        guding += navagarHeight;
+
+//        if (realHeight - availableHeight == navagarHeight + statusBarHeight)
+//            guding += 50;
+//
+//        if (realHeight - availableHeight == navagarHeight){ //华为平板带虚拟按键
+//
+//        }
+//
         if (navagarShow)
             guding += navagarHeight;
+        if (navagarShow && realHeight - availableHeight == navagarHeight)
+            guding -= statusBarHeight;
 
         jj.bottomMargin = guding;
+//        jj.height = heigh;
         view.setLayoutParams(jj);
     }
 
@@ -471,11 +510,25 @@ public class CustomerData {
         int realHeight = getRealScreenInfo(context).heightPixels;
         int navagarHeight = getNavigationBarHeight(context);
         boolean navagarShow = false;
+        int heigh = 0;
+
+        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams )view.getLayoutParams();
 
         if (navagarHeight != 0 && realHeight - availableHeight > statusBarHeight)
         {
             navagarShow = true;
+            heigh = navagarHeight;
         }
+
+        if (navagarHeight != 0 && (realHeight - availableHeight) == (statusBarHeight + navagarHeight))
+        {
+            if (statusBarHeight > navagarHeight) {
+                navagarShow = true;
+                heigh = statusBarHeight;
+            }
+        }
+
+
 //        if (navagarHeight != 0 && realHeight - availableHeight == navagarHeight) //实际高度 - 可用高度 == 虚拟按键高度（华为平板)
 //        {
 //            navagarShow = true;
@@ -486,8 +539,7 @@ public class CustomerData {
 //        }
         if (navagarShow)
         {
-            ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams )view.getLayoutParams();
-            jj.bottomMargin = navagarHeight;
+            jj.bottomMargin = heigh;
             view.setLayoutParams(jj);
         }
 

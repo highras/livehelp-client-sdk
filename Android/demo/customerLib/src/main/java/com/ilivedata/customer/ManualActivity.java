@@ -147,6 +147,10 @@ public class ManualActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        if (m_webView != null){
+//            instan.adjustViewHeight(this,m_webView,false);
+            instan.adjustHeighMarge(this,m_webView);
+        }
     }
 
     //方法描述：接收数据
@@ -249,11 +253,14 @@ public class ManualActivity extends Activity {
         m_webView = findViewById(R.id.showwebview);
 
         instan.adjustHeighMarge(this,m_webView);
+//        instan.adjustViewHeight(this,m_webView,false);
 
         m_webView.setHorizontalScrollBarEnabled(false);//水平不显示
         m_webView.setVerticalScrollBarEnabled(false); //垂直不显示
         m_webView.getSettings().setJavaScriptEnabled(true);
         m_webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        m_webView.getSettings().setSupportZoom(true);
+        m_webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         m_webView.addJavascriptInterface(new WebAppInterface(), "infoData");
 
         // 设置支持https

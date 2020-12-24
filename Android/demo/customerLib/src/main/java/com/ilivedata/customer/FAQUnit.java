@@ -37,7 +37,7 @@ public class FAQUnit extends Activity {
     JSONObject respondsDta = null;
     SearchView searchView;
     ListView faqList;
-    LanagePrompt lanagePrompt = new LanagePrompt();
+    LanagePrompt tmplanagePrompt = new LanagePrompt();
     ArrayAdapter adapter;
     List<SpannableString> listData;
 
@@ -56,13 +56,13 @@ public class FAQUnit extends Activity {
     }
 
     class LanagePrompt {
-        String helpfulYes;
-        String helpfulNo;
-        String clickYes;
-        String clickNo;
-        String ContactUs;
-        String searchtPrompt;
-        String helpfulQuestion;
+        String helpfulYes = "YES";
+        String helpfulNo = "NO";
+        String clickYes = "You found this helpful";
+        String clickNo = "You didn't find this helpful";
+        String ContactUs = "Contact Us";
+        String searchtPrompt = "Your question";
+        String helpfulQuestion = "Was this helpful?";
     }
 
     void hideKeyboard() {
@@ -77,7 +77,7 @@ public class FAQUnit extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                searchView.setQueryHint(lanagePrompt.searchtPrompt);
+                searchView.setQueryHint(tmplanagePrompt.searchtPrompt);
                 for (String title : instan.faqMap.keySet()) {
                     SpannableString tt = new SpannableString(title);
                     adapter.add(tt);
@@ -120,31 +120,43 @@ public class FAQUnit extends Activity {
                         }
                         reader.close();
                         respondsDta = new JSONObject(builder.toString());
-                        JSONObject data = respondsDta.getJSONObject("data");
-                        JSONObject messages = data.getJSONObject("messages");
-                        lanagePrompt.clickNo = messages.getString("sdk.api.faq.helpful.click.no");
-                        lanagePrompt.clickYes = messages.getString("sdk.api.faq.helpful.click.yes");
-                        lanagePrompt.helpfulNo = messages.getString("sdk.api.faq.helpful.option.no");
-                        lanagePrompt.helpfulYes = messages.getString("sdk.api.faq.helpful.option.yes");
-                        lanagePrompt.ContactUs = messages.getString("sdk.api.faq.button.contact.us");
-                        lanagePrompt.searchtPrompt = messages.getString("sdk.api.faq.search.placeholder");
-                        lanagePrompt.helpfulQuestion = messages.getString("sdk.api.faq.helpful.question");
-
-                        instan.lanagePrompt = lanagePrompt;
-
-                        JSONArray sections = data.getJSONArray("sections");
-                        for (int i = 0; i < sections.length(); i++) {
-                            JSONObject obj = sections.getJSONObject(i);
-                            String firstTitle = obj.getString("title");
-                            JSONArray secondObj = obj.getJSONArray("faqs");
-                            Map<String, FAQInfo> tmpMap = new HashMap<String, FAQInfo>();
-                            for (int j = 0; j < secondObj.length(); j++) {
-                                JSONObject realFAQ = secondObj.getJSONObject(j);
-                                String secondTitle = realFAQ.getString("title");
-                                FAQInfo faqInfo = new FAQInfo(realFAQ.getString("id"), realFAQ.getString("sectionId"), realFAQ.getString("body"), realFAQ.getLong("modifiedDate"));
-                                tmpMap.put(secondTitle, faqInfo);
+                        JSONObject data = respondsDta.optJSONObject("data");
+                        if (data != null) {
+                            JSONObject messages = data.optJSONObject("messages");
+                            if (messages != null) {
+                                tmplanagePrompt.clickNo = messages.optString("sdk.api.faq.helpful.click.no");
+                                tmplanagePrompt.clickYes = messages.getString("sdk.api.faq.helpful.click.yes");
+                                tmplanagePrompt.helpfulNo = messages.getString("sdk.api.faq.helpful.option.no");
+                                tmplanagePrompt.helpfulYes = messages.getString("sdk.api.faq.helpful.option.yes");
+                                tmplanagePrompt.ContactUs = messages.getString("sdk.api.faq.button.contact.us");
+                                tmplanagePrompt.searchtPrompt = messages.getString("sdk.api.faq.search.placeholder");
+                                tmplanagePrompt.helpfulQuestion = messages.getString("sdk.api.faq.helpful.question");
                             }
-                            instan.faqMap.put(firstTitle, tmpMap);
+                        }
+
+                        instan.lanagePrompt = tmplanagePrompt;
+
+                        JSONArray sections = data.optJSONArray("sections");
+                        if (sections != null) {
+                            for (int i = 0; i < sections.length(); i++) {
+                                JSONObject obj = sections.optJSONObject(i);
+                                if (obj != null) {
+                                    String firstTitle = obj.optString("title");
+                                    JSONArray secondObj = obj.optJSONArray("faqs");
+                                    if (secondObj != null) {
+                                        Map<String, FAQInfo> tmpMap = new HashMap<String, FAQInfo>();
+                                        for (int j = 0; j < secondObj.length(); j++) {
+                                            JSONObject realFAQ = secondObj.optJSONObject(j);
+                                            if (realFAQ != null) {
+                                                String secondTitle = realFAQ.optString("title");
+                                                FAQInfo faqInfo = new FAQInfo(realFAQ.optString("id"), realFAQ.optString("sectionId"), realFAQ.optString("body"), realFAQ.optLong("modifiedDate"));
+                                                tmpMap.put(secondTitle, faqInfo);
+                                            }
+                                        }
+                                        instan.faqMap.put(firstTitle, tmpMap);
+                                    }
+                                }
+                            }
                         }
                         showResponse();
                     } else {

@@ -144,7 +144,8 @@ public class FAQBody extends Activity {
 
         String viewData = info.body.replace("<img","<img style=\"max-width:100%;height:auto\"");//图片适应宽度
         webView.getSettings().setTextZoom(100);
-        webView.loadData(viewData, "text/html", "utf-8");
+        webView.loadData(viewData, "text/html; charset=UTF-8", null);
+//        webView.loadData(viewData, "text/html", "utf-8");
         contactUs = findViewById(R.id.contactus);
         textno = findViewById(R.id.textno);
         textyes = findViewById(R.id.textyes);
@@ -153,7 +154,7 @@ public class FAQBody extends Activity {
         TextView title = findViewById(R.id.title);
 
         time.setText("\t\t" + stampToDate(info.modifyTime));
-        title.setText("\t\t" + secondTitle);
+        title.setText(secondTitle);
 
 //        contactUs.setText(remind.ContactUs);
 

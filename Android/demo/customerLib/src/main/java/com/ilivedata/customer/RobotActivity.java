@@ -15,8 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -41,13 +39,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Locale;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
 
 public class RobotActivity extends Activity {
@@ -94,7 +86,10 @@ public class RobotActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-//        initViews();
+        if (m_webView != null){
+            instan.adjustRobotHeight(this,m_webView);
+//            instan.adjustViewHeight(this,m_webView,true);
+        }
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -118,7 +113,6 @@ public class RobotActivity extends Activity {
     private void getData() {
         landscape = getIntent().getBooleanExtra("webview_landscape", true);
     }
-
 
     private void addWebview(String url){
         WebView jj  = new WebView(this);
@@ -196,11 +190,14 @@ public class RobotActivity extends Activity {
 
 //        instan.adjustHeighMarge(this,m_webView);
         instan.adjustRobotHeight(this,m_webView);
+//        instan.adjustViewHeight(this,m_webView,true);
 
         m_webView.setHorizontalScrollBarEnabled(false);//水平不显示
         m_webView.setVerticalScrollBarEnabled(false); //垂直不显示
         m_webView.getSettings().setJavaScriptEnabled(true);
         m_webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        m_webView.getSettings().setSupportZoom(true);
+        m_webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         m_webView.addJavascriptInterface(new WebAppInterface(), "edithData");
 
         // 设置支持https
