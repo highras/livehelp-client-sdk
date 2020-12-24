@@ -27,19 +27,19 @@ SDK支持
 
     1.初始化
 
-    +(BOOL)fpCustomerInitWithAppid:(NSInteger)appId                                        //项目ID(客服控制台获取)    必传
-                            userId:(NSString * _Nonnull)userId                             //用户ID                  必传
-                            appKey:(NSString * _Nonnull)appKey                             //密匙(客服控制台获取)      必传
-                      gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(语言编码采用ISO 639-1标准)   必传
-                            gameId:(NSString * _Nullable)gameId                            //游戏应用商店ID
-                          userName:(NSString * _Nullable)userName                          //玩家游戏名称
-                          serverId:(NSString * _Nullable)serverId                          //当前区服ID
-                       networkType:(NSString * _Nullable)networkType                       //网络类型
-                              tags:(NSArray<NSString*> * _Nullable)tags                    //标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置)
-                          vipLevel:(NSInteger)vipLevel                                     //玩家VIP等级
-                            custom:(NSDictionary * _Nullable)custom                        //自定义参数,传入信息会显示在控制台的客诉详情中
-                            domain:(NSString * _Nonnull)domain                             //公司域名(与控制台一致)     必传
-                   pushDeviceToken:(NSString * _Nullable)pushDeviceToken;                  //推送token
+    +(BOOL)fpCustomerInitWithProjectId:(NSInteger)projectId                                    //项目ID(客服控制台获取)    必传
+                                userId:(NSString * _Nonnull)userId                             //用户ID                  必传
+                            projectKey:(NSString * _Nonnull)projectKey                         //密匙(客服控制台获取)      必传
+                          gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(语言编码采用ISO 639-1标准)   必传
+                                gameId:(NSString * _Nullable)gameId                            //游戏应用商店ID
+                              userName:(NSString * _Nullable)userName                          //玩家游戏名称
+                              serverId:(NSString * _Nullable)serverId                          //当前区服ID
+                           networkType:(NSString * _Nullable)networkType                       //网络类型
+                                  tags:(NSArray<NSString*> * _Nullable)tags                    //标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置)
+                              vipLevel:(NSInteger)vipLevel                                     //玩家VIP等级
+                                custom:(NSDictionary * _Nullable)custom                        //自定义参数,传入信息会显示在控制台的客诉详情中
+                                domain:(NSString * _Nonnull)domain                             //公司域名(与控制台一致)     必传
+                       pushDeviceToken:(NSString * _Nullable)pushDeviceToken;                  //推送token
             
             
             
@@ -60,8 +60,8 @@ SDK支持
     if ([FPCustomerManager shareInstance].initFinish) {
     
         FPCustomerSmartServiceViewController * vc = [FPCustomerSmartServiceViewController
-                                                     initWithAppId:[FPCustomerManager shareInstance].appId
-                                                     appKey:[FPCustomerManager shareInstance].appKey
+                                                     initWithAppId:[FPCustomerManager shareInstance].projectId
+                                                     appKey:[FPCustomerManager shareInstance].projectKey
                                                      userId:[FPCustomerManager shareInstance].userId
                                                      userName:[FPCustomerManager shareInstance].userName
                                                      gameId:[FPCustomerManager shareInstance].gameId

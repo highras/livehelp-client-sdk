@@ -11,19 +11,19 @@
 NS_ASSUME_NONNULL_BEGIN
 @interface FPCustomerManager : NSObject
 
-+(BOOL)fpCustomerInitWithAppid:(NSInteger)appId                     //必传
-                        userId:(NSString * _Nonnull)userId          //必传
-                        appKey:(NSString * _Nonnull)appKey          //必传
-                  gameLanguage:(NSString * _Nonnull)gameLanguage    //必传
-                        gameId:(NSString * _Nullable)gameId
-                      userName:(NSString * _Nullable)userName
-                      serverId:(NSString * _Nullable)serverId
-                   networkType:(NSString * _Nullable)networkType
-                          tags:(NSArray<NSString*> * _Nullable)tags
-                      vipLevel:(NSInteger)vipLevel
-                        custom:(NSDictionary * _Nullable)custom
-                        domain:(NSString * _Nonnull)domain
-               pushDeviceToken:(NSString * _Nullable)pushDeviceToken;
++(BOOL)fpCustomerInitWithProjectId:(NSInteger)projectId                     //必传
+                            userId:(NSString * _Nonnull)userId          //必传
+                        projectKey:(NSString * _Nonnull)projectKey          //必传
+                      gameLanguage:(NSString * _Nonnull)gameLanguage    //必传
+                            gameId:(NSString * _Nullable)gameId
+                          userName:(NSString * _Nullable)userName
+                          serverId:(NSString * _Nullable)serverId
+                       networkType:(NSString * _Nullable)networkType
+                              tags:(NSArray<NSString*> * _Nullable)tags
+                          vipLevel:(NSInteger)vipLevel
+                            custom:(NSDictionary * _Nullable)custom
+                            domain:(NSString * _Nonnull)domain
+                   pushDeviceToken:(NSString * _Nullable)pushDeviceToken;
 
 + (instancetype)shareInstance;
 @property(nonatomic,assign,readonly)BOOL initFinish;
@@ -31,9 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong,readonly)NSDictionary * _Nullable allDataDictionary;
 @property(nonatomic,copy,readonly) NSString * _Nullable greeting;
 
-@property(nonatomic,assign,readonly)NSInteger appId;
+@property(nonatomic,assign,readonly)NSInteger projectId;
 @property(nonatomic,copy,readonly)NSString * userId;
-@property(nonatomic,copy,readonly)NSString * appKey;
+@property(nonatomic,copy,readonly)NSString * projectKey;
 @property(nonatomic,copy,readonly)NSString * gameLanguage;
 @property(nonatomic,copy,readonly)NSString * gameId;
 @property(nonatomic,copy,readonly)NSString * userName;
