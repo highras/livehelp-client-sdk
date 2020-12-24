@@ -7,12 +7,13 @@ SDK 接入说明
 
 SDK支持
 -
+   *  采用Objective-C语言开发
    *  包含armv7,armv7s,arm64,i386,x86_64指令集, 可运行真机 + 模拟器 
 
 集成依赖
 -
 
-   *  引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
+   *  拖入FPCustomerSDK.framework 引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
    
    *  拖入 FPCustomerSDKResource 文件夹放根目录 （点击 create folder references ） 不要改名字！
     
@@ -30,7 +31,7 @@ SDK支持
     +(BOOL)fpCustomerInitWithProjectId:(NSInteger)projectId                                    //项目ID(客服控制台获取)    必传
                                 userId:(NSString * _Nonnull)userId                             //用户ID                  必传
                             projectKey:(NSString * _Nonnull)projectKey                         //密匙(客服控制台获取)      必传
-                          gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(语言编码采用ISO 639-1标准)   必传
+                          gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(参考https://docs.ilivedata.com/alt/language/)   必传
                                 gameId:(NSString * _Nullable)gameId                            //游戏应用商店ID
                               userName:(NSString * _Nullable)userName                          //玩家游戏名称
                               serverId:(NSString * _Nullable)serverId                          //当前区服ID

@@ -15,7 +15,7 @@
 2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
 
 3.SDK初始化(须在app启动的时候调用):
-	import com.ilivedata.customer;
+	import com.ilivedata.customer.*;
 
 	初始化的接口:
 	CustomerData.getInstance().init(Context context,String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
@@ -26,7 +26,7 @@
      * @param projectKey    项目key（必传）
      * @param userId    用户id（必传）
      * @param userName  用户名称
-     * @param gameLanguage 游戏语言(语言编码采用ISO 639-1标准) 
+     * @param gameLanguage 游戏语言(必传) [支持语言](https://docs.ilivedata.com/alt/language/)
      * @param gameId    游戏应用商店ID
      * @param serverId  当前区服ID
      * @param networkType   网络类型
