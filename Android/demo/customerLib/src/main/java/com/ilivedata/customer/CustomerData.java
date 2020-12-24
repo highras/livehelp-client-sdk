@@ -149,6 +149,7 @@ public class CustomerData {
         viewset.setVerticalScrollBarEnabled(false); //垂直不显示
         viewset.getSettings().setJavaScriptEnabled(true);
         viewset.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        viewset.getSettings().setTextZoom(100);
         viewset.getSettings().setSupportZoom(true);
         viewset.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
@@ -421,27 +422,84 @@ public class CustomerData {
         return (int) (dpValue * scale + 0.5f);
     }
 
-
-    void adjustViewHeight(Context context, View  view, boolean isRobot) {
+    void adjustRobotHeightNew(Context context, View  view) {
         int statusBarHeight = getStatusBarHeight(context);
         int availableHeight = getScreenInfo(context).heightPixels;
         int realHeight = getRealScreenInfo(context).heightPixels;
         int navagarHeight = getNavigationBarHeight(context);
         boolean navagarShow = false;
         ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-        int heigh = availableHeight - dp2px(context,45) - dp2px(context, 15); //返回控件高度
-        if (!isRobot)
-            heigh = availableHeight - dp2px(context,45); //返回控件高度
-
-        if (navagarHeight == 0 || realHeight - availableHeight == statusBarHeight) //没有虚拟按键
+//        int realMarginHeight = dp2px(context, 15);
+        int realMarginHeight = 0;
+        if (realHeight == availableHeight) //可用高度和实际高度相等 屋里按键 或者横屏
         {
-
+            if (isMIUI() && navagarHeight !=0)
+                realMarginHeight += 50;
         }
-//        else if (realHeight - availableHeight == navagarHeight) {//华为平板
-//            heigh =
-//        }
-        jj.height = heigh;
+        else if (realHeight - availableHeight == statusBarHeight)//全面屏 没有虚拟按键
+        {
+            ;
+        }
+        else if (realHeight - availableHeight == navagarHeight){
+            realMarginHeight += navagarHeight;
+        }
+        else if ((realHeight - availableHeight) == statusBarHeight + navagarHeight) //全面屏 开启了虚拟按键
+        {
+            realMarginHeight += navagarHeight;
+            if (isMIUI())
+            {
+                realMarginHeight += 50;
+            }
+        }
+        else if (availableHeight + statusBarHeight +navagarHeight > realHeight)//个别手机
+        {
+            realMarginHeight += navagarHeight + 50;
+        }
+
+        jj.bottomMargin = realMarginHeight;
+//        jj.height = heigh;
         view.setLayoutParams(jj);
+    }
+
+    void adjustHeighMarge(Context context, View  view){
+        int statusBarHeight = getStatusBarHeight(context);
+        int availableHeight = getScreenInfo(context).heightPixels;
+        int realHeight = getRealScreenInfo(context).heightPixels;
+        int navagarHeight = getNavigationBarHeight(context);
+        boolean navagarShow = false;
+        int heigh = 0;
+
+        ConstraintLayout.LayoutParams jj = (ConstraintLayout.LayoutParams )view.getLayoutParams();
+
+        if (navagarHeight != 0 && realHeight - availableHeight > statusBarHeight)
+        {
+            navagarShow = true;
+            heigh = navagarHeight;
+        }
+
+        if (navagarHeight != 0 && (realHeight - availableHeight) == (statusBarHeight + navagarHeight))
+        {
+            if (statusBarHeight > navagarHeight) {
+                navagarShow = true;
+                heigh = statusBarHeight;
+            }
+        }
+
+
+//        if (navagarHeight != 0 && realHeight - availableHeight == navagarHeight) //实际高度 - 可用高度 == 虚拟按键高度（华为平板)
+//        {
+//            navagarShow = true;
+//        }
+//        else if (realHeight - statusBarHeight -navagarHeight == availableHeight) //实际高度 - 可用高度 == 虚拟按键高度 + 状态栏高度
+//        {
+//            navagarShow =  true;
+//        }
+        if (navagarShow)
+        {
+            jj.bottomMargin = heigh;
+            view.setLayoutParams(jj);
+        }
+
     }
 
     synchronized String getManualURL() {
@@ -853,6 +911,14 @@ public class CustomerData {
         return android.os.Build.MODEL;
     }
 
+    boolean isMIUI() {
+        String manufacturer = Build.MANUFACTURER;
+        //这个字符串可以自己定义,例如判断华为就填写huawei,魅族就填写meizu
+        if ("xiaomi".equalsIgnoreCase(manufacturer)) {
+            return true;
+        }
+        return false;
+    }
     //获取当前系统的语言
     private String getSystemLanguage() {
         return Locale.getDefault().getLanguage();

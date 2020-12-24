@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -68,6 +69,8 @@ public class ManualActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         instan = CustomerData.getInstance();
         setContentView(R.layout.activity_manual);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
         //隐藏虚拟按键
 //        Window _window = getWindow();
 //        WindowManager.LayoutParams params = _window.getAttributes();
@@ -147,6 +150,8 @@ public class ManualActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        if (m_webView != null)
+            instan.adjustRobotHeightNew(this,m_webView);
     }
 
     //方法描述：接收数据
@@ -247,8 +252,10 @@ public class ManualActivity extends Activity {
         });
 
         m_webView = findViewById(R.id.showwebview);
+
         instan.webSeting(m_webView);
         m_webView.addJavascriptInterface(new WebAppInterface(), "infoData");
+        instan.adjustRobotHeightNew(this,m_webView);
 
         // 设置支持https
         m_webView.setWebViewClient(new WebViewClient() {
