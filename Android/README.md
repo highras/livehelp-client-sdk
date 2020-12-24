@@ -26,7 +26,7 @@
      * @param projectKey    项目key（必传）
      * @param userId    用户id（必传）
      * @param userName  用户名称
-     * @param gameLanguage 游戏语言(语言编码采用ISO 639-1标准) 
+     * @param gameLanguage 游戏语言(必传 支持语言见https://docs.ilivedata.com/alt/language/) 
      * @param gameId    游戏应用商店ID
      * @param serverId  当前区服ID
      * @param networkType   网络类型
