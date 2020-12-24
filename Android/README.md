@@ -18,28 +18,33 @@
 	import com.ilivedata.customer;
 
 	初始化的接口:
-	CustomerData.getInstance().init(Context context,String _domain, int appId, String appKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
+	CustomerData.getInstance().init(Context context,String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
     /**
      * @context    应用的applicationcontext（必传）
      * @param _domain  后台配置的项目域名（必传）
-     * @param appId    项目id（必传）
-     * @param appKey    项目key（必传）
+     * @param projectId    项目id（必传）
+     * @param projectKey    项目key（必传）
      * @param userId    用户id（必传）
      * @param userName  用户名称
-     * @param gameLanguage  控制台配置的语言(必传)
+     * @param gameLanguage 游戏语言(语言编码采用ISO 639-1标准) 
      * @param gameId    游戏应用商店ID
      * @param serverId  当前区服ID
      * @param networkType   网络类型
      * @param vipLevel  vip等级
-     * @param tags      客诉标签(来自控制台标签)
-     * @param customData 自定义参数
-     * @param _deviceToken 推送token
+     * @param tags      标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置
+     * @param customData 自定义参数,传入信息会显示在控制台的客诉详情中
+     * @param _deviceToken 推送token(可以再控制台设置推送)
      */
 
 4.客服接口说明:(需要初始化完成后)
 - 启用faq页面
-	    CustomerData.getInstance().faqShow(Activity currentActivity);
+	    void CustomerData.getInstance().faqShow(Activity currentActivity);
 - 启用robot页面
-        CustomerData.getInstance().robotShow(Activity currentActivity);
+        void CustomerData.getInstance().robotShow(Activity currentActivity);
 - 拉取是否有未读
-        getUnreadMsg(IUnreadCallback callback); //callback未读回调函数
+        void getUnreadMsg(IUnreadCallback callback); <br/>callback 未读回调接口
+    ~~~
+    public interface IUnreadCallback {
+        void getMsg(boolean msg);
+    }
+    ~~~
