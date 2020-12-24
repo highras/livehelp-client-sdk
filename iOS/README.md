@@ -31,7 +31,7 @@ SDK支持
     +(BOOL)fpCustomerInitWithProjectId:(NSInteger)projectId                                    //项目ID(客服控制台获取)    必传
                                 userId:(NSString * _Nonnull)userId                             //用户ID                  必传
                             projectKey:(NSString * _Nonnull)projectKey                         //密匙(客服控制台获取)      必传
-                          gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(语言编码采用ISO 639-1标准)   必传
+                          gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(参考https://docs.ilivedata.com/alt/language/)   必传
                                 gameId:(NSString * _Nullable)gameId                            //游戏应用商店ID
                               userName:(NSString * _Nullable)userName                          //玩家游戏名称
                               serverId:(NSString * _Nullable)serverId                          //当前区服ID
