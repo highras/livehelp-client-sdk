@@ -7,7 +7,7 @@
 
     <application>
         <activity android:name=".RobotActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ManualActivity"
             android:windowSoftInputMode="adjustPan"

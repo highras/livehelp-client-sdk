@@ -3,8 +3,10 @@ package com.ilivedata.customer;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.usage.StorageStatsManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,6 +17,7 @@ import android.graphics.Rect;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Looper;
 import android.os.StatFs;
 import android.provider.Settings;
 import android.text.format.DateFormat;
@@ -38,11 +41,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -52,6 +57,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Dictionary;
@@ -231,6 +237,47 @@ public class CustomerData {
         }).start();
     }
 
+    String inputStreamToString(InputStream ls) {
+        String str = "";
+        if (ls != null) {
+            try {
+                ByteArrayOutputStream result = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = ls.read(buffer)) != -1) {
+                    result.write(buffer, 0, length);
+                }
+                str = result.toString(StandardCharsets.UTF_8.name());
+            } catch (Exception e) {
+
+            }
+        }
+        return str;
+    }
+
+
+    void alertDialog(final Activity activity, final String str){
+//        Looper.prepare();
+//        new AlertDialog.Builder(activity).setMessage(str).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//            }
+//        }).show();
+//        Looper.loop();
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(activity).setMessage(str).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        activity.finish();
+                    }
+                }).show();
+            }
+        });
+    }
+
     void getUnread() {
         new Thread(new Runnable() {
             @Override
@@ -306,12 +353,12 @@ public class CustomerData {
      * @param customData 自定义参数
      * @param _deviceToken 推送token
      */
-    public synchronized boolean init(Context context, String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken) {
-        if (context == null || _domain.isEmpty() || projectId == 0 || gameLanguage.isEmpty() || projectKey.isEmpty() || userId.isEmpty() ) {
-            Log.e("customsdk","param init error");
+    public synchronized boolean init(Context applicationContext, String domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken) {
+        if (applicationContext == null || domain.isEmpty() || projectId == 0 || gameLanguage.isEmpty() || projectKey.isEmpty() || userId.isEmpty() ) {
+            Log.e("customsdk","init customService param  error");
             return false;
         }
-        appContext = context;
+        appContext = applicationContext;
         m_appId = projectId;
         m_appKey = projectKey;
         m_uId = userId;
@@ -324,7 +371,7 @@ public class CustomerData {
         m_tags = tags;
         deviceToken = _deviceToken;
         m_customData = customData;
-        m_manualBaseURL = "https://" + _domain + m_manualBaseTail;
+        m_manualBaseURL = "https://" + domain + m_manualBaseTail;
         m_manualURL = m_manualBaseURL + m_manualURLtail;
         m_unreadURL = m_manualBaseURL + m_unreadURLtail;
         m_faqURL = m_manualBaseURL + m_FAQURLtail;

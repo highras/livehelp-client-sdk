@@ -8,22 +8,22 @@
     tools:context=".FAQsecond">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/kk"
+        android:id="@+id/mytitle"
         android:background="#669999"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <ImageView
             android:id="@+id/back"
             android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:scaleType="fitCenter"
+            android:layout_height="40dp"
             android:src="@drawable/icbacknew"
+            android:layout_marginTop="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="IncludeLayoutParam" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -34,6 +34,7 @@
         android:layout_marginTop="2dp"
         android:footerDividersEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kk"
-        tools:layout_editor_absoluteX="2dp"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/mytitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"></ListView>
 </androidx.constraintlayout.widget.ConstraintLayout>

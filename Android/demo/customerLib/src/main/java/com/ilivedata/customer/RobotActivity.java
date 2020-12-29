@@ -2,9 +2,11 @@ package com.ilivedata.customer;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -35,11 +37,15 @@ import android.widget.ImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 
@@ -117,6 +123,7 @@ public class RobotActivity extends Activity {
         jj.setLayoutParams(m_webView.getLayoutParams());
         jj.getSettings().setJavaScriptEnabled(true);
         jj.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        jj.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         jj.getSettings().setDomStorageEnabled(true);
         jj.setWebChromeClient(new WebChromeClient() {
 
@@ -157,7 +164,7 @@ public class RobotActivity extends Activity {
     //初始化WebView
     private void initViews() {
         layoutMain = findViewById(R.id.manrobot);
-        imageButton = findViewById(R.id.robotBack);
+        imageButton = findViewById(R.id.back);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,14 +278,13 @@ public class RobotActivity extends Activity {
                         }
 
                         if(responseCode == HttpURLConnection.HTTP_OK){
-                            return new WebResourceResponse("text/html", "utf-8", connection.getInputStream());
+                            return new WebResourceResponse("text/html", "utf-8",connection.getInputStream());
                         }
-                        else
-                        {
-                            Log.e("customsdk","post return error :" + responseCode);
-                            return new WebResourceResponse("text/html", "utf-8", connection.getErrorStream());
+                        else {
+                            String str = instan.inputStreamToString(connection.getErrorStream());
+                            Log.e("customsdk","robot init view error:" + str);
+                            instan.alertDialog(RobotActivity.this, "robot init view error :\n " +str);
                         }
-
                     } catch (Exception e) {
                         Log.e("customsdk","post robot error :" + e.getMessage());
                     }

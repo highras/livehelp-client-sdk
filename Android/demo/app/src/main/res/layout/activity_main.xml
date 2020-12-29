@@ -39,7 +39,7 @@
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
-        android:text="en"
+        android:text="zh-CN"
         app:layout_constraintEnd_toEndOf="@+id/textUserId"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="@+id/textUserId"

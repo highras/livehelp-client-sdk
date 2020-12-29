@@ -36,7 +36,6 @@ public class FAQBody extends Activity {
     }
 
 
-
     JSONObject sendPost(String postUrl) {
         StringBuffer sb = new StringBuffer();
         JSONObject tt = null;

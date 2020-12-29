@@ -9,7 +9,7 @@
     tools:context=".RobotActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+        android:id="@+id/mytitle"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#4abee5"
@@ -17,24 +17,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <ImageView
-            android:id="@+id/robotBack"
+            android:id="@+id/back"
             android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:scaleType="fitCenter"
+            android:layout_height="40dp"
             android:src="@drawable/icbacknew"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="3dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/gotoManual"
             android:layout_width="35dp"
             android:layout_height="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="4dp"
             android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/kefu"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/mytitle"
         app:layout_constraintVertical_bias="0.0">
     </WebView>
 

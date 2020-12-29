@@ -160,7 +160,9 @@ public class FAQUnit extends Activity {
                         }
                         showResponse();
                     } else {
-                        Log.e("customsdk","faq return code is:" + code);
+                        String str = instan.inputStreamToString(connection.getErrorStream());
+                        Log.e("customsdk","initFAQData return HTTP code Exception:" + str);
+                        instan.alertDialog(FAQUnit.this, "initFAQData ERROR :\n" + str);
                     }
                     connection.disconnect();
                 } catch (Exception e) {

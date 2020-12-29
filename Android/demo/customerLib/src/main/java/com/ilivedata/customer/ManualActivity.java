@@ -223,6 +223,11 @@ public class ManualActivity extends Activity {
                 }
                 responseReader.close();
             }
+            else{
+                String str = instan.inputStreamToString(connection.getErrorStream());
+                Log.e("customsdk","manual init view error:" + str);
+                instan.alertDialog(ManualActivity.this, "manual init view error :\n " +str);
+            }
             showPostResponseJs(sb.toString(), responseCode);
 
         } catch (Exception e) {
@@ -233,7 +238,7 @@ public class ManualActivity extends Activity {
     private void initViews() {
         layoutMain = findViewById(R.id.manualMain);
 
-        imageButton = findViewById(R.id.goback);
+        imageButton = findViewById(R.id.back);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

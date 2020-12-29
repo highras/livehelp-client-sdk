@@ -8,24 +8,22 @@
     tools:context=".ManualActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/titile"
+        android:id="@+id/mytitle"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#4abee5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <ImageView
-            android:id="@+id/goback"
+            android:id="@+id/back"
             android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="4dp"
+            android:layout_height="40dp"
             android:src="@drawable/icbacknew"
+            android:layout_marginTop="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></ImageView>
+            app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <WebView
@@ -35,5 +33,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titile" />
+        app:layout_constraintTop_toBottomOf="@+id/mytitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
