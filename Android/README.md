@@ -21,7 +21,7 @@
 	CustomerData.getInstance().init(Context context,String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
     /**
      * @context    应用的applicationcontext（必传）
-     * @param _domain  后台配置的项目域名（必传）
+     * @param domain  后台配置的项目域名（必传）
      * @param projectId    项目id（必传）
      * @param projectKey    项目key（必传）
      * @param userId    用户id（必传）
@@ -33,7 +33,7 @@
      * @param vipLevel  vip等级
      * @param tags      标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置
      * @param customData 自定义参数,传入信息会显示在控制台的客诉详情中
-     * @param _deviceToken 推送token(可以再控制台设置推送)
+     * @param deviceToken 推送token(可以再控制台设置推送)
      */
 备注：游戏语言详见[支持语言](https://docs.ilivedata.com/alt/language/)<br/>
 4.客服接口说明:(需要初始化完成后)
