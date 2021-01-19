@@ -84,8 +84,7 @@ public class CustomerData {
     public String   m_faqURL;
 
     private  String m_FAQURLtail = "/api/v1/jarvis/faqs";
-    private String  m_robotURL = "https://livehelp-edith.ilivedata.com/edith/chat.html";
-//    private String  m_robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
+    public String  m_robotURL = "https://livehelp-edith.ilivedata.com/edith/chat.html";
     private String  m_manualURLtail = "/jarvis/conversation";
     private String  m_unreadURLtail = "/api/v1/jarvis/config";
     public String   m_manualBaseTail = ".livehelp.ilivedata.com";
@@ -153,11 +152,14 @@ public class CustomerData {
     void webSeting(WebView viewset){
         viewset.setHorizontalScrollBarEnabled(false);//水平不显示
         viewset.setVerticalScrollBarEnabled(false); //垂直不显示
-        viewset.getSettings().setJavaScriptEnabled(true);
-        viewset.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        viewset.getSettings().setTextZoom(100);
-        viewset.getSettings().setSupportZoom(true);
-        viewset.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        WebSettings settings = viewset.getSettings();
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setJavaScriptEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setTextZoom(100);
+        settings.setSupportZoom(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
     }
 
     public void readObject(){
@@ -168,11 +170,7 @@ public class CustomerData {
             FAQFileMap = (HashMap <String, String >)objectInputStream.readObject();
             objectInputStream.close();
         }
-        catch (FileNotFoundException e) {
-            Log.e("customsdk", "readObject error " + e.getMessage());
-        } catch (IOException e) {
-            Log.e("customsdk", "readObject error " + e.getMessage());
-        } catch (ClassNotFoundException e) {
+        catch (Exception e) {
             Log.e("customsdk", "readObject error " + e.getMessage());
         }
     }
@@ -256,7 +254,7 @@ public class CustomerData {
     }
 
 
-    void alertDialog(final Activity activity, final String str){
+    public void alertDialog(final Activity activity, final String str){
 //        Looper.prepare();
 //        new AlertDialog.Builder(activity).setMessage(str).setPositiveButton("确定", new DialogInterface.OnClickListener() {
 //            @Override
@@ -339,7 +337,7 @@ public class CustomerData {
 
     /**
      * @context    应用的appliaction(必传)
-     * @param _domain  后台配置的项目域名(必传)
+     * @param domain  后台配置的项目域名(必传)
      * @param projectId    项目id(必传)
      * @param projectKey    项目key(必传)
      * @param userId    用户id(必传)
@@ -551,10 +549,6 @@ public class CustomerData {
 
     synchronized String getManualURL() {
         return  m_manualURL;
-    }
-
-    synchronized String getRobotURL() {
-        return  m_robotURL;
     }
 
     synchronized String getFAQURL() {

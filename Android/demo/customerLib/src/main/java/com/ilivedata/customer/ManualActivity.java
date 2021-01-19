@@ -109,7 +109,20 @@ public class ManualActivity extends Activity {
         jj.setLayoutParams(m_webView.getLayoutParams());
         jj.getSettings().setJavaScriptEnabled(true);
         jj.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        jj.getSettings().setDomStorageEnabled(true);
+//        jj.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        jj.getSettings().setDomStorageEnabled(false);
+        jj.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                WebView.HitTestResult hitTestResult = view.getHitTestResult();
+                if (hitTestResult == null) {
+                    return false;
+                }
+                if (hitTestResult.getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
+                    return false;
+                }
+                addWebview(url);
+                return true;//不加载该url
+            }});
         jj.setWebChromeClient(new WebChromeClient() {
 
             //针对 Android 5.0+
@@ -262,7 +275,6 @@ public class ManualActivity extends Activity {
         m_webView.addJavascriptInterface(new WebAppInterface(), "infoData");
         instan.adjustRobotHeightNew(this,m_webView);
 
-        // 设置支持https
         m_webView.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -276,7 +288,7 @@ public class ManualActivity extends Activity {
                     return false;
                 }
                 addWebview(url);
-                return true;
+                return true;//不加载改url
             }
         });
 

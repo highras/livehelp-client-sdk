@@ -68,7 +68,8 @@ public class FAQBody extends Activity {
                 responseReader.close();
                 tt = new JSONObject(sb.toString());
             } else {
-                Log.e("customsdk", "post url failed:" + resultCode);
+                String str = instan.inputStreamToString(conn.getErrorStream());
+                Log.e("customsdk","post url " + postUrl + " failed:"  + str);
             }
         }
         catch (Exception ex)

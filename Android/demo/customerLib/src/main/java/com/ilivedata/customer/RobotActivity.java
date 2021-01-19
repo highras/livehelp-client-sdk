@@ -2,11 +2,9 @@ package com.ilivedata.customer;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -37,15 +35,11 @@ import android.widget.ImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 
@@ -124,7 +118,19 @@ public class RobotActivity extends Activity {
         jj.getSettings().setJavaScriptEnabled(true);
         jj.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
 //        jj.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        jj.getSettings().setDomStorageEnabled(true);
+        jj.getSettings().setDomStorageEnabled(false);
+        jj.setWebViewClient(new WebViewClient() {
+                                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                    WebView.HitTestResult hitTestResult = view.getHitTestResult();
+                                    if (hitTestResult == null) {
+                                        return false;
+                                    }
+                                    if (hitTestResult.getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
+                                        return false;
+                                    }
+                                    addWebview(url);
+                                    return true;
+                                }});
         jj.setWebChromeClient(new WebChromeClient() {
 
             //针对 Android 5.0+
@@ -192,8 +198,8 @@ public class RobotActivity extends Activity {
         });
 
         m_webView = findViewById(R.id.robotwebview);
-        instan.webSeting(m_webView);
 
+        instan.webSeting(m_webView);
         m_webView.addJavascriptInterface(new WebAppInterface(), "edithData");
 
         // 设置支持https
@@ -209,6 +215,7 @@ public class RobotActivity extends Activity {
                 if (hitTestResult.getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
                     return false;
                 }
+//                view.loadUrl(url);
                 addWebview(url);
                 return true;
             }
@@ -282,8 +289,8 @@ public class RobotActivity extends Activity {
                         }
                         else {
                             String str = instan.inputStreamToString(connection.getErrorStream());
-                            Log.e("customsdk","robot init view error:" + str);
-                            instan.alertDialog(RobotActivity.this, "robot init view error :\n " +str);
+                            Log.e("customsdk","robot init view error:" +  +responseCode + "-" + str);
+                            instan.alertDialog(RobotActivity.this, "robot init view error :\n " +responseCode + "-" + str);
                         }
                     } catch (Exception e) {
                         Log.e("customsdk","post robot error :" + e.getMessage());
@@ -432,9 +439,10 @@ public class RobotActivity extends Activity {
 
     //方法描述：加载数据
     private void loadData() {
-        String webViewUrl = instan.getRobotURL();
+        String webViewUrl = instan.m_robotURL;
         if (!TextUtils.isEmpty(webViewUrl) && m_webView != null)
             m_webView.loadUrl(webViewUrl);
+
     }
 
     @Override
