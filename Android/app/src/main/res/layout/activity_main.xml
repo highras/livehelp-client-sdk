@@ -1,103 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:customeedittext="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/livehelp_bg1"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/textdomain"
-        android:layout_width="128dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:text="funplus"
-        app:layout_constraintEnd_toEndOf="@+id/textLang"
-        app:layout_constraintStart_toStartOf="@+id/textLang"
-        app:layout_constraintTop_toBottomOf="@+id/textLang" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="114dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="30px"
+        android:layout_marginTop="30px"
+        android:adjustViewBounds="true"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
-        android:id="@+id/domain"
-        android:layout_width="72dp"
-        android:layout_height="32dp"
-        android:layout_marginEnd="4dp"
-        android:gravity="center"
-        android:text="domain"
-        app:layout_constraintBottom_toBottomOf="@+id/textdomain"
-        app:layout_constraintEnd_toStartOf="@+id/textdomain"
-        app:layout_constraintTop_toTopOf="@+id/textdomain" />
-
-    <EditText
-        android:id="@+id/textLang"
-        android:layout_width="128dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:text="zh-CN"
-        app:layout_constraintEnd_toEndOf="@+id/textUserId"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="@+id/textUserId"
-        app:layout_constraintTop_toBottomOf="@+id/textUserId" />
-
-    <TextView
-        android:id="@+id/lang"
-        android:layout_width="57dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="4dp"
-        android:gravity="center"
-        android:text="Lang"
-        app:layout_constraintBottom_toBottomOf="@+id/textLang"
-        app:layout_constraintEnd_toStartOf="@+id/textLang"
-        app:layout_constraintTop_toTopOf="@+id/textLang" />
-
-    <EditText
-        android:id="@+id/textUserId"
-        android:layout_width="133dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="140dp"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:text="100"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/userId"
-        android:layout_width="51dp"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:text="UserId"
-        app:layout_constraintBottom_toBottomOf="@+id/textUserId"
-        app:layout_constraintEnd_toStartOf="@+id/textUserId"
-        app:layout_constraintTop_toTopOf="@+id/textUserId"
-        app:layout_constraintVertical_bias="0.476" />
-
-    <Button
-        android:id="@+id/faq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="FAQ"
-        app:layout_constraintEnd_toEndOf="@+id/robot"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/robot"
-        app:layout_constraintTop_toBottomOf="@+id/robot" />
+        android:text="      © 2021 北京云上曲率科技有限公司 \nAll Rights Reserved.京ICP备18051523号 "
+        android:textColor="@color/colorAccent"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.974"></TextView>
+
+
+    <com.customer.test.CustomeEdittext
+        android:id="@+id/proid"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/userID"
+        app:layout_constraintStart_toStartOf="@+id/userID"
+        app:layout_constraintTop_toBottomOf="@+id/userID"
+        customeedittext:bottomMessage="请输入项目ID"
+        customeedittext:isShowTopMessage="true"
+        customeedittext:topMessage="项目ID">
+
+    </com.customer.test.CustomeEdittext>
+
+    <com.customer.test.CustomeEdittext
+        android:id="@+id/domain"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/proid"
+        app:layout_constraintStart_toStartOf="@+id/proid"
+        app:layout_constraintTop_toBottomOf="@+id/proid"
+        customeedittext:bottomMessage="请输入项目域名"
+        customeedittext:isShowTopMessage="true"
+        customeedittext:topMessage="项目域名">
+
+    </com.customer.test.CustomeEdittext>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="2dp"
+        android:background="@drawable/layoutback"
+        app:layout_constraintEnd_toEndOf="@+id/projectKey"
+        app:layout_constraintStart_toStartOf="@+id/projectKey"
+        app:layout_constraintTop_toBottomOf="@+id/projectKey">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="语言"
+            android:textColor="@color/colorAccent"
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/nice_spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:overlapAnchor="false"
+            app:arrowTint="@color/white"
+            app:backgroundSelector="@drawable/background_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:textTint="@color/white"
+            tools:layout_editor_absoluteY="2dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <Button
         android:id="@+id/robot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="robot"
-        app:layout_constraintEnd_toEndOf="@+id/textdomain"
-        app:layout_constraintStart_toStartOf="@+id/textdomain"
-        app:layout_constraintTop_toBottomOf="@+id/textdomain" />
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/buttonstyle"
+        android:text="客服"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/login"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/login"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
+    <Button
+        android:id="@+id/faq"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/buttonstyle"
+        android:text="常见问题"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/robot"
+        app:layout_constraintStart_toEndOf="@+id/robot"
+        app:layout_constraintTop_toTopOf="@+id/robot"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/manualMain"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/buttonstyle"
+        android:text="人工客服"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/faq"
+        app:layout_constraintStart_toEndOf="@+id/faq"
+        app:layout_constraintTop_toTopOf="@+id/faq"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.customer.test.CustomeEdittext
+        android:id="@+id/userID"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        customeedittext:bottomMessage="请输入用户ID"
+        customeedittext:isShowTopMessage="true"
+        customeedittext:topMessage="用户ID"></com.customer.test.CustomeEdittext>
+
+    <com.customer.test.CustomeEdittext
+        android:id="@+id/projectKey"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/domain"
+        app:layout_constraintStart_toStartOf="@+id/domain"
+        app:layout_constraintTop_toBottomOf="@+id/domain"
+        customeedittext:bottomMessage="请输入项目key"
+        customeedittext:isPasswdType="true"
+        customeedittext:isShowTopMessage="true"
+        customeedittext:topMessage="项目key"/>
+
+    <Button
+        android:id="@+id/loginout"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/buttonstyle"
+        android:text="登出"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/login"
+        app:layout_constraintStart_toEndOf="@+id/login"
+        app:layout_constraintTop_toTopOf="@+id/login"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/buttonstyle"
+        android:text="登陆"
+        android:textColor="@color/white"
+        customeedittext:layout_constraintStart_toStartOf="parent"
+        customeedittext:layout_constraintTop_toBottomOf="@+id/constraintLayout2" /><![CDATA[
+
+    " />
+
+]]>
 </androidx.constraintlayout.widget.ConstraintLayout>

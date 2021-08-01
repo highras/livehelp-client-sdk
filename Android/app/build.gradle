@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.customer.test"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -14,13 +14,20 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         production.initWith(buildTypes.debug)
         production {
-            buildConfigField("String", "roboturl", '"https://livehelp-edith.ilivedata.com/edith/chat.html"')
+            buildConfigField("String", "roboturl", '"https://livehelp-edith.ilivedata.com/edith/conversation"')
             buildConfigField("String", "baseurl", '".livehelp.ilivedata.com"')
             buildConfigField("int", "pid", "80900001")
             buildConfigField("String", "key", '"61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8="')
+        }
+        debug{
+            buildConfigField("String", "roboturl", '""')
+            buildConfigField("String", "baseurl", '""')
+            buildConfigField("int", "pid", "0")
+            buildConfigField("String", "key", '"0"')
         }
         release {
             minifyEnabled false
@@ -28,7 +35,7 @@ android {
         }
         devTest.initWith(buildTypes.debug)
         devTest {
-            buildConfigField("String", "roboturl", '"https://jarvis.ilivedata.com/edith/chat.html"')
+            buildConfigField("String", "roboturl", '"https://jarvis.ilivedata.com/edith/conversation"')
             buildConfigField("String", "baseurl", '".jarvis.ilivedata.com"')
             buildConfigField("int", "pid", "90900003")
             buildConfigField("String", "key", '"vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0="')
@@ -41,4 +48,5 @@ dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.github.arcadefire:nice-spinner:1.4'
 }
