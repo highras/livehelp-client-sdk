@@ -14,7 +14,7 @@
 
 2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
 
-3.  接口说明
+3.接口说明
     ~~~
  /**
      * @context             应用的appliaction(必传)
