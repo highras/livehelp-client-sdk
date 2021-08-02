@@ -35,7 +35,7 @@
      * @param userName  用户名称
      * @param avatar    用户头像url
      * @param email     用户邮箱
-     * @param tags      用户标签 	String 	optional 	用户身上的标签，用于分类，自动化过滤等
+     * @param tags      用户标签 	用户身上的标签，用于分类，自动化过滤等
      * @param email     电子邮箱
      * @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
      * @param deviceToken 推送token(可以再控制台设置推送)
