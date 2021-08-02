@@ -2,19 +2,13 @@
 - 最低支持Android版本为4.4(api 19)
 
 ### 依赖集成
- dependency in Gradle
-    allprojects {
-            repositories {
-                maventral()
-            }
-        }
-    dependencies {
-        implementation 'com.github.highras:livehelp-android:1.0.0'
-    }
+~~~
+/libs/Livehelp-Android.aar
+~~~
+
 ### 使用说明
 - RTM需要的权限
   ~~~
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     ~~~
 
