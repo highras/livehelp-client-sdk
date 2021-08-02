@@ -1,5 +1,5 @@
 ### 版本支持
-- 最低支持Android版本为5.0(api21)
+- 最低支持Android版本为4.4(api 19)
 
 ### 依赖集成
  dependency in Gradle
