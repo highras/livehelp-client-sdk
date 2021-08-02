@@ -1,21 +1,25 @@
-# 智能客服Android sdk接入文档
-
 ### 版本支持
-最低支持android5.0 （api21）
+- 最低支持Android版本为5.0(api21)
 
-### 接入 
-1.在Android工程的AndroidManifest.xml，增加需要的配置：<br/>
-* 网络权限,如果已经有,则不需要添加该配置
-    `<uses-permission android:name="android.permission.INTERNET" />`<br/>
-* sdk内部ui使用约束布局 如果没有请在build.gradle中引用<br/>
+### 依赖集成
+ dependency in Gradle
+    allprojects {
+            repositories {
+                maventral()
+            }
+        }
     dependencies {
-        implementation`'androidx.constraintlayout:constraintlayout:1.1.3'`
-  
-
-2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
-
-3.接口说明
+        implementation 'com.github.highras:livehelp-android:1.0.0'
+    }
+### 使用说明
+- RTM需要的权限
+  ~~~
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     ~~~
+
+###接口说明
+~~~
  /**
      * @context             应用的appliaction(必传)
      * @param domain        后台配置的项目域名(必传)
@@ -67,4 +71,16 @@
      * @param activity
      */
     public void showAllFAQs(Activity activity);
-    ~~~
+~~~
+
+### 使用示例
+ ~~~
+    CustomerService service = new CustomerService();
+
+    service.init(getApplicationContext(),projectid, projectkeys, projectdomain, lang);
+
+    service.setUserInfo(...)
+
+    service.showConversation(MainActivity.this, UserInterface.ConversationType.BOT);
+
+~~~
