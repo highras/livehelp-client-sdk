@@ -69,3 +69,30 @@ SDK支持
 //获取用户未读消息
 + (void)unreadMessage:(void(^_Nullable)(BOOL issueExist,int unreadCount,BOOL isSuccess)) isUnread;
 ```
+
+快速使用
+-
+```objc
+BOOL result = [FPCustomerManager initWithAppId:
+                                     secretKey:
+                                        domain:
+                                      language:];
+    
+    if (result) {
+        [FPCustomerManager resetUserInfoWithUserId: 
+                                          userName:
+                                            avatar: 
+                                          language:
+                                             email:
+                                              tags: 
+                                        customData:
+                                       deviceToken: 
+                                        resetResult:^(BOOL isSuccess) {
+    
+                 if(isSuccess){
+                    //其他接口调用
+                 }
+
+        }];
+    }
+```
