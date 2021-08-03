@@ -25,7 +25,7 @@ SDK支持
     
 接口
 -
-*
+```objc
 /// 初始化
 /// @param appId 项目id(必传)
 /// @param secretKey 项目key(必传)
@@ -68,3 +68,4 @@ SDK支持
 
 //获取用户未读消息
 + (void)unreadMessage:(void(^_Nullable)(BOOL issueExist,int unreadCount,BOOL isSuccess)) isUnread;
+```
