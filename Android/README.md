@@ -1,50 +1,80 @@
-# 智能客服Android sdk接入文档
-
 ### 版本支持
-最低支持android4.4 （api19）
+- 最低支持Android版本为4.4(api 19)
 
-### 接入 
-1.在Android工程的AndroidManifest.xml，增加需要的配置：<br/>
-* 网络权限,如果已经有,则不需要添加该配置
-    `<uses-permission android:name="android.permission.INTERNET" />`<br/>
-* sdk内部ui使用约束布局 如果没有请在build.gradle中引用<br/>
-    dependencies {
-        implementation`'androidx.constraintlayout:constraintlayout:1.1.3'`
-  
+### 依赖集成
+~~~
+/libs/Livehelp-Android.aar
+~~~
 
-2.将liveHelp-android.aar包拷贝到工程app中的libs文件夹下.
+### 使用说明
+- RTM需要的权限
+  ~~~
+    <uses-permission android:name="android.permission.INTERNET"/>
+    ~~~
 
-3.SDK初始化(须在app启动的时候调用):
-	import com.ilivedata.customer.*;
+### 接口说明
+~~~
+ /**
+     * @context             应用的appliaction(必传)
+     * @param domain        后台配置的项目域名(必传)
+     * @param projectId     项目id(必传)
+     * @param projectKey    项目key(必传)
+     * @param lang          游戏语言(必传) 见链接https://docs.ilivedata.com/livehelp/techdocs/languages/
+     */
+    public boolean init(Context applicationContext, int projectId, String projectKey, String domain, String lang) ;
 
-	初始化的接口:
-	CustomerData.getInstance().init(Context context,String _domain, int projectId, String projectKey, String userId, String userName, String gameLanguage, String gameId, String serverId, String networkType, int vipLevel, String[] tags, Map<String,String> customData,String _deviceToken)
     /**
-     * @context    应用的applicationcontext（必传）
-     * @param domain  后台配置的项目域名（必传）
-     * @param projectId    项目id（必传）
-     * @param projectKey    项目key（必传）
+     * 设置游戏语言
+     * @param lang
+     */
+    public void setLanguage(String lang);
+
+
+    /** 设定用户属性 (必须调用(需要在init之后调用) 否则无法调用其它接口)
      * @param userId    用户id（必传）
      * @param userName  用户名称
-     * @param gameLanguage 游戏语言(必传)
-     * @param gameId    游戏应用商店ID
-     * @param serverId  当前区服ID
-     * @param networkType   网络类型
-     * @param vipLevel  vip等级
-     * @param tags      标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置
-     * @param customData 自定义参数,传入信息会显示在控制台的客诉详情中
+     * @param avatar    用户头像url
+     * @param email     用户邮箱
+     * @param tags      用户标签 	用户身上的标签，用于分类，自动化过滤等
+     * @param email     电子邮箱
+     * @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
      * @param deviceToken 推送token(可以再控制台设置推送)
      */
-备注：游戏语言详见[支持语言](https://docs.ilivedata.com/alt/language/)<br/>
-4.客服接口说明:(需要初始化完成后)
-- 启用faq页面
-	    void CustomerData.getInstance().faqShow(Activity currentActivity);
-- 启用robot页面
-        void CustomerData.getInstance().robotShow(Activity currentActivity);
-- 拉取是否有未读
-        void getUnreadMsg(IUnreadCallback callback); <br/>callback 未读回调接口
-    ~~~
-    public interface IUnreadCallback {
-        void getMsg(boolean msg);
-    }
-    ~~~
+    public void setUserInfo(String userId, String userName, String avatar, String email, List<String> tags,
+                            Map<String, String> customData, String deviceToken, UserInterface.IUserCallback callback );
+
+    /**
+     * 用户下线(退出后 如果想再次进入客服系统 需再次调用setUserInfo才能正常进入智能客服)
+     */
+    public void resetUserInfo();
+
+
+    /**
+     * 获取用户未读消息
+     */
+    public void unreadMessage(UserInterface.IUnreadCallback callback);
+
+    /**
+     *
+     * @param type 会话类型 BOT-机器人(如果有客诉未解决将直接跳转到人工服务) HUMAN-人工
+     */
+    public void showConversation( Activity activity,UserInterface.ConversationType type);
+
+    /**
+     * 打开常见问题列表(需要在后台项目自己配置问题列表)
+     * @param activity
+     */
+    public void showAllFAQs(Activity activity);
+~~~
+
+### 使用示例
+ ~~~
+    CustomerService service = new CustomerService();
+
+    service.init(getApplicationContext(),projectid, projectkeys, projectdomain, lang);
+
+    service.setUserInfo(...)
+
+    service.showConversation(MainActivity.this, UserInterface.ConversationType.BOT);
+
+~~~
