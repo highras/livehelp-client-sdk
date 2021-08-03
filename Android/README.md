@@ -19,7 +19,7 @@
      * @param domain        后台配置的项目域名(必传)
      * @param projectId     项目id(必传)
      * @param projectKey    项目key(必传)
-     * @param lang          游戏语言(必传)
+     * @param lang          游戏语言(必传) 见链接https://docs.ilivedata.com/livehelp/techdocs/languages/
      */
     public boolean init(Context applicationContext, int projectId, String projectKey, String domain, String lang) ;
 
