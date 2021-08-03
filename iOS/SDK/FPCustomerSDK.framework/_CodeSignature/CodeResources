@@ -4,21 +4,17 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/FPCustomerManager+Interface.h</key>
+		<data>
+		mMWfyQZ+sQu4wn9Ih3m1T1uzNYM=
+		</data>
 		<key>Headers/FPCustomerManager.h</key>
 		<data>
-		+5N+hLe43/v4M7uYQF2SGixE5Do=
+		9GYrRTJp5OhdrzbA5NAn3hFRpSI=
 		</data>
 		<key>Headers/FPCustomerSDK.h</key>
 		<data>
-		8mS1YI8ntdmz1/k9oTyTf7gxrUM=
-		</data>
-		<key>Headers/FPCustomerSmartServiceViewController.h</key>
-		<data>
-		UZ5rQRWRNxlhtB+a/mxG2zPJ+wk=
-		</data>
-		<key>Headers/FPFaqTypeViewController.h</key>
-		<data>
-		5fR9hQXWNyG7eeE/9ZebQmeZRxo=
+		23sE0MFyR5UtVbc5wXn1R5t0NmM=
 		</data>
 		<key>Headers/FPNavigationController.h</key>
 		<data>
@@ -26,7 +22,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		bXIcybBxudpQyMOt/+kIby4TSrQ=
+		NAz/MTQ5ByIsaaRnTXW/s5SgBBI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -35,48 +31,37 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/FPCustomerManager+Interface.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			mMWfyQZ+sQu4wn9Ih3m1T1uzNYM=
+			</data>
+			<key>hash2</key>
+			<data>
+			rvUaBcDzU+U5o9mqmMf2YLiWfkE8IYa9lcgh2rTZyyA=
+			</data>
+		</dict>
 		<key>Headers/FPCustomerManager.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			+5N+hLe43/v4M7uYQF2SGixE5Do=
+			9GYrRTJp5OhdrzbA5NAn3hFRpSI=
 			</data>
 			<key>hash2</key>
 			<data>
-			RmJnO4gvIaqXsTQvNvLqXJWMkUGtzCi18SD5Q2IkSlE=
+			dynMpO0r644Div6NEspv/VWI3HYjLoFchBCdn0lQZUo=
 			</data>
 		</dict>
 		<key>Headers/FPCustomerSDK.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8mS1YI8ntdmz1/k9oTyTf7gxrUM=
+			23sE0MFyR5UtVbc5wXn1R5t0NmM=
 			</data>
 			<key>hash2</key>
 			<data>
-			nzN9MOVX6IN6dsqKfPZfgn+ANzxAeVOaW8n+kYv0S30=
-			</data>
-		</dict>
-		<key>Headers/FPCustomerSmartServiceViewController.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			UZ5rQRWRNxlhtB+a/mxG2zPJ+wk=
-			</data>
-			<key>hash2</key>
-			<data>
-			f4NjRECoGEssJZwbJJJR91I/GM7fwUbUdSsMriSB+3A=
-			</data>
-		</dict>
-		<key>Headers/FPFaqTypeViewController.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			5fR9hQXWNyG7eeE/9ZebQmeZRxo=
-			</data>
-			<key>hash2</key>
-			<data>
-			0qhgFxoA99P3peNm+ddpwEZj2OBbQBupnQ7U5zCcJEI=
+			LGFg22PH3h/x7777uj4q3pWUT1r3nbvHFip0/PRnsHI=
 			</data>
 		</dict>
 		<key>Headers/FPNavigationController.h</key>

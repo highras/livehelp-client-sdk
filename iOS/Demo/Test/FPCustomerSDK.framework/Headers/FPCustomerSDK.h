@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <FPCustomerSDK/FPFaqTypeViewController.h>
-#import <FPCustomerSDK/FPCustomerSmartServiceViewController.h>
+//#import <FPCustomerSDK/FPFaqTypeViewController.h>
+//#import <FPCustomerSDK/FPCustomerSmartServiceViewController.h>
 #import <FPCustomerSDK/FPNavigationController.h>
-#import <FPCustomerSDK/FPCustomerManager.h>
+//#import <FPCustomerSDK/FPCustomerManager.h>
+#import <FPCustomerSDK/FPCustomerManager+Interface.h>
 //! Project version number for FPCustomerSDK.
 FOUNDATION_EXPORT double FPCustomerSDKVersionNumber;
 
