@@ -25,8 +25,8 @@ SDK支持
     
 接口
 -
-
-   /// 初始化
+*
+/// 初始化
 /// @param appId 项目id(必传)
 /// @param secretKey 项目key(必传)
 /// @param domain 后台配置的项目域名(必传)
