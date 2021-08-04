@@ -74,12 +74,12 @@ SDK支持
 -
 ```objc
 BOOL result = [LivehelpSupport initWithAppId:
-                                     secretKey:
-                                        domain:
-                                      language:];
+                                   secretKey:
+                                      domain:
+                                    language:];
     
     if (result) {
-        [LivehelpSupport resetUserInfoWithUserId: 
+          [LivehelpSupport resetUserInfoWithUserId: 
                                           userName:
                                             avatar: 
                                           language:
