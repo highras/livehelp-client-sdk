@@ -13,7 +13,7 @@ SDK支持
 集成依赖
 -
 
-   *  拖入FPCustomerSDK.framework 引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
+   *  Livehelp.framework 引入头文件 #import <Livehelp/Livehelp.h>
    
    *  拖入 FPCustomerSDK_Image 导入 Assets.xcassets
     
@@ -58,10 +58,10 @@ SDK支持
                    resetResult:(void(^)(BOOL isSuccess))resetResult;
 
 //常见问题列表
-+(FPNavigationController * _Nullable)showAllFAQs;
++(LivehelpSupportNavigationController * _Nullable)showAllFAQs;
 
 //会话类型 BOT-机器人(如果有客诉未解决将直接跳转到人工服务) HUMAN-人工
-+(FPNavigationController * _Nullable)showConversationWithType:(FPCustomerConversationType)type;
++(LivehelpSupportNavigationController * _Nullable)showConversationWithType:(FPCustomerConversationType)type;
 
 //修改语言
 +(void)setLanguage:(NSString*)language;
@@ -73,13 +73,13 @@ SDK支持
 快速使用
 -
 ```objc
-BOOL result = [FPCustomerManager initWithAppId:
-                                     secretKey:
-                                        domain:
-                                      language:];
+BOOL result = [LivehelpSupport initWithAppId:
+                                   secretKey:
+                                      domain:
+                                    language:];
     
     if (result) {
-        [FPCustomerManager resetUserInfoWithUserId: 
+          [LivehelpSupport resetUserInfoWithUserId: 
                                           userName:
                                             avatar: 
                                           language:
