@@ -40,7 +40,7 @@
 		5625FA3B26AED08E0085CCFE /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5625FA2426AED08E0085CCFE /* MASViewConstraint.m */; };
 		5625FA3C26AED08E0085CCFE /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 5625FA2526AED08E0085CCFE /* MASViewAttribute.m */; };
 		5625FA4126AEE28A0085CCFE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5625FA4026AEE28A0085CCFE /* logo.png */; };
-		56EAD0B326B917D70058E5DE /* FPCustomerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56EAD0B226B917D70058E5DE /* FPCustomerSDK.framework */; };
+		56EAD5EC26BA36650058E5DE /* Livehelp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56EAD5EB26BA36650058E5DE /* Livehelp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,7 +132,7 @@
 		5625FA2426AED08E0085CCFE /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
 		5625FA2526AED08E0085CCFE /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
 		5625FA4026AEE28A0085CCFE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		56EAD0B226B917D70058E5DE /* FPCustomerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FPCustomerSDK.framework; sourceTree = "<group>"; };
+		56EAD5EB26BA36650058E5DE /* Livehelp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Livehelp.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56EAD0B326B917D70058E5DE /* FPCustomerSDK.framework in Frameworks */,
+				56EAD5EC26BA36650058E5DE /* Livehelp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +164,7 @@
 		56177FEA24D82D4C00814B65 = {
 			isa = PBXGroup;
 			children = (
-				56EAD0B226B917D70058E5DE /* FPCustomerSDK.framework */,
+				56EAD5EB26BA36650058E5DE /* Livehelp.framework */,
 				56177FF524D82D4C00814B65 /* Test */,
 				5617801424D82D4E00814B65 /* TestTests */,
 				5617801F24D82D4E00814B65 /* TestUITests */,

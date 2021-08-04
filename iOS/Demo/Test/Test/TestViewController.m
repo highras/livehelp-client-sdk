@@ -9,7 +9,7 @@
 #import "TestViewController.h"
 #import "Masonry.h"
 #import "IQKeyboardManager.h"
-#import <FPCustomerSDK/FPCustomerSDK.h>
+#import <Livehelp/Livehelp.h>
 
 @interface TestViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField * language;
@@ -173,33 +173,15 @@
 }
 -(void)okClick{
     //@"player00"
-    BOOL result = [FPCustomerManager initWithAppId:[self.projectId.text intValue]
+    BOOL result = [LivehelpSupport initWithAppId:[self.projectId.text intValue]
                                          secretKey:self.key.text
                                             domain:self.domain.text
                                           language:self.language.text];
     
     if (result) {
-        [FPCustomerManager resetUserInfoWithUserId:self.userId.text userName:@"userName123" avatar:@"avatar" language:self.language.text email:@"email" tags:[NSArray array] customData:[NSDictionary dictionary] deviceToken:@"deviceToken" resetResult:^(BOOL isSuccess) {
+        [LivehelpSupport resetUserInfoWithUserId:self.userId.text userName:@"userName123" avatar:@"avatar" language:self.language.text email:@"email" tags:[NSArray array] customData:[NSDictionary dictionary] deviceToken:@"deviceToken" resetResult:^(BOOL isSuccess) {
     
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (isSuccess == NO) {
-                    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"init error" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *cancelBtn = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull   action) {
-
-                    }];
-                    [alertVc addAction:cancelBtn];
-                    [self presentViewController:alertVc animated:YES completion:nil];
-                    return;
-                }else{
-                    UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"init success" preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *cancelBtn = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull   action) {
-
-                    }];
-                    [alertVc addAction:cancelBtn];
-                    [self presentViewController:alertVc animated:YES completion:nil];
-                    return;
-                }
-            });
+            
             
             
             
@@ -210,7 +192,7 @@
 
 -(void)faqClick{
     
-    FPNavigationController * nav = [FPCustomerManager showAllFAQs];
+    LivehelpSupportNavigationController * nav = [LivehelpSupport showAllFAQs];
     if (nav != nil) {
         [self presentViewController:nav animated:YES completion:nil];
     }
