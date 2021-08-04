@@ -15,7 +15,7 @@ SDK支持
 
    *  拖入FPCustomerSDK.framework 引入头文件 #import <FPCustomerSDK/FPCustomerSDK.h>
    
-   *  拖入 FPCustomerSDKResource 文件夹放根目录 （点击 create folder references ） 不要改名字！
+   *  拖入 FPCustomerSDK_Image 导入 Assets.xcassets
     
    *  info.plist 
    
@@ -25,60 +25,74 @@ SDK支持
     
 接口
 -
+```objc
+/// 初始化
+/// @param appId 项目id(必传)
+/// @param secretKey 项目key(必传)
+/// @param domain 后台配置的项目域名(必传)
+/// @param language 游戏语言(必传)
++(BOOL)initWithAppId:(NSInteger)appId
+           secretKey:(NSString * _Nonnull)secretKey
+              domain:(NSString * _Nonnull)domain
+            language:(NSString * _Nonnull)language;
 
-    1.初始化
 
-    +(BOOL)fpCustomerInitWithProjectId:(NSInteger)projectId                                    //项目ID(客服控制台获取)    必传
-                                userId:(NSString * _Nonnull)userId                             //用户ID                  必传
-                            projectKey:(NSString * _Nonnull)projectKey                         //密匙(客服控制台获取)      必传
-                          gameLanguage:(NSString * _Nonnull)gameLanguage                       //游戏语言(参考https://docs.ilivedata.com/alt/language/)   必传
-                                gameId:(NSString * _Nullable)gameId                            //游戏应用商店ID
-                              userName:(NSString * _Nullable)userName                          //玩家游戏名称
-                              serverId:(NSString * _Nullable)serverId                          //当前区服ID
-                           networkType:(NSString * _Nullable)networkType                       //网络类型
-                                  tags:(NSArray<NSString*> * _Nullable)tags                    //标签名列表(大小写敏感), 标签从客服控制台创建,设置->标签设置)
-                              vipLevel:(NSInteger)vipLevel                                     //玩家VIP等级
-                                custom:(NSDictionary * _Nullable)custom                        //自定义参数,传入信息会显示在控制台的客诉详情中
-                                domain:(NSString * _Nonnull)domain                             //公司域名(与控制台一致)     必传
-                       pushDeviceToken:(NSString * _Nullable)pushDeviceToken;                  //推送token
-            
-            
-            
-    2.faq调用
-                                   
-    if ([FPCustomerManager shareInstance].initFinish) {
+/// 设定用户属性 (必须调用(需要在init之后调用) 否则无法调用其它接口)
+/// @param userId 用户id（必传）
+/// @param userName 用户名称
+/// @param avatar 用户头像url
+/// @param language 用户语言
+/// @param email 用户邮箱
+/// @param tags 用户标签     用户身上的标签，用于分类，自动化过滤等
+/// @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
+/// @param deviceToken 推送token(可以再控制台设置推送)
+/// @param resetResult 设置结果
++(void)resetUserInfoWithUserId:(NSString * _Nonnull)userId
+                      userName:(NSString * _Nullable)userName
+                        avatar:(NSString * _Nullable)avatar
+                      language:(NSString * _Nonnull)language
+                         email:(NSString * _Nullable)email
+                          tags:(NSArray<NSString*> * _Nullable)tags
+                    customData:(NSDictionary * _Nullable)customData
+                   deviceToken:(NSString * _Nullable)deviceToken
+                   resetResult:(void(^)(BOOL isSuccess))resetResult;
+
+//常见问题列表
++(FPNavigationController * _Nullable)showAllFAQs;
+
+//会话类型 BOT-机器人(如果有客诉未解决将直接跳转到人工服务) HUMAN-人工
++(FPNavigationController * _Nullable)showConversationWithType:(FPCustomerConversationType)type;
+
+//修改语言
++(void)setLanguage:(NSString*)language;
+
+//获取用户未读消息
++ (void)unreadMessage:(void(^_Nullable)(BOOL issueExist,int unreadCount,BOOL isSuccess)) isUnread;
+```
+
+快速使用
+-
+```objc
+BOOL result = [FPCustomerManager initWithAppId:
+                                     secretKey:
+                                        domain:
+                                      language:];
     
-        FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:[FPFaqTypeViewController new]];
-        nav.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:nav animated:YES completion:nil];
-        
+    if (result) {
+        [FPCustomerManager resetUserInfoWithUserId: 
+                                          userName:
+                                            avatar: 
+                                          language:
+                                             email:
+                                              tags: 
+                                        customData:
+                                       deviceToken: 
+                                        resetResult:^(BOOL isSuccess) {
+    
+                 if(isSuccess){
+                    //其他接口调用
+                 }
+
+        }];
     }
-    
-    
-    
-    3.智能机器人调用
-
-    if ([FPCustomerManager shareInstance].initFinish) {
-    
-        FPCustomerSmartServiceViewController * vc = [FPCustomerSmartServiceViewController
-                                                     initWithAppId:[FPCustomerManager shareInstance].projectId
-                                                     appKey:[FPCustomerManager shareInstance].projectKey
-                                                     userId:[FPCustomerManager shareInstance].userId
-                                                     userName:[FPCustomerManager shareInstance].userName
-                                                     gameId:[FPCustomerManager shareInstance].gameId
-                                                     gameLang:[FPCustomerManager shareInstance].gameLanguage
-                                                     vipLevel:[FPCustomerManager shareInstance].vipLevel];
-    
-        FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:vc];
-        nav.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:nav animated:YES completion:nil];
-    
-    }
-    
-   
-
-    4.拉取是否有未读
-    
-    [FPCustomerManager getUnreadStatus:^(BOOL result) {
-        
-    }];
+```
