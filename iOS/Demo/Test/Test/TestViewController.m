@@ -182,7 +182,7 @@
         [LivehelpSupport resetUserInfoWithUserId:self.userId.text userName:@"userName123" avatar:@"avatar" language:self.language.text email:@"email" tags:[NSArray array] customData:[NSDictionary dictionary] deviceToken:@"deviceToken" resetResult:^(BOOL isSuccess) {
     
             
-            
+            [LivehelpSupport setLanguage:@"en"];
             
             
         }];
