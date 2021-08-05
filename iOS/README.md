@@ -15,7 +15,7 @@ SDK支持
 
    *  Livehelp.framework 引入头文件 #import <Livehelp/Livehelp.h>
    
-   *  拖入 FPCustomerSDK_Image 导入 Assets.xcassets
+   *  拖入 Livehelp_Image 导入 Assets.xcassets
     
    *  info.plist 
    
