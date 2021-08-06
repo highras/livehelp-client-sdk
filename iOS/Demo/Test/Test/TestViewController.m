@@ -7,166 +7,198 @@
 //
 
 #import "TestViewController.h"
-#import <FPCustomerSDK/FPCustomerSDK.h>
+#import "Masonry.h"
+#import "IQKeyboardManager.h"
+#import <Livehelp/Livehelp.h>
+
 @interface TestViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField * language;
 @property(nonatomic,strong)UITextField * name;
 @property(nonatomic,strong)UITextField * domain;
+@property(nonatomic,strong)UITextField * userId;
+@property(nonatomic,strong)UITextField * projectId;
+@property(nonatomic,strong)UITextField * key;
 @end
 
 @implementation TestViewController
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    UIScrollView * backScrollView = [[UIScrollView alloc] init];
+    backScrollView.backgroundColor = [UIColor colorWithRed:30./255 green:82.0/255 blue:199.0/255 alpha:1];
+    [self.view addSubview:backScrollView];
+    [backScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.right.top.bottom.equalTo(self.view);
+        make.width.equalTo(@(self.view.frame.size.width));
+    }];
     
-    self.name = [[UITextField alloc] initWithFrame:CGRectMake(50, 100, 300, 40)];
-    self.name.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:self.name];
-    self.name.placeholder = @"请输入UserID ";
-    self.name.text = @"player00";
+    UIImageView * logo = [UIImageView new];
+    logo.image = [UIImage imageNamed:@"logo.png"];
+    [backScrollView addSubview:logo];
+    [logo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(@(50));
+        make.top.equalTo(@(30));
+        make.width.equalTo(@(150));
+    }];
+    logo.contentMode = UIViewContentModeScaleAspectFit;
     
+    int w = self.view.frame.size.width - 100;
+    int h = 35;
+    int hSpace = 35;
     
-    self.language = [[UITextField alloc] initWithFrame:CGRectMake(50, 150, 300, 40)];
-    self.language.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:self.language];
-    self.language.placeholder = @"请输入语言 ";
-    self.language.text = @"zh-CN";
-    
-    
-    self.domain = [[UITextField alloc] initWithFrame:CGRectMake(50, 200, 300, 40)];
-    self.domain.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:self.domain];
-    self.domain.placeholder = @"请输入域名 ";
-    self.domain.text = @"livedata";
-    
-    
-    UIButton * ok = [UIButton buttonWithType:UIButtonTypeCustom];
-    [ok setTitle:@"请先点击我初始化 \n" forState:UIControlStateNormal];
-    ok.titleLabel.numberOfLines = 0;
-    ok.titleLabel.font = [UIFont systemFontOfSize:18];
-    ok.backgroundColor = [UIColor orangeColor];
-    ok.frame = CGRectMake(100, 250, 180, 70);
-    [ok addTarget:self action:@selector(okClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:ok];
-    
-    UIButton * smart = [UIButton buttonWithType:UIButtonTypeCustom];
-    [smart setTitle:@"智能客服" forState:UIControlStateNormal];
-    smart.backgroundColor = [UIColor orangeColor];
-    smart.frame = CGRectMake(100, 330, 180, 80);
-    [smart addTarget:self action:@selector(smartClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:smart];
-    
-    
-    UIButton * faq = [UIButton buttonWithType:UIButtonTypeCustom];
-    [faq setTitle:@"Faq" forState:UIControlStateNormal];
-    faq.backgroundColor = [UIColor orangeColor];
-    faq.frame = CGRectMake(100, 420, 180, 80);
-    [faq addTarget:self action:@selector(faqClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:faq];
-    
-    UIButton * unread = [UIButton buttonWithType:UIButtonTypeCustom];
-    [unread setTitle:@"获取是否有未读" forState:UIControlStateNormal];
-    unread.backgroundColor = [UIColor orangeColor];
-    unread.frame = CGRectMake(100, 510, 180, 80);
-    [unread addTarget:self action:@selector(unreadlClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:unread];
-    
+    self.userId = [self getTextFieldWithName:@"用户ID"];
+    [backScrollView addSubview:self.userId];
+    [self.userId mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(logo.mas_bottom).offset(hSpace);
+        make.width.equalTo(@(w));
+        make.height.equalTo(@(h));
+        make.centerX.equalTo(self.view);
+    }];
+    self.userId.text = @"player00";
+//
+    self.projectId = [self getTextFieldWithName:@"项目ID"];
+    [backScrollView addSubview:self.projectId];
+    [self.projectId mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.userId.mas_bottom).offset(hSpace);
+        make.width.equalTo(@(w));
+        make.height.equalTo(@(h));
+        make.centerX.equalTo(self.view);
+    }];
+    self.projectId.text = @"80900001";
 
+    self.domain = [self getTextFieldWithName:@"项目域名"];
+    [backScrollView addSubview:self.domain];
+    [self.domain mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.projectId.mas_bottom).offset(hSpace);
+        make.width.equalTo(@(w));
+        make.height.equalTo(@(h));
+        make.centerX.equalTo(self.view);
+    }];
+    self.domain.text = @"livedata";
+
+    self.key = [self getTextFieldWithName:@"项目key"];
+    [backScrollView addSubview:self.key];
+    [self.key mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.domain.mas_bottom).offset(hSpace);
+        make.width.equalTo(@(w));
+        make.height.equalTo(@(h));
+        make.centerX.equalTo(self.view);
+    }];
+    self.key.text = @"61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=";
     
+    self.language = [self getTextFieldWithName:@"项目语言 (例如:zh-CN)"];
+    [backScrollView addSubview:self.language];
+    [self.language mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.key.mas_bottom).offset(hSpace);
+        make.width.equalTo(@(w));
+        make.height.equalTo(@(h));
+        make.centerX.equalTo(self.view);
+    }];
+    self.language.text = @"zh-CN";
+//    lang.text = @"zh-CN";
+    
+    
+    UIButton * customerServiceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    customerServiceBtn.layer.masksToBounds = YES;
+    customerServiceBtn.layer.cornerRadius = 5;
+    [customerServiceBtn setTitle:@"客服初始化" forState:UIControlStateNormal];
+    customerServiceBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+    customerServiceBtn.backgroundColor = [UIColor colorWithRed:69./255 green:159.0/255 blue:248.0/255 alpha:1];
+    [customerServiceBtn addTarget:self action:@selector(okClick) forControlEvents:UIControlEventTouchUpInside];
+    [backScrollView addSubview:customerServiceBtn];
+    [customerServiceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.language.mas_bottom).offset(hSpace + 20);
+        make.left.equalTo(self.userId);
+        make.width.equalTo(@(w/2 - 20));
+        make.height.equalTo(@(50));
+    }];
+    
+    UIButton * questionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    questionBtn.layer.masksToBounds = YES;
+    questionBtn.layer.cornerRadius = 5;
+    [questionBtn setTitle:@"客服Faq" forState:UIControlStateNormal];
+    questionBtn.titleLabel.font = [UIFont systemFontOfSize:20];
+    questionBtn.backgroundColor = [UIColor colorWithRed:69./255 green:159.0/255 blue:248.0/255 alpha:1];
+    [questionBtn addTarget:self action:@selector(faqClick) forControlEvents:UIControlEventTouchUpInside];
+    [backScrollView addSubview:questionBtn];
+    [questionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.language.mas_bottom).offset(hSpace + 20);
+        make.right.equalTo(self.userId);
+        make.width.equalTo(@(w/2 - 20));
+        make.height.equalTo(@(50));
+        make.bottom.equalTo(backScrollView).offset(-400);
+    }];
+    
+    
+    
+    UILabel * company = [UILabel new];
+    [self.view addSubview:company];
+    company.font = [UIFont systemFontOfSize:12];
+    company.textColor = [UIColor colorWithRed:190.0/255 green:199.0/255 blue:212.0/255 alpha:1];
+    company.numberOfLines = 0;
+    company.textAlignment = NSTextAlignmentCenter;
+    company.text = @"© 2021 北京云上曲率科技有限公司 \nAll Rights Reserved.京ICP备18051523号";
+    [company mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(self.userId);
+        make.width.equalTo(self.userId);
+        make.bottom.equalTo(self.view).offset(-40);
+    }];
+    
+    
+}
+-(UITextField*)getTextFieldWithName:(NSString*)name{
+    UITextField * textField = [[UITextField alloc] init];
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    textField.font = [UIFont systemFontOfSize:18];
+    textField.textColor = [UIColor whiteColor];
+    NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:name
+                                                                     attributes:
+        @{NSForegroundColorAttributeName:[UIColor colorWithRed:190.0/255 green:199.0/255 blue:212.0/255 alpha:1],
+                     NSFontAttributeName:textField.font
+             }];
+    textField.attributedPlaceholder = attrString;
+    
+    UIView * line = [[UIView alloc] init];
+    line.backgroundColor = [UIColor whiteColor];
+    [textField addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.bottom.equalTo(textField);
+        make.left.equalTo(textField).offset(-5);
+        make.height.equalTo(@(1.0));
+    }];
+    
+    return textField;
 }
 -(void)okClick{
     //@"player00"
-    BOOL result = [FPCustomerManager fpCustomerInitWithProjectId:80900001
-                                                          userId:self.name.text
-                                                      projectKey:@"61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8="
-                                                    gameLanguage:self.language.text
-                                                          gameId:@"gameId"
-                                                        userName:@"userName123"
-                                                        serverId:@"serverId123"
-                                                     networkType:@"wifi"
-                                                            tags:@[@"tag1",@"tag2"]
-                                                        vipLevel:111
-                                                          custom:@{@"custom1":@"custom2"}
-                                                          domain:self.domain.text
-                                                 pushDeviceToken:@"pushDeviceToken"];
+    BOOL result = [LivehelpSupport initWithAppId:[self.projectId.text intValue]
+                                         secretKey:self.key.text
+                                            domain:self.domain.text
+                                          language:self.language.text];
     
-    if (result == NO) {
-        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"init error" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelBtn = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull   action) {
-        
+    if (result) {
+        [LivehelpSupport resetUserInfoWithUserId:self.userId.text userName:@"userName123" avatar:@"avatar" language:self.language.text email:@"email" tags:[NSArray array] customData:[NSDictionary dictionary] deviceToken:@"deviceToken" resetResult:^(BOOL isSuccess) {
+    
+            
+            [LivehelpSupport setLanguage:@"en"];
+            
+            
         }];
-        [alertVc addAction:cancelBtn];
-        [self presentViewController:alertVc animated:YES completion:nil];
-        return;
-    }else{
-        UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"init success" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancelBtn = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull   action) {
-        
-        }];
-        [alertVc addAction:cancelBtn];
-        [self presentViewController:alertVc animated:YES completion:nil];
-        return;
-    }
-}
--(void)unreadlClick{
-    [FPCustomerManager getUnreadStatus:^(BOOL result) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (result) {
-                UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"有未读" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *cancelBtn = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull   action) {
-                
-                }];
-                [alertVc addAction:cancelBtn];
-                [self presentViewController:alertVc animated:YES completion:nil];
-            }else{
-                UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"提示" message:@"无未读" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *cancelBtn = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull   action) {
-                
-                }];
-                [alertVc addAction:cancelBtn];
-                [self presentViewController:alertVc animated:YES completion:nil];
-            }
-        });
-        
-    }];
-    
-}
--(void)smartClick{
-    
-    if ([FPCustomerManager shareInstance].initFinish) {
-        
-        
-        FPCustomerSmartServiceViewController * vc = [FPCustomerSmartServiceViewController
-                                                     initWithAppId:[FPCustomerManager shareInstance].projectId
-                                                     appKey:[FPCustomerManager shareInstance].projectKey
-                                                     userId:[FPCustomerManager shareInstance].userId
-                                                     userName:[FPCustomerManager shareInstance].userName
-                                                     gameId:[FPCustomerManager shareInstance].gameId
-                                                     gameLang:[FPCustomerManager shareInstance].gameLanguage
-                                                     vipLevel:[FPCustomerManager shareInstance].vipLevel];
-        
-        
-       
-        FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:vc];
-        nav.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:nav animated:YES completion:nil];
     }
     
-    
-    
 }
+
 -(void)faqClick{
-    if ([FPCustomerManager shareInstance].initFinish) {
-        FPNavigationController * nav = [[FPNavigationController alloc] initWithRootViewController:[FPFaqTypeViewController new]];
-        nav.modalPresentationStyle = UIModalPresentationFullScreen;
+    
+    LivehelpSupportNavigationController * nav = [LivehelpSupport showAllFAQs];
+    if (nav != nil) {
         [self presentViewController:nav animated:YES completion:nil];
     }
     
 }
+
 /*
 #pragma mark - Navigation
 
