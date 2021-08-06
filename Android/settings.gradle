@@ -1,2 +1,3 @@
 rootProject.name='CustomerTest'
 include ':app'
+include ':livehelp-android'
