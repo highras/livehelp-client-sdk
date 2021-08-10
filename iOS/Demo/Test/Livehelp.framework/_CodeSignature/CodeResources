@@ -6,11 +6,11 @@
 	<dict>
 		<key>Headers/Livehelp.h</key>
 		<data>
-		AT+tR3bUOkWvFru5aZlE1/pruhs=
+		XKrCoHh9XuIEX5abYkknO9g7lHY=
 		</data>
 		<key>Headers/LivehelpSupport+Interface.h</key>
 		<data>
-		/BfGW+OKA9O5NlT+xnPouuGHh6k=
+		8sSz8cGeiEwN181frsSjk40leVE=
 		</data>
 		<key>Headers/LivehelpSupport.h</key>
 		<data>
@@ -35,22 +35,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AT+tR3bUOkWvFru5aZlE1/pruhs=
+			XKrCoHh9XuIEX5abYkknO9g7lHY=
 			</data>
 			<key>hash2</key>
 			<data>
-			8qGjRAihIS1u/FAPkxpzPgsvU4NaPQh3vvWQBktGDSo=
+			ys4ZK58rnIbVymR+mf1gEqddjTV6JO9vlekpAG6HtZY=
 			</data>
 		</dict>
 		<key>Headers/LivehelpSupport+Interface.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			/BfGW+OKA9O5NlT+xnPouuGHh6k=
+			8sSz8cGeiEwN181frsSjk40leVE=
 			</data>
 			<key>hash2</key>
 			<data>
-			bjAXfQauAS7vjpEYBJyRrp8qv+nz1VGDAaJ5q87BYWU=
+			TT01gi0WIZRHVxfqH6VtW2BGDpME51ww0Gna86nRWSY=
 			</data>
 		</dict>
 		<key>Headers/LivehelpSupport.h</key>

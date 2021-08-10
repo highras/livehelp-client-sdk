@@ -56,7 +56,7 @@
         make.height.equalTo(@(h));
         make.centerX.equalTo(self.view);
     }];
-    self.userId.text = @"player00";
+    self.userId.text = @"99900";
 //
     self.projectId = [self getTextFieldWithName:@"项目ID"];
     [backScrollView addSubview:self.projectId];
@@ -76,7 +76,7 @@
         make.height.equalTo(@(h));
         make.centerX.equalTo(self.view);
     }];
-    self.domain.text = @"livedata";
+    self.domain.text = @"funplus";
 
     self.key = [self getTextFieldWithName:@"项目key"];
     [backScrollView addSubview:self.key];

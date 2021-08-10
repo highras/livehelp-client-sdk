@@ -65,6 +65,7 @@ typedef enum : NSUInteger {
 
 + (NSString*)sdkVersion;
 
++ (void)errorLog:(void(^_Nonnull)(NSError * error))error;
 @end
 
 NS_ASSUME_NONNULL_END
