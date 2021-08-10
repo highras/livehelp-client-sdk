@@ -28,7 +28,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.ilivedata.customer.*;
+import com.livehelp.*;
 
 import org.angmarch.views.NiceSpinner;
 
@@ -45,7 +45,6 @@ import java.util.TreeSet;
 public class MainActivity extends AppCompatActivity implements CustomeEdittext.OnSuccessListener{
     Activity mactivity;
     SharedPreferences sp;
-    CustomerService myservice = new CustomerService();
     CustomeEdittext customProjectId, customUserid, customDomain,customprokey;
 
     final String[] buttonNames = {"robot", "faq","manualMain","login","loginout"};
@@ -94,16 +93,16 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
                     initCustome();
                     break;
                 case R.id.loginout:
-                    myservice.resetUserInfo();
+                    LivehelpSupport.resetUserInfo();
                     break;
                 case R.id.robot:
-                    myservice.showConversation(MainActivity.this, UserInterface.ConversationType.BOT);
+                    LivehelpSupport.showConversation(MainActivity.this, UserInterface.ConversationType.BOT);
                     break;
                 case R.id.faq:
-                    myservice.showAllFAQs(MainActivity.this);
+                    LivehelpSupport.showAllFAQs(MainActivity.this);
                     break;
                 case R.id.manualMain:
-                    myservice.showConversation(MainActivity.this,UserInterface.ConversationType.HUMAN);
+                    LivehelpSupport.showConversation(MainActivity.this,UserInterface.ConversationType.HUMAN);
             }
         }
     }
@@ -115,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         int pid = 0;
         userId = customUserid.getContent();
         slang = ((CustomLang.CItem)(lanspinner.getSelectedItem())).getValue();
+        slang ="zh-cn";
         String android_id=Secure.getString(getContentResolver(),Secure.ANDROID_ID);
         if (BuildConfig.BUILD_TYPE == "devTest" || BuildConfig.BUILD_TYPE == "production"){
             prokeys = BuildConfig.key;
@@ -153,9 +153,15 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         List<String> tags = new LinkedList<>();
         Map<String, String> tcustomdata = new HashMap<>();
 
-        myservice.init(getApplicationContext(),pid, prokeys, sdomain, slang);
+        LivehelpSupport.setErrorRecoder(new ErrorRecorder() {
+            @Override
+            public void recordError(String message) {
+                Log.e("hehe","fuck");
+            }
+        });
+        LivehelpSupport.init(getApplicationContext(),pid, prokeys, sdomain, slang);
 
-        myservice.setUserInfo("888","tom","werwer.com","163.com",tags,tcustomdata,"werlkjwelr",
+        LivehelpSupport.setUserInfo(userId,"tom","werwer.com","163.com",tags,tcustomdata,"werlkjwelr",
                 new UserInterface.IUserCallback(){
                     @Override
                     public void onResult(final String errmsg) {
