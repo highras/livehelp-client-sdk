@@ -2,12 +2,16 @@ package com.livehelp;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import org.json.JSONObject;
 
@@ -54,7 +58,7 @@ public class FAQBody extends Activity {
                     }
                 }
                 else {
-                    instan.errorRecorder.recordError("postInitBody error " + errMsg);
+                    instan.errorRecord.recordError("postInitBody error " + errMsg);
                 }
             }
         });
@@ -66,7 +70,7 @@ public class FAQBody extends Activity {
             @Override
             public void onResult(int code,String errMsg, JSONObject ret) {
                 if (!errMsg.isEmpty()){
-                    instan.errorRecorder.recordError("postInitBody error " + errMsg);
+                    instan.errorRecord.recordError("postInitBody error " + errMsg);
                 }
             }
         });
@@ -75,9 +79,13 @@ public class FAQBody extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_faq_body);
+        if (instan.m_Lang.equals(instan.specailLan))
+            setContentView(R.layout.activity_faq_body_ar);
+        else
+            setContentView(R.layout.activity_faq_body);
 
         instan.setcolor(this);
+
 
         String firstTitle = getIntent().getStringExtra("firstTitle");
         String secondTitle = getIntent().getStringExtra("secondTitle");
@@ -86,7 +94,7 @@ public class FAQBody extends Activity {
             if (instan.faqMap.get(firstTitle).containsKey(secondTitle))
                 info = instan.faqMap.get(firstTitle).get(secondTitle);
         if (info == null){
-            instan.errorRecorder.recordError(" can't find FAQInfo firsttitle " + firstTitle + " second title " + secondTitle);
+            instan.errorRecord.recordError(" can't find FAQInfo firsttitle " + firstTitle + " second title " + secondTitle);
             return;
         }
 
@@ -111,6 +119,51 @@ public class FAQBody extends Activity {
 
         texthelpmsg.setText(remind.helpfulQuestion);
         ImageView back = findViewById(R.id.back);
+
+        /*if (instan.m_Lang.equals(instan.specailLan)){
+            ConstraintSet jj = new ConstraintSet();
+            jj.clone((ConstraintLayout) findViewById(R.id.mytitle));
+            jj.clear(R.id.back, ConstraintSet.START);
+            jj.clear(R.id.back, ConstraintSet.END);
+            jj.connect(R.id.back, ConstraintSet.END, R.id.mytitle, ConstraintSet.END, 15);
+            jj.connect(R.id.back, ConstraintSet.TOP, R.id.mytitle, ConstraintSet.TOP, 3);
+            jj.applyTo(this.<ConstraintLayout>findViewById(R.id.mytitle));
+            back.setImageResource(R.drawable.back_ar);
+            title.setGravity(Gravity.RIGHT);
+            time.setGravity(Gravity.RIGHT);
+            title.setPadding(0,0,10,0);
+            time.setPadding(0,0,10,0);
+
+
+            ConstraintSet kk = new ConstraintSet();
+            kk.clone((ConstraintLayout) findViewById(R.id.bottomLayout));
+            kk.clear(R.id.nohelp, ConstraintSet.START);
+            kk.clear(R.id.nohelp, ConstraintSet.END);
+
+            kk.clear(R.id.help, ConstraintSet.START);
+            kk.clear(R.id.help, ConstraintSet.END);
+
+            kk.clear(R.id.textShow, ConstraintSet.START);
+            kk.clear(R.id.textShow, ConstraintSet.END);
+
+            kk.clear(R.id.buttonContact, ConstraintSet.START);
+            kk.clear(R.id.buttonContact, ConstraintSet.END);
+
+            kk.connect(R.id.buttonContact, ConstraintSet.START, R.id.mytitle, ConstraintSet.START, 5);
+            kk.connect(R.id.buttonContact, ConstraintSet.TOP, R.id.mytitle, ConstraintSet.TOP, 3);
+
+            kk.connect(R.id.textShow, ConstraintSet.END, R.id.mytitle, ConstraintSet.END);
+            kk.connect(R.id.textShow, ConstraintSet.START, R.id.buttonContact, ConstraintSet.END);
+
+
+            kk.applyTo(this.<ConstraintLayout>findViewById(R.id.mytitle));
+            back.setImageResource(R.drawable.back_ar);
+            title.setGravity(Gravity.RIGHT);
+            time.setGravity(Gravity.RIGHT);
+            title.setPadding(0,0,10,0);
+            time.setPadding(0,0,10,0);
+        }
+*/
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

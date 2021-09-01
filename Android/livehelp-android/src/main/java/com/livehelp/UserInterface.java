@@ -1,7 +1,7 @@
 package com.livehelp;
 
 public class UserInterface {
-    public interface ErrorRecorder {
+    public interface errorRecord {
         public  void recordError(String message) ;
 
         public  void recordError(Exception e) ;

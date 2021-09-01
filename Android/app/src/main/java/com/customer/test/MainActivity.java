@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
     SharedPreferences sp;
     CustomeEdittext customProjectId, customUserid, customDomain,customprokey;
 
-    final String[] buttonNames = {"robot", "faq","manualMain","login","loginout"};
+    final String[] buttonNames = {"robot", "faq","manualMain","login","loginout","switchlan"};
     NiceSpinner lanspinner;
     boolean hasgetdefault = false;
     CustomLang langcode = new CustomLang();
@@ -103,6 +103,16 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
                     break;
                 case R.id.manualMain:
                     LivehelpSupport.showConversation(MainActivity.this,UserInterface.ConversationType.HUMAN);
+                    break;
+                case R.id.switchlan:
+                    String slang = ((CustomLang.CItem)(lanspinner.getSelectedItem())).getValue();
+                    LivehelpSupport.setLanguage(slang, new UserInterface.IUserCallback() {
+                        @Override
+                        public void onResult(String errmsg) {
+                            Log.i("sdktest","setLanguage result " + errmsg);
+                        }
+                    });
+                    break;
             }
         }
     }
@@ -114,7 +124,6 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         int pid = 0;
         userId = customUserid.getContent();
         slang = ((CustomLang.CItem)(lanspinner.getSelectedItem())).getValue();
-        slang ="zh-cn";
         String android_id=Secure.getString(getContentResolver(),Secure.ANDROID_ID);
         if (BuildConfig.BUILD_TYPE == "devTest" || BuildConfig.BUILD_TYPE == "production"){
             prokeys = BuildConfig.key;
@@ -153,7 +162,8 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         List<String> tags = new LinkedList<>();
         Map<String, String> tcustomdata = new HashMap<>();
 
-        LivehelpSupport.setErrorRecoder(new ErrorRecorder() {
+        LivehelpSupport.setErrorRecord(new ErrorRecord() {
+//        LivehelpSupport.setErrorRecoder(new ErrorRecorder() {
             @Override
             public void recordError(String message) {
                 Log.e("hehe","fuck");
@@ -228,8 +238,8 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         sp=getSharedPreferences("Logindb",MODE_PRIVATE);
 
         LinkedList<CustomLang.CItem> lanarray = langcode.getlangcode();
-        int ii = lanarray.indexOf(new CustomLang.CItem("English","en"));
-//        int ii = lanarray.indexOf(new CustomLang.CItem("Simplified Chinese","zh-CN"));
+//        int ii = lanarray.indexOf(new CustomLang.CItem("English","en"));
+        int ii = lanarray.indexOf(new CustomLang.CItem("Simplified Chinese","zh-CN"));
         lanspinner = findViewById(R.id.nice_spinner);
 //        List<String> dataset = new LinkedList<>(lanarray);
         lanspinner.attachDataSource(lanarray); //设置下拉框要显示的数据集合

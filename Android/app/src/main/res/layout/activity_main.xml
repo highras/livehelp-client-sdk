@@ -162,7 +162,9 @@
         customeedittext:bottomMessage="请输入项目key"
         customeedittext:isPasswdType="true"
         customeedittext:isShowTopMessage="true"
-        customeedittext:topMessage="项目key"/>
+        customeedittext:topMessage="项目key" >
+
+    </com.customer.test.CustomeEdittext>
 
     <Button
         android:id="@+id/loginout"
@@ -187,7 +189,20 @@
         android:text="登陆"
         android:textColor="@color/white"
         customeedittext:layout_constraintStart_toStartOf="parent"
-        customeedittext:layout_constraintTop_toBottomOf="@+id/constraintLayout2" /><![CDATA[
+        customeedittext:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
+
+    <Button
+        android:id="@+id/switchlan"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/buttonstyle"
+        android:text="切换语言"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/loginout"
+        app:layout_constraintStart_toEndOf="@+id/loginout"
+        app:layout_constraintTop_toTopOf="@+id/loginout"
+        app:layout_constraintVertical_bias="0.0" /><![CDATA[
 
     " />
 

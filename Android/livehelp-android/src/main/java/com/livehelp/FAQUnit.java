@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class FAQUnit extends Activity {
     Context context = this;
-    CustomerData instan;
+    CustomerData instan = CustomerData.INSTANCE;
     JSONObject respondsDta = null;
     SearchView searchView;
     ExpandableListView faqList;
@@ -87,23 +87,22 @@ public class FAQUnit extends Activity {
             @Override
             public void run() {
                 int id = searchView.getContext().getResources().getIdentifier("android:id/search_src_text",null,null);
-//获取到TextView的控件
                 TextView textView = (TextView) searchView.findViewById(id);
-//设置字体大小为14sp
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//14sp
-//设置字体颜色
 
                 searchView.setQueryHint(tmplanagePrompt.searchtPrompt);
 
-                for (String title : instan.faqMap.keySet()) {
-                    SpannableString tt = new SpannableString(title);
-                    mGroupList.add(tt);
-                    ArrayList<SpannableString> tmp = new ArrayList<SpannableString>();
-                    for(String secondtitle: instan.faqMap.get(title).keySet()){
-                        SpannableString sectitle = new SpannableString(secondtitle);
-                        tmp.add(sectitle);
+                if (instan.faqMap != null) {
+                    for (String title : instan.faqMap.keySet()) {
+                        SpannableString tt = new SpannableString(title);
+                        mGroupList.add(tt);
+                        ArrayList<SpannableString> tmp = new ArrayList<SpannableString>();
+                        for (String secondtitle : instan.faqMap.get(title).keySet()) {
+                            SpannableString sectitle = new SpannableString(secondtitle);
+                            tmp.add(sectitle);
+                        }
+                        mItemSet.add(tmp);
                     }
-                    mItemSet.add(tmp);
                 }
                 adapter = new MyAdapter(getApplicationContext(), mGroupList, mItemSet);
 //                adapter.notifyDataSetChanged();
@@ -151,7 +150,8 @@ public class FAQUnit extends Activity {
                                             tmpMap.put(secondTitle, faqInfo);
                                         }
                                     }
-                                    instan.faqMap.put(firstTitle, tmpMap);
+                                    if (instan.faqMap != null)
+                                        instan.faqMap.put(firstTitle, tmpMap);
                                 }
                             }
                         }
@@ -159,7 +159,7 @@ public class FAQUnit extends Activity {
                     showResponse();
                 }
                 else {
-                    instan.errorRecorder.recordError("initFAQData return HTTP code Exception:" + errMsg);
+                    instan.errorRecord.recordError("initFAQData return HTTP code Exception:" + errMsg);
                     instan.alertDialog(FAQUnit.this, "initFAQData ERROR :\n" + errMsg);
                 }
             }
@@ -168,7 +168,7 @@ public class FAQUnit extends Activity {
 
     protected void onDestroy() {
         instan.writeObject();
-        instan.faqMap = null;
+//        instan.faqMap.clear();
 //        instan = null;
         super.onDestroy();
     }
@@ -184,24 +184,26 @@ public class FAQUnit extends Activity {
             } else {
                 searchGroupList.clear();
                 searchMap.clear();
-                for (String first : instan.faqMap.keySet()) {
-                    for (String title : instan.faqMap.get(first).keySet()) {
-                        int index = title.toLowerCase().indexOf(text);
-                        if (index != -1) {
-                            SpannableString ss = new SpannableString(title);
-                            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#49ADFF"));
-                            ss.setSpan(foregroundColorSpan, index, index + text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            searchGroupList.add(ss);
-                            searchMap.put(ss.toString(),first);
-                            continue;
-                        } else {
-                            String body = instan.faqMap.get(first).get(title).body;
-                            int index1 = body.indexOf(text);
-                            if (index1 != -1) {
+                if (instan.faqMap != null) {
+                    for (String first : instan.faqMap.keySet()) {
+                        for (String title : instan.faqMap.get(first).keySet()) {
+                            int index = title.toLowerCase().indexOf(text);
+                            if (index != -1) {
                                 SpannableString ss = new SpannableString(title);
+                                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#49ADFF"));
+                                ss.setSpan(foregroundColorSpan, index, index + text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 searchGroupList.add(ss);
-                                searchMap.put(ss.toString(),first);
+                                searchMap.put(ss.toString(), first);
+                                continue;
+                            } else {
+                                String body = instan.faqMap.get(first).get(title).body;
+                                int index1 = body.indexOf(text);
+                                if (index1 != -1) {
+                                    SpannableString ss = new SpannableString(title);
+                                    searchGroupList.add(ss);
+                                    searchMap.put(ss.toString(), first);
 
+                                }
                             }
                         }
                     }
@@ -215,7 +217,7 @@ public class FAQUnit extends Activity {
             }
         }
         catch (Exception ex){
-            instan.errorRecorder.recordError("textFilter error");
+            instan.errorRecord.recordError("textFilter error");
         }
 //        faqList.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_DISABLED);
 //        if (!faqList.isStackFromBottom())
@@ -227,8 +229,12 @@ public class FAQUnit extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_faq);
-        instan = CustomerData.INSTANCE;
+        if (instan.m_Lang.equals(instan.specailLan)){
+            setContentView(R.layout.activity_faq_ar);
+        }
+        else
+            setContentView(R.layout.activity_faq);
+
 
         ConstraintLayout layout = findViewById(R.id.mytitle);
         int color = Color.parseColor(instan.backgroundcolor);

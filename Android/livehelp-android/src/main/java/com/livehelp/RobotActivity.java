@@ -31,12 +31,16 @@ import android.widget.ImageView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import org.json.JSONObject;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RobotActivity extends Activity {
@@ -70,7 +74,12 @@ public class RobotActivity extends Activity {
 //        _window.setAttributes(params);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_robot);
+        if (instan.m_Lang.equals(instan.specailLan)){
+            setContentView(R.layout.activity_robot_ar);
+        }
+        else
+            setContentView(R.layout.activity_robot);
+
         //        getSupportActionBar().hide();
         instan.setcolor(this);
 
@@ -104,26 +113,10 @@ public class RobotActivity extends Activity {
         return false;
     }
 
-    private void addWebview(String url){
-        WebView jj  = new WebView(this);
-        jj.setLayoutParams(m_webView.getLayoutParams());
-        jj.getSettings().setJavaScriptEnabled(true);
-        jj.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        jj.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        jj.getSettings().setDomStorageEnabled(false);
-        jj.setWebViewClient(new WebViewClient() {
-                                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                                    WebView.HitTestResult hitTestResult = view.getHitTestResult();
-                                    if (hitTestResult == null) {
-                                        return false;
-                                    }
-                                    if (hitTestResult.getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
-                                        return false;
-                                    }
-                                    addWebview(url);
-                                    return true;
-                                }});
-        jj.setWebChromeClient(new WebChromeClient() {
+
+
+    private void setPicAttr(WebView view){
+        view.setWebChromeClient(new WebChromeClient() {
 
             //针对 Android 5.0+
             @Override
@@ -154,10 +147,60 @@ public class RobotActivity extends Activity {
             }
 
         });
+
+    }
+
+
+    private void showPostResponseJs(final WebView view, final String content, final int errcode){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String script = "javascript:ldChat.platform.response(" + content + "," + errcode + ")";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//sdk>19才有用
+                        view.evaluateJavascript(script, new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String Str) {
+//                        Toast.makeText(getApplicationContext(), "我是android调用js方法,返回结果是" + Str, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    } else {
+                        view.loadUrl(script);
+                    }
+                }
+                catch (Exception ex){
+
+                }
+            }
+//                m_webView.loadData(content,"text/html", "utf-8");
+        });
+    }
+
+    private void addWebview(String url){
+        WebView jj  = new WebView(this);
+        jj.setLayoutParams(m_webView.getLayoutParams());
+        jj.getSettings().setJavaScriptEnabled(true);
+        jj.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        jj.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        jj.getSettings().setDomStorageEnabled(false);
+        jj.setWebViewClient(new WebViewClient() {
+                                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                    WebView.HitTestResult hitTestResult = view.getHitTestResult();
+                                    if (hitTestResult == null) {
+                                        return false;
+                                    }
+                                    if (hitTestResult.getType() == WebView.HitTestResult.UNKNOWN_TYPE) {
+                                        return false;
+                                    }
+                                    addWebview(url);
+                                    return true;
+                                }});
+        setPicAttr(jj);
         layoutMain.addView(jj,++webviewCount);
         layoutMain.getChildAt(layoutMain.getChildCount() -2).setVisibility(View.GONE);
         jj.loadUrl(url);
     }
+
 
     //初始化WebView
     private void initViews() {
@@ -208,7 +251,13 @@ public class RobotActivity extends Activity {
                     return false;
                 }
 //                view.loadUrl(url);
-                addWebview(url);
+                if (url.indexOf("arvis.ilivedata.com/jarvis/conversation") != -1 || url.indexOf("livehelp.ilivedata.com/jarvis/conversation") != -1){
+                    Intent intent = new Intent(RobotActivity.this, ManualActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    addWebview(url);
+                }
                 return true;
             }
 
@@ -249,6 +298,7 @@ public class RobotActivity extends Activity {
 
                         String time = instan.getTime();
                         String body = instan.getUrlBody(nonce);
+//                        String body = "{}";
                         String session = instan.getSession();
                         if(session.length() != 0)
                         {
@@ -272,12 +322,12 @@ public class RobotActivity extends Activity {
                         }
                         else {
                             String str = instan.inputStreamToString(connection.getErrorStream());
-                            instan.errorRecorder.recordError("robot init view error:" +  +responseCode + "-" + str);
-                            instan.alertDialog(RobotActivity.this, "robot init view error :\n " +responseCode + "-" + str);
+                            instan.errorRecord.recordError("robot init view error:" +  +responseCode + "-" + str);
+                            instan.alertDialog(RobotActivity.this, "robot init view error : " +responseCode + "-" + str + "\nrequest body " + body);
                         }
                     } catch (Exception e) {
                         String msg = "post robot error :" + e.getMessage();
-                        instan.errorRecorder.recordError(msg);
+                        instan.errorRecord.recordError(msg);
                         instan.alertDialog(RobotActivity.this, "robot init view error :\n " +msg);
                     }
                 }
@@ -468,7 +518,7 @@ public class RobotActivity extends Activity {
                 ((ViewGroup) parent).removeView(m_webView);
             }
             m_webView.destroy();
-            m_webView = null;
+//            m_webView = null;
         }
         instan.setShow(false);
         super.onDestroy();

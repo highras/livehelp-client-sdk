@@ -1,5 +1,5 @@
 package com.livehelp;
 
-public interface   ErrorRecorder {
+public interface   ErrorRecord {
     void recordError(String message);
 }

@@ -1,5 +1,6 @@
 package com.livehelp;
 
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
@@ -31,6 +32,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.constraintlayout.widget.Constraints;
 
 import org.json.JSONObject;
 
@@ -156,84 +159,43 @@ public class ManualActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String script = "javascript:ldChat.platform.response(" + content+ "," + errcode + ")";
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//sdk>19才有用
-
-                    m_webView.evaluateJavascript(script, new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String Str) {
+                try {
+                    String script = "javascript:ldChat.platform.response(" + content + "," + errcode + ")";
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//sdk>19才有用
+                            m_webView.evaluateJavascript(script, new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String Str) {
 //                        Toast.makeText(getApplicationContext(), "我是android调用js方法,返回结果是" + Str, Toast.LENGTH_LONG).show();
-                        }
-                    });
+                                }
+                            });
+                    } else {
+                        m_webView.loadUrl(script);
+                    }
                 }
-                else {
-                    m_webView.loadUrl(script);
+                catch (Exception ex){
+
                 }
             }
 //                m_webView.loadData(content,"text/html", "utf-8");
         });
     }
 
-//    private void postQuest(final String url, String body)
-//    {
-//        try {
-//            URL urlR= new URL(url);
-//            HttpURLConnection connection= (HttpURLConnection) urlR.openConnection();
-//            connection.setDoInput(true);
-//            connection.setDoOutput(true);
-//            connection.setUseCaches(false);
-//            connection.setRequestMethod("POST");
-//
-//            String time = instan.getTime();
-//            connection.setRequestProperty("Authorization", instan.getAuth(url, time, body, true));
-//            connection.setRequestProperty("X-TimeStamp", time);
-//            connection.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-//
-//            connection.connect();
-//            if(body.length() != 0)
-//            {
-//                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-//                writer.write(body);
-//                writer.close();
-//            }
-//
-//            int responseCode;
-//            try
-//            {
-//                responseCode = connection.getResponseCode();
-//            }
-//            catch (IOException e)
-//            {
-//                responseCode = connection.getResponseCode();
-//            }
-//
-//            StringBuffer sb = new StringBuffer();
-//            if(responseCode == HttpURLConnection.HTTP_OK){
-//                String readLine = new String();
-//                BufferedReader responseReader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-//                while ((readLine = responseReader.readLine()) != null) {
-//                    sb.append(readLine);
-//                }
-//                responseReader.close();
-//            }
-//            else{
-//                String str = instan.inputStreamToString(connection.getErrorStream());
-//                Log.e("customsdk","manual init view error:" + str);
-//                instan.alertDialog(ManualActivity.this, "manual init view error :\n " +str);
-//            }
-//            showPostResponseJs(sb.toString(), responseCode);
-//
-//        } catch (Exception e) {
-//            Log.e("customsdk", "postQuest error " + e.getMessage());
-//        }
-//    }
-
-
     //初始化WebView
     private void initViews() {
         layoutMain = findViewById(R.id.manualMain);
-
         imageButton = findViewById(R.id.back);
+
+        if (instan.m_Lang.equals(instan.specailLan)){
+            ConstraintSet jj = new ConstraintSet();
+            jj.clone((ConstraintLayout) findViewById(R.id.mytitle));
+            jj.clear(R.id.back, ConstraintSet.START);
+            jj.clear(R.id.back, ConstraintSet.END);
+            jj.connect(R.id.back, ConstraintSet.END, R.id.mytitle, ConstraintSet.END, 15);
+            jj.connect(R.id.back, ConstraintSet.TOP, R.id.mytitle, ConstraintSet.TOP, 3);
+            jj.applyTo(this.<ConstraintLayout>findViewById(R.id.mytitle));
+            imageButton.setImageResource(R.drawable.back_ar);
+        }
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -460,18 +422,24 @@ public class ManualActivity extends Activity {
     //销毁Webview
     @Override
     protected void onDestroy() {
-        if (m_webView != null) {
-            m_webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
-            m_webView.clearHistory();
-            ViewParent parent = m_webView.getParent();
-            if (parent != null) {
-                ((ViewGroup) parent).removeView(m_webView);
+        try {
+            if (m_webView != null) {
+                m_webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+                m_webView.clearHistory();
+                ViewParent parent = m_webView.getParent();
+                if (parent != null) {
+                    ((ViewGroup) parent).removeView(m_webView);
+                }
+                m_webView.removeAllViews();
+                m_webView.destroy();
+//            m_webView = null;
             }
-            m_webView.destroy();
-            m_webView = null;
+            instan.setShow(false);
+            super.onDestroy();
         }
-        instan.setShow(false);
-        super.onDestroy();
+        catch (Exception ex){
+
+        }
     }
 
     private class WebAppInterface {
@@ -486,13 +454,13 @@ public class ManualActivity extends Activity {
         }
 
         @JavascriptInterface
-        public void setUrlBody(String url, String body) {
+        public void setUrlBody(String url, final String body) {
             instan.httpRequest(instan.m_manualBaseURL + url, true, body, new CustomerData.RequestCallback() {
                 @Override
                 public void onResult(int code, String errMsg, JSONObject ret) {
                     if (!errMsg.isEmpty()){
-                        instan.alertDialog(ManualActivity.this, "manual setUrlBody error :\n " +errMsg);
-                        return;
+                        instan.alertDialog(ManualActivity.this, "manual setUrlBody error :\n " +errMsg + " request body " + body);
+//                        return;
                     }
                     showPostResponseJs(ret.toString(), code);
                 }
