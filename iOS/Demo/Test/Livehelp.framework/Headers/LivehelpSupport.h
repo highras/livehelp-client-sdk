@@ -1,10 +1,4 @@
-//
-//  LivehelpSupport.h
-//  FPCustomerService
-//
-//  Created by zsl on 2020/7/16.
-//  Copyright © 2020 FunPlus. All rights reserved.
-//
+
 
 #import <Foundation/Foundation.h>
 
@@ -19,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy,readonly)NSString * userName;
 @property(nonatomic,copy,readonly)NSString * domain;
 @property(nonatomic,copy,readonly)NSString * pushDeviceToken;
+@property(nonatomic,copy,readonly)NSArray * tags;
+@property(nonatomic,copy,readonly)NSMutableDictionary * customData;
+
 
 @end
 
