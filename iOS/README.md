@@ -64,7 +64,7 @@ SDK支持
 +(LivehelpSupportNavigationController * _Nullable)showAllFAQs;
 
 //会话类型 BOT-机器人(如果有客诉未解决将直接跳转到人工服务) HUMAN-人工
-+(LivehelpSupportNavigationController * _Nullable)showConversationWithType:(FPCustomerConversationType)type;
++(LivehelpSupportNavigationController * _Nullable)showConversationWithType:(LivehelpSupportConversationType)type;
 
 //修改语言
 +(void)setLanguage:(NSString*)language;
