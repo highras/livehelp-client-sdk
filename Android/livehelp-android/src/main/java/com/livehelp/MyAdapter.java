@@ -18,6 +18,7 @@ public class MyAdapter extends BaseExpandableListAdapter{
     public ArrayList<ArrayList<SpannableString>> mItemList = new ArrayList<>();
     public boolean isSearchFlag = false;
     private Context mContext;
+    CustomerData  instan =  CustomerData.INSTANCE;
     private final LayoutInflater mInflater = null;
 
     public MyAdapter(Context _context, ArrayList<SpannableString> group, ArrayList<ArrayList<SpannableString>> itemList){
@@ -26,15 +27,6 @@ public class MyAdapter extends BaseExpandableListAdapter{
         this.mItemList = itemList;
 //        mInflater = LayoutInflater.from(context);
     }
-
-//    public String[] groupString = {"射手", "辅助", "坦克", "法师"};
-//    public String[][] childString = {
-//            {"孙尚香", "后羿", "马可波罗", "狄仁杰"},
-//            {"孙膑", "蔡文姬", "鬼谷子", "杨玉环"},
-//            {"张飞", "廉颇", "牛魔", "项羽"},
-//            {"诸葛亮", "王昭君", "安琪拉", "干将"}
-//
-//    };
 
     @Override
     // 获取分组的个数
@@ -95,7 +87,10 @@ public class MyAdapter extends BaseExpandableListAdapter{
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
         if (convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.partent_item,parent,false);
+            if (instan.m_Lang.equals(instan.specailLan))
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.partent_item_ar,parent,false);
+            else
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.partent_item,parent,false);
             groupViewHolder = new GroupViewHolder();
             groupViewHolder.tvTitle = (TextView)convertView.findViewById(R.id.label_group_normal);
             groupViewHolder.parent_image = convertView.findViewById(R.id.parent_image);
@@ -136,7 +131,10 @@ public class MyAdapter extends BaseExpandableListAdapter{
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder childViewHolder;
         if (convertView==null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item,parent,false);
+            if (instan.m_Lang.equals(instan.specailLan))
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item_ar,parent,false);
+            else
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item,parent,false);
             childViewHolder = new ChildViewHolder();
             childViewHolder.tvTitle = (TextView)convertView.findViewById(R.id.expand_child);
             convertView.setTag(childViewHolder);

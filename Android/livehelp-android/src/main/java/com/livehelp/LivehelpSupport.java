@@ -29,8 +29,12 @@ public class LivehelpSupport {
      * 设置游戏语言
      * @param lang
      */
-    public static void setLanguage(String lang){
-        instanseData.sysLanguage = lang;
+    public static void setLanguage(String lang, UserInterface.IUserCallback callback ){
+        instanseData.m_Lang = lang;
+        instanseData.m_greeting = "";
+        if (instanseData.faqMap != null)
+            instanseData.faqMap.clear();
+        instanseData.getConfig( callback );
     }
 
 
@@ -39,7 +43,7 @@ public class LivehelpSupport {
      * @param userName  用户名称
      * @param avatar    用户头像url
      * @param email     用户邮箱
-     * @param tags      用户标签 	String 	optional 	用户身上的标签，用于分类，自动化过滤等
+     * @param tags      用户标签 	Stringoptional 	用户身上的标签，用于分类，自动化过滤等
      * @param email     电子邮箱
      * @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
      * @param deviceToken 推送token(可以再控制台设置推送)
@@ -88,7 +92,7 @@ public class LivehelpSupport {
     /**
      * 记录sdk内部发生的错误(可重载记录到自己的日志里 便于查询错误)
      */
-    public static void setErrorRecoder(ErrorRecorder errorRecoder){
-        instanseData.errorRecorder = errorRecoder;
+    public static void setErrorRecord(ErrorRecord errorRecord){
+        instanseData.errorRecord = errorRecord;
     }
 }

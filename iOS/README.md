@@ -47,21 +47,24 @@ SDK支持
 /// @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
 /// @param deviceToken 推送token(可以再控制台设置推送)
 /// @param resetResult 设置结果
-+(void)resetUserInfoWithUserId:(NSString * _Nonnull)userId
-                      userName:(NSString * _Nullable)userName
-                        avatar:(NSString * _Nullable)avatar
-                      language:(NSString * _Nonnull)language
-                         email:(NSString * _Nullable)email
-                          tags:(NSArray<NSString*> * _Nullable)tags
-                    customData:(NSDictionary * _Nullable)customData
-                   deviceToken:(NSString * _Nullable)deviceToken
-                   resetResult:(void(^)(BOOL isSuccess))resetResult;
++(void)setUserInfoWithUserId:(NSString * _Nonnull)userId
+                    userName:(NSString * _Nullable)userName
+                      avatar:(NSString * _Nullable)avatar
+                    language:(NSString * _Nonnull)language
+                       email:(NSString * _Nullable)email
+                        tags:(NSArray<NSString*> * _Nullable)tags
+                  customData:(NSDictionary * _Nullable)customData
+                 deviceToken:(NSString * _Nullable)deviceToken
+                 resetResult:(void(^)(BOOL isSuccess))resetResult;
+
+//用户下线 (退出后 如果想再次进入客服系统 需再次调用setUserInfo才能正常进入智能客服)
++(void)resetUserInfo;
 
 //常见问题列表
 +(LivehelpSupportNavigationController * _Nullable)showAllFAQs;
 
 //会话类型 BOT-机器人(如果有客诉未解决将直接跳转到人工服务) HUMAN-人工
-+(LivehelpSupportNavigationController * _Nullable)showConversationWithType:(FPCustomerConversationType)type;
++(LivehelpSupportNavigationController * _Nullable)showConversationWithType:(LivehelpSupportConversationType)type;
 
 //修改语言
 +(void)setLanguage:(NSString*)language;
@@ -79,15 +82,15 @@ BOOL result = [LivehelpSupport initWithAppId:
                                     language:];
     
     if (result) {
-          [LivehelpSupport resetUserInfoWithUserId: 
-                                          userName:
-                                            avatar: 
-                                          language:
-                                             email:
-                                              tags: 
-                                        customData:
-                                       deviceToken: 
-                                        resetResult:^(BOOL isSuccess) {
+          [LivehelpSupport setUserInfoWithUserId: 
+                                        userName:
+                                          avatar: 
+                                        language:
+                                           email:
+                                            tags: 
+                                      customData:
+                                     deviceToken: 
+                                      resetResult:^(BOOL isSuccess) {
     
                  if(isSuccess){
                     //其他接口调用

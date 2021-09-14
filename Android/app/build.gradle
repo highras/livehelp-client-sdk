@@ -41,7 +41,6 @@ android {
             buildConfigField("String", "key", '"vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0="')
         }
     }
-
 }
 
 dependencies {
@@ -50,4 +49,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation project(':livehelp-android')
     implementation 'com.github.arcadefire:nice-spinner:1.4'
+//    implementation 'com.github.highras:livehelp-android:1.4.0'
 }

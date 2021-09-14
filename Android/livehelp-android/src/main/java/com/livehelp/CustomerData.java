@@ -3,6 +3,8 @@
  import android.app.Activity;
  import android.app.ActivityManager;
  import android.app.AlertDialog;
+ import android.app.Application;
+ import android.app.Dialog;
  import android.content.Context;
  import android.content.DialogInterface;
  import android.content.Intent;
@@ -44,6 +46,8 @@
  import java.io.ObjectInputStream;
  import java.io.ObjectOutputStream;
  import java.io.OutputStreamWriter;
+ import java.lang.reflect.Field;
+ import java.lang.reflect.InvocationTargetException;
  import java.net.HttpURLConnection;
  import java.net.Inet4Address;
  import java.net.InetAddress;
@@ -51,14 +55,17 @@
  import java.net.URL;
  import java.nio.charset.StandardCharsets;
  import java.security.MessageDigest;
+ import java.text.SimpleDateFormat;
  import java.util.ArrayList;
  import java.util.Calendar;
+ import java.util.Date;
  import java.util.Dictionary;
  import java.util.Enumeration;
  import java.util.HashMap;
  import java.util.List;
  import java.util.Locale;
  import java.util.Map;
+ import java.util.TimeZone;
 
  import javax.crypto.Mac;
  import javax.crypto.spec.SecretKeySpec;
@@ -74,12 +81,12 @@
      HashMap<String,String> FAQFileMap = new HashMap<>();
      String m_manualBaseURL;
      String m_manualURL;
+     String specailLan = "ar";
      String m_configURL;
      String m_unreadURL;
      String m_userinfoURL;
      String m_faqURL;
      String deviceId = "";
-     String logTag = "customservice";
      String sysLanguage = Locale.getDefault().getLanguage();
      String model = Build.MODEL;
      String mANUFACTURER = Build.MANUFACTURER;
@@ -120,7 +127,7 @@
          deviceToken= "";
      }
 
-     ErrorRecorder errorRecorder = new ErrorRecorder() {
+     ErrorRecord errorRecord = new ErrorRecord() {
          @Override
          public void recordError(String message) {
              Log.e("customservice",message);
@@ -131,11 +138,11 @@
      public String  manualBaseTail = ".livehelp.ilivedata.com";
 
      private  String m_uId = "";
-     private  String m_greeting=  "";
+     String m_greeting=  "";
      private  String m_userName = "";
      private  String m_gameId =  "";
      private  String m_gameVersion = "";
-     private  String m_Lang = "en";
+     String m_Lang = "en";
      private  String m_appKey = "";
      private  String m_networkType = "";
      private  String deviceToken = "";
@@ -146,7 +153,7 @@
      private  int m_vipLevel = 0;
      private  Context appContext;
      private Map<String, String> m_NonceMap = new HashMap<>();
-     private Map<String, String> m_customData;
+     private Map<String, String> m_customData = new HashMap<>();
      private String m_session;
      private String version = "1.0.0";
 
@@ -186,7 +193,7 @@
              objectInputStream.close();
          }
          catch (Exception e) {
-             errorRecorder.recordError("readObject error " + e.getMessage());
+             errorRecord.recordError("readObject error " + e.getMessage());
          }
      }
 
@@ -208,7 +215,7 @@
              activity.startActivity(intent);
          }
          catch (Exception ex){
-             errorRecorder.recordError("faqShow error " + ex.getMessage());
+             errorRecord.recordError("faqShow error " + ex.getMessage());
              alertDialog(activity,"faqShow error " + ex.getMessage());
          }
      }
@@ -220,6 +227,12 @@
              alertDialog(activity,"please call setUserInfo successful first");
              return;
          }
+
+//         if (true){
+//             Intent intent = new Intent(activity, RobotActivity.class);
+//             activity.startActivity(intent);
+//             return;
+//         }
 
          String unreadUrl = m_unreadURL + "?appId=" + m_appId + "&userId=" + m_uId;
          httpRequest(unreadUrl, false, "",new RequestCallback() {
@@ -312,17 +325,25 @@
  //            }
  //        }).show();
  //        Looper.loop();
+         if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+             return;
+         }
 
          activity.runOnUiThread(new Runnable() {
              @Override
              public void run() {
-                 new AlertDialog.Builder(activity).setMessage(str).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                 builder.setMessage(str).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                      @Override
                      public void onClick(DialogInterface dialog, int which) {
  //                        if (activity.equals(M))
  //                        activity.finish();
                      }
-                 }).show();
+                 });
+                 if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+                     return;
+                 }
+                 builder.show();
              }
          });
      }
@@ -350,6 +371,56 @@
          m_userinfoURL = m_manualBaseURL + "/api/v1/jarvis/user/info";
          deviceId = Settings.Secure.getString(appContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 
+         getConfig(null);
+      }
+
+
+
+     public  Activity getActivity() throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException {
+         Class activityThreadClass = Class.forName("android.app.ActivityThread");
+         Object activityThread = activityThreadClass.getMethod("currentActivityThread").invoke(null);
+         Field activitiesField = activityThreadClass.getDeclaredField("mActivities");
+         activitiesField.setAccessible(true);
+         HashMap activities = (HashMap) activitiesField.get(activityThread);
+
+         for (Object activityRecord : activities.values()) {
+             Class activityRecordClass = activityRecord.getClass();
+             Field pausedField = activityRecordClass.getDeclaredField("paused");
+             pausedField.setAccessible(true);
+
+             if (!pausedField.getBoolean(activityRecord)) {
+                 Field activityField = activityRecordClass.getDeclaredField("activity");
+                 activityField.setAccessible(true);
+                 Activity activity = (Activity) activityField.get(activityRecord);
+                 return activity;
+             }
+         }
+         return null;
+
+     }
+
+
+      void flushTitle(){
+          Activity tmp = null;
+          try {
+              tmp = getActivity();
+          }catch (Exception e){
+          }
+          if (tmp == null)
+              return;
+          final Activity finalTmp = tmp;
+          tmp.runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                  final TextView view = finalTmp.findViewById(R.id.centerTitle);
+                  if (view != null)
+                      view.setText(titileText);
+              }
+          });
+        }
+
+
+      void getConfig(final UserInterface.IUserCallback callback ){
           String configUrl = m_configURL + "?appId=" + m_appId + "&language=" + m_Lang + "&platform=ANDROID";
           httpRequest(configUrl, false, "",new RequestCallback(){
               @Override
@@ -366,29 +437,30 @@
                                   if (responds2 != null) {
                                       titileText = responds2.optString("title");
                                       backgroundcolor = responds2.optString("bgColor");
+                                      flushTitle();
                                   }
                               }
                           }
                       }
                   }
                   else {
-                      errorRecorder.recordError("getConfig error " + errMsg);
+                      errorRecord.recordError("getConfig error " + errMsg);
                   }
+                  if (callback != null)
+                      callback.onResult(errMsg);
               }
           });
       }
-
 
      void setUserInfo(String userId, String userName, String avatar, String email, List<String> tags, Map<String, String> customData,
                       String deviceToken,final UserInterface.IUserCallback callback){
          m_uId = userId;
          m_tags = tags;
-         m_customData = customData;
+         m_customData = new HashMap<>(customData);
          this.deviceToken = deviceToken;
          m_userName = userName;
-         deviceToken = "";
 
-         JSONObject postjson = new JSONObject();
+         final JSONObject postjson = new JSONObject();
          try {
              postjson.put("appId", m_appId);
              postjson.put("userId", m_uId);
@@ -398,8 +470,11 @@
              postjson.put("email", email);
              postjson.put("platform", "Android");
              postjson.put("deviceToken", deviceToken);
+
          }catch (JSONException ex){
-             errorRecorder.recordError("setUserInfo error "+  String.format("exception: %s", ex));
+             errorRecord.recordError("setUserInfo error "+  String.format("exception: %s", ex));
+             callback.onResult("setUserInfo error "+  String.format("exception: %s", ex));
+             return;
          }
 
          httpRequest(m_userinfoURL + "?appId=" + m_appId, true, postjson.toString(), new RequestCallback() {
@@ -407,8 +482,8 @@
              public void onResult(int responseCode, String errMsg, JSONObject ret) {
                  String msg = "";
                  if (!errMsg.isEmpty()){
-                     msg = "post setUserInfo error " + errMsg;
-                     errorRecorder.recordError(msg);
+                     msg = "post setUserInfo error " + errMsg + "postjson " + postjson.toString();
+                     errorRecord.recordError(msg);
                  }
                  else{
                      hasinitOk = true;
@@ -484,7 +559,7 @@
              mac.init(new SecretKeySpec(key, algorithm));
              return mac.doFinal(data);
          } catch (Exception e) {
-             errorRecorder.recordError("Unable to calculate a signature: " + e.getMessage());
+             errorRecord.recordError("Unable to calculate a signature: " + e.getMessage());
          }
          return null;
      }
@@ -494,7 +569,7 @@
              byte[] signature = sign(data.getBytes("UTF-8"), key.getBytes("UTF-8"), algorithm);
              return Base64.encodeToString(signature, Base64.DEFAULT);
          } catch (Exception e) {
-             errorRecorder.recordError("Unable to calculate a request signature: " + e.getMessage());
+             errorRecord.recordError("Unable to calculate a request signature: " + e.getMessage());
          }
          return "";
      }
@@ -548,7 +623,7 @@
          }
          catch(Exception e)
          {
-             errorRecorder.recordError("Unable to calculate a request signature: " + e.getMessage());
+             errorRecord.recordError("Unable to calculate a request signature: " + e.getMessage());
          }
          return "";
      }
@@ -594,12 +669,17 @@
 
      static String getTime()
      {
-         Calendar cal = Calendar.getInstance();
-         int zoneOffset = cal.get(Calendar.ZONE_OFFSET);   //取得时间偏移量
-         int dstOffset = cal.get(Calendar.DST_OFFSET); //取得夏令时差
-         cal.add(Calendar.MILLISECOND, -(zoneOffset + dstOffset));
-         String s = DateFormat.format("yyyy'-'MM'-'dd'T'hh':'mm':'ss'Z'", cal).toString();
-         return s;
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+         String  restime = sdf.format(new Date());
+         return restime;
+
+//         Calendar cal = Calendar.getInstance(Locale.US);
+//         int zoneOffset = cal.get(Calendar.ZONE_OFFSET);   //取得时间偏移量
+//         int dstOffset = cal.get(Calendar.DST_OFFSET); //取得夏令时差
+//         cal.add(Calendar.MILLISECOND, -(zoneOffset + dstOffset));
+//         String s = DateFormat.format("yyyy'-'MM'-'dd'T'hh':'mm':'ss'Z'", cal).toString();
+//         return s;
      }
 
      String getAppKey() {
@@ -776,7 +856,7 @@
          }
          catch (JSONException e)
          {
-             errorRecorder.recordError("sendUserDataToJS_infoeditor error " + e.getMessage());
+             errorRecord.recordError("sendUserDataToJS_infoeditor error " + e.getMessage());
          }
          return obt;
      }
@@ -805,7 +885,7 @@
          }
          catch (Exception ex){
              ex.printStackTrace();
-             errorRecorder.recordError("sendUserDataToJS error " + ex.getMessage());
+             errorRecord.recordError("sendUserDataToJS error " + ex.getMessage());
          }
          return ret.toString();
      }

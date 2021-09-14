@@ -13,7 +13,7 @@
 - Add dependency in your module's build.gradle:
     ~~~
     dependencies {
-        implementation 'com.github.highras:livehelp-android:1.4.0'
+        implementation 'com.github.highras:livehelp-android:1.4.1'
     }
     ~~~
 
@@ -76,6 +76,12 @@
      * @param activity
      */
     public static void showAllFAQs(Activity activity);
+    
+    
+    /**
+     * 记录sdk内部发生的错误(可重载记录到自己的日志里 便于查询错误 在初始化之前设置)
+     */
+    public static void setErrorRecord(ErrorRecord errorRecord)
 ~~~
 
 
