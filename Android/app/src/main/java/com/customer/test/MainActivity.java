@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
             prokeys = BuildConfig.key;
             pid = BuildConfig.pid;
             sdomain = "funplus";
+//            sdomain = "livedata";
             CustomerData.INSTANCE.robotURL = BuildConfig.roboturl;
             CustomerData.INSTANCE.manualBaseTail = BuildConfig.baseurl;
         }
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
 //        LivehelpSupport.setErrorRecoder(new ErrorRecorder() {
             @Override
             public void recordError(String message) {
-                Log.e("hehe","fuck");
+                Log.e("hehe","curr error " + message);
             }
         });
         LivehelpSupport.init(getApplicationContext(),pid, prokeys, sdomain, slang);

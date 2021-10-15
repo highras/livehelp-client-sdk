@@ -95,6 +95,7 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
+     public String SDKVerison = "1.4.2";
 
 
      void setcolor(Activity activity){
@@ -136,6 +137,9 @@
 
      public String  robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
      public String  manualBaseTail = ".livehelp.ilivedata.com";
+
+//     public String  robotURL = "https://jarvis.ilivedata.com/edith/conversation";
+//     public String  manualBaseTail = ".jarvis.ilivedata.com";
 
      private  String m_uId = "";
      String m_greeting=  "";
@@ -182,6 +186,7 @@
          settings.setTextZoom(100);
          settings.setSupportZoom(true);
          settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//         settings.setDomStorageEnabled(true);
      }
 
      public void readObject(){

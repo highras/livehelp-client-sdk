@@ -95,4 +95,12 @@ public class LivehelpSupport {
     public static void setErrorRecord(ErrorRecord errorRecord){
         instanseData.errorRecord = errorRecord;
     }
+
+
+    /**
+     * 获取当前sdk版本号
+     */
+    public static String getSDKVersion(){
+        return instanseData.SDKVerison;
+    }
 }

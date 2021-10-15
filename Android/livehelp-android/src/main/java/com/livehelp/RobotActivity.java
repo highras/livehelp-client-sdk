@@ -14,11 +14,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -58,6 +60,9 @@ public class RobotActivity extends Activity {
     private WebView m_webView;
 
     int webviewCount = 0;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mUploadMessage = null;
@@ -176,6 +181,7 @@ public class RobotActivity extends Activity {
         });
     }
 
+
     private void addWebview(String url){
         WebView jj  = new WebView(this);
         jj.setLayoutParams(m_webView.getLayoutParams());
@@ -200,6 +206,8 @@ public class RobotActivity extends Activity {
         layoutMain.getChildAt(layoutMain.getChildCount() -2).setVisibility(View.GONE);
         jj.loadUrl(url);
     }
+
+
 
 
     //初始化WebView
@@ -236,6 +244,9 @@ public class RobotActivity extends Activity {
 
         instan.webSeting(m_webView);
         m_webView.addJavascriptInterface(new WebAppInterface(), "edithData");
+
+
+//        Log.i("sdktest","enablejavascript " + m_webView.getSettings().getJavaScriptEnabled());
 
         // 设置支持https
         m_webView.setWebViewClient(new WebViewClient() {
@@ -337,6 +348,19 @@ public class RobotActivity extends Activity {
         });
 
         m_webView.setWebChromeClient(new WebChromeClient() {
+
+//            @Override
+//            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+//                String message = consoleMessage.message();
+//                int lineNumber = consoleMessage.lineNumber();
+//                String sourceID = consoleMessage.sourceId();
+//                String messageLevel = consoleMessage.message();
+//
+//                Log.i("[sdktest]", String.format("robot [%s] sourceID: %s lineNumber: %n message: %s",
+//                        messageLevel, sourceID, lineNumber, message));
+//
+//                return super.onConsoleMessage(consoleMessage);
+//            }
 
             //针对 Android 5.0+
             @Override
@@ -490,11 +514,17 @@ public class RobotActivity extends Activity {
     protected void onResume() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         super.onResume();
+        m_webView.onResume();
+        m_webView.resumeTimers();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+//        //暂停WebView在后台的所有活动
+//        m_webView.onPause();
+//        //暂停WebView在后台的JS活动
+//        m_webView.pauseTimers();
     }
 
     @Override
@@ -569,6 +599,7 @@ public class RobotActivity extends Activity {
             usableHeightPrevious = usableHeightNow;
         }
     }
+
 
     private int computeUsableHeight() {
         Rect r = new Rect();
