@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="      © 2021 北京云上曲率科技有限公司 \nAll Rights Reserved.京ICP备18051523号 "
@@ -137,16 +138,16 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.customer.test.CustomeEdittext
+        android:layout_marginTop="30dp"
         android:id="@+id/userID"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="88dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         customeedittext:bottomMessage="请输入用户ID"
         customeedittext:isShowTopMessage="true"
         customeedittext:topMessage="用户ID"></com.customer.test.CustomeEdittext>

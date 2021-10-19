@@ -16,11 +16,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -142,7 +144,6 @@ public class ManualActivity extends Activity {
         jj.loadUrl(url);
     }
 
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -237,6 +238,19 @@ public class ManualActivity extends Activity {
         });
 
         m_webView.setWebChromeClient(new WebChromeClient() {
+
+//            @Override
+//            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+//                String message = consoleMessage.message();
+//                int lineNumber = consoleMessage.lineNumber();
+//                String sourceID = consoleMessage.sourceId();
+//                String messageLevel = consoleMessage.message();
+//
+//                Log.i("[sdktest]", String.format("manual [%s] sourceID: %s lineNumber: %n message: %s",
+//                        messageLevel, sourceID, lineNumber, message));
+//
+//                return super.onConsoleMessage(consoleMessage);
+//            }
 
             //针对 Android 5.0+
             @Override
@@ -377,6 +391,31 @@ public class ManualActivity extends Activity {
         String webUrl = instan.getManualURL();
         if (!TextUtils.isEmpty(webUrl) && m_webView != null)
             m_webView.loadUrl(webUrl);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//sdk>19才有用
+                        m_webView.evaluateJavascript("javascript:getThanksMsg()", new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String Str) {
+//                                Log.e("sdktest","调用js返回值 " + Str);
+//                        Toast.makeText(getApplicationContext(), "我是android调用js方法,返回结果是" + Str, Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                }
+                catch (Exception ex){
+
+                }
+            }
+//                m_webView.loadData(content,"text/html", "utf-8");
+        });
     }
 
     /**
@@ -396,17 +435,19 @@ public class ManualActivity extends Activity {
     // 设置横竖屏
     @Override
     protected void onResume() {
-        if (landscape) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        }
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         super.onResume();
+        m_webView.onResume();
+        m_webView.resumeTimers();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+//        //暂停WebView在后台的所有活动
+//        m_webView.onPause();
+//        //暂停WebView在后台的JS活动
+//        m_webView.pauseTimers();
     }
 
     @Override
