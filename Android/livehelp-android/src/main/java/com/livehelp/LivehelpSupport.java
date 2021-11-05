@@ -32,8 +32,10 @@ public class LivehelpSupport {
     public static void setLanguage(String lang, UserInterface.IUserCallback callback ){
         instanseData.m_Lang = lang;
         instanseData.m_greeting = "";
-        if (instanseData.faqMap != null)
-            instanseData.faqMap.clear();
+//        if (instanseData.faqMap != null)
+//            instanseData.faqMap.clear();
+        if (instanseData.showfaqList != null)
+            instanseData.showfaqList.clear();
         instanseData.getConfig( callback );
     }
 

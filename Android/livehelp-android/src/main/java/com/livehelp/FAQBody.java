@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class FAQBody extends Activity {
     CustomerData instan = CustomerData.INSTANCE;
     HashMap<String, String> faqMap = instan.FAQFileMap;
-    FAQUnit.FAQInfo info = null;
+    FAQUnit.FAQInfo.FAQINNER info = null;
     TextView texthelpmsg;
     FAQUnit.LanagePrompt remind = instan.lanagePrompt;
     ImageButton textyes, textno;
@@ -90,9 +90,17 @@ public class FAQBody extends Activity {
         String firstTitle = getIntent().getStringExtra("firstTitle");
         String secondTitle = getIntent().getStringExtra("secondTitle");
 
-        if (instan.faqMap.containsKey(firstTitle))
-            if (instan.faqMap.get(firstTitle).containsKey(secondTitle))
-                info = instan.faqMap.get(firstTitle).get(secondTitle);
+//        if (instan.faqMap.containsKey(firstTitle))
+//            if (instan.faqMap.get(firstTitle).containsKey(secondTitle))
+//                info = instan.faqMap.get(firstTitle).get(secondTitle);
+        for (FAQUnit.FAQInfo hehe: instan.showfaqList){
+            if (hehe.firstTitle.equals(firstTitle)) {
+                for (FAQUnit.FAQInfo.FAQINNER tt : hehe.realInfo) {
+                    if (tt.secondTitle.equals(secondTitle))
+                        info = tt;
+                }
+            }
+        }
         if (info == null){
             instan.errorRecord.recordError(" can't find FAQInfo firsttitle " + firstTitle + " second title " + secondTitle);
             return;

@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class FAQUnit extends Activity {
     Context context = this;
     CustomerData instan = CustomerData.INSTANCE;
@@ -50,19 +49,32 @@ public class FAQUnit extends Activity {
     //item数据
     private ArrayList<ArrayList<SpannableString>> mItemSet = new ArrayList<>();
 
-    class FAQInfo {
-        String id;
-        String sectionId;
-        String body;
-        long modifyTime;
+//    class FAQInfo {
+//        String id;
+//        String sectionId;
+//        String body;
+//        long modifyTime;
+//
+//        FAQInfo(String _id, String _sectionId, String _body, long _modifyTime) {
+//            id = _id;
+//            sectionId = _sectionId;
+//            body = _body;
+//            modifyTime = _modifyTime;
+//        }
+//    }
 
-        FAQInfo(String _id, String _sectionId, String _body, long _modifyTime) {
-            id = _id;
-            sectionId = _sectionId;
-            body = _body;
-            modifyTime = _modifyTime;
+    static class FAQInfo {
+        String firstTitle;
+        ArrayList<FAQINNER> realInfo = new ArrayList();
+         public static class FAQINNER {
+            String secondTitle;
+            String id;
+            String sectionId;
+            String body;
+            long modifyTime;
         }
     }
+
 
     class LanagePrompt {
         String helpfulYes = "YES";
@@ -92,13 +104,25 @@ public class FAQUnit extends Activity {
 
                 searchView.setQueryHint(tmplanagePrompt.searchtPrompt);
 
-                if (instan.faqMap != null) {
-                    for (String title : instan.faqMap.keySet()) {
-                        SpannableString tt = new SpannableString(title);
+//                if (instan.faqMap != null) {
+//                    for (String title : instan.faqMap.keySet()) {
+//                        SpannableString tt = new SpannableString(title);
+//                        mGroupList.add(tt);
+//                        ArrayList<SpannableString> tmp = new ArrayList<SpannableString>();
+//                        for (String secondtitle : instan.faqMap.get(title).keySet()) {
+//                            SpannableString sectitle = new SpannableString(secondtitle);
+//                            tmp.add(sectitle);
+//                        }
+//                        mItemSet.add(tmp);
+//                    }
+//                }
+                if (instan.showfaqList != null) {
+                    for (FAQInfo kkk  : instan.showfaqList) {
+                        SpannableString tt = new SpannableString(kkk.firstTitle);
                         mGroupList.add(tt);
                         ArrayList<SpannableString> tmp = new ArrayList<SpannableString>();
-                        for (String secondtitle : instan.faqMap.get(title).keySet()) {
-                            SpannableString sectitle = new SpannableString(secondtitle);
+                        for(FAQInfo.FAQINNER faqinner: kkk.realInfo){
+                            SpannableString sectitle = new SpannableString(faqinner.secondTitle);
                             tmp.add(sectitle);
                         }
                         mItemSet.add(tmp);
@@ -135,24 +159,49 @@ public class FAQUnit extends Activity {
                     instan.lanagePrompt = tmplanagePrompt;
                     JSONArray sections = data.optJSONArray("sections");
                     if (sections != null) {
+//                        for (int i = 0; i < sections.length(); i++) {
+//                            JSONObject obj = sections.optJSONObject(i);
+//                            if (obj != null) {
+//                                String firstTitle = obj.optString("title");
+//                                JSONArray secondObj = obj.optJSONArray("faqs");
+//                                if (secondObj != null) {
+//                                    Map<String, FAQInfo> tmpMap = new HashMap<String, FAQInfo>();
+//                                    for (int j = 0; j < secondObj.length(); j++) {
+//                                        JSONObject realFAQ = secondObj.optJSONObject(j);
+//                                        if (realFAQ != null) {
+//                                            String secondTitle = realFAQ.optString("title");
+//                                            FAQInfo faqInfo = new FAQInfo(realFAQ.optString("id"), realFAQ.optString("sectionId"), realFAQ.optString("body"), realFAQ.optLong("modifiedDate"));
+//                                            tmpMap.put(secondTitle, faqInfo);
+//                                        }
+//                                    }
+//                                    if (instan.faqMap != null)
+//                                        instan.faqMap.put(firstTitle, tmpMap);
+//                                }
+//                            }
+//                        }
+
                         for (int i = 0; i < sections.length(); i++) {
+                            FAQInfo faqInfo = new FAQInfo();
                             JSONObject obj = sections.optJSONObject(i);
                             if (obj != null) {
-                                String firstTitle = obj.optString("title");
+                                faqInfo.firstTitle = obj.optString("title");
                                 JSONArray secondObj = obj.optJSONArray("faqs");
                                 if (secondObj != null) {
-                                    Map<String, FAQInfo> tmpMap = new HashMap<String, FAQInfo>();
                                     for (int j = 0; j < secondObj.length(); j++) {
                                         JSONObject realFAQ = secondObj.optJSONObject(j);
                                         if (realFAQ != null) {
-                                            String secondTitle = realFAQ.optString("title");
-                                            FAQInfo faqInfo = new FAQInfo(realFAQ.optString("id"), realFAQ.optString("sectionId"), realFAQ.optString("body"), realFAQ.optLong("modifiedDate"));
-                                            tmpMap.put(secondTitle, faqInfo);
+                                            FAQInfo.FAQINNER ttt = new FAQInfo.FAQINNER();
+                                            ttt.secondTitle = realFAQ.optString("title");
+                                            ttt.id = realFAQ.optString("id");
+                                            ttt.sectionId = realFAQ.optString("sectionId");
+                                            ttt.modifyTime = realFAQ.optLong("modifiedDate");
+                                            ttt.body = realFAQ.optString("body");
+                                            faqInfo.realInfo.add(ttt);
                                         }
                                     }
-                                    if (instan.faqMap != null)
-                                        instan.faqMap.put(firstTitle, tmpMap);
                                 }
+                                if (instan.showfaqList != null)
+                                    instan.showfaqList.add(faqInfo);
                             }
                         }
                     }
@@ -184,7 +233,7 @@ public class FAQUnit extends Activity {
             } else {
                 searchGroupList.clear();
                 searchMap.clear();
-                if (instan.faqMap != null) {
+       /*         if (instan.faqMap != null) {
                     for (String first : instan.faqMap.keySet()) {
                         for (String title : instan.faqMap.get(first).keySet()) {
                             int index = title.toLowerCase().indexOf(text);
@@ -207,7 +256,33 @@ public class FAQUnit extends Activity {
                             }
                         }
                     }
+                }*/
+
+                if (instan.showfaqList != null) {
+                    for (FAQInfo faqinfos : instan.showfaqList) {
+                        for (FAQInfo.FAQINNER tt: faqinfos.realInfo) {
+                            int index = tt.secondTitle.toLowerCase().indexOf(text);
+                            if (index != -1) {
+                                SpannableString ss = new SpannableString(tt.secondTitle);
+                                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.parseColor("#49ADFF"));
+                                ss.setSpan(foregroundColorSpan, index, index + text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                searchGroupList.add(ss);
+                                searchMap.put(ss.toString(), faqinfos.firstTitle);
+                                continue;
+                            } else {
+                                String body = tt.body;
+                                int index1 = body.indexOf(text);
+                                if (index1 != -1) {
+                                    SpannableString ss = new SpannableString(tt.secondTitle);
+                                    searchGroupList.add(ss);
+                                    searchMap.put(ss.toString(), faqinfos.firstTitle);
+
+                                }
+                            }
+                        }
+                    }
                 }
+
                 if (!searchGroupList.isEmpty()) {
                     adapter.isSearchFlag = true;
                     adapter.mGroup = searchGroupList;
@@ -348,9 +423,12 @@ public class FAQUnit extends Activity {
 
 //        faqList.setSelector(R.drawable.bg_searchview);
 
-        if (instan.faqMap == null)
-            instan.faqMap = new HashMap<>();
-        if (instan.faqMap.isEmpty())
+//        if (instan.faqMap == null)
+//            instan.faqMap = new HashMap<>();
+//        if (instan.faqMap.isEmpty())
+        if (instan.showfaqList == null)
+            instan.showfaqList = new ArrayList<>();
+        if (instan.showfaqList.isEmpty())
             initFAQData();
         else
             showResponse();

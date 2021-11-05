@@ -75,7 +75,8 @@
  public enum CustomerData {
      INSTANCE;
      volatile boolean hasinitOk = false;
-     Map<String, Map<String, FAQUnit.FAQInfo>> faqMap = new HashMap<>();
+//     Map<String, Map<String, FAQUnit.FAQInfo>> faqMap = new HashMap<>();
+     ArrayList<FAQUnit.FAQInfo> showfaqList = new ArrayList<>();
      FAQUnit.LanagePrompt lanagePrompt;
      File FAQfile;
      HashMap<String,String> FAQFileMap = new HashMap<>();
@@ -95,7 +96,7 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
-     public String SDKVerison = "1.4.2";
+     public String SDKVerison = "1.4.3";
 
 
      void setcolor(Activity activity){
@@ -126,6 +127,10 @@
          m_tags.clear();
          m_customData.clear();
          deviceToken= "";
+//         if (faqMap != null)
+//             faqMap.clear();
+         if (showfaqList != null)
+             showfaqList.clear();
      }
 
      ErrorRecord errorRecord = new ErrorRecord() {

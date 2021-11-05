@@ -99,6 +99,7 @@ public class MyAdapter extends BaseExpandableListAdapter{
             groupViewHolder = (GroupViewHolder)convertView.getTag();
         }
         groupViewHolder.tvTitle.setText(mGroup.get(groupPosition));
+        groupViewHolder.tvTitle.setTextSize(16);
         if (isSearchFlag) {
             groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.itemright));
         }
