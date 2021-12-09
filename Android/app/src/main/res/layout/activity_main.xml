@@ -47,6 +47,19 @@
 
     </com.customer.test.CustomeEdittext>
 
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/testtype"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40px"
+        android:layout_marginEnd="40px"
+        app:textTint="@color/white"
+        app:backgroundSelector="@drawable/background_selector"
+        android:background="@drawable/layoutback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></org.angmarch.views.NiceSpinner>
+
     <com.customer.test.CustomeEdittext
         android:id="@+id/domain"
         android:layout_width="0dp"
@@ -203,9 +216,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/loginout"
         app:layout_constraintStart_toEndOf="@+id/loginout"
         app:layout_constraintTop_toTopOf="@+id/loginout"
-        app:layout_constraintVertical_bias="0.0" /><![CDATA[
-
-    " />
-
-]]>
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

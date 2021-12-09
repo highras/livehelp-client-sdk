@@ -66,6 +66,8 @@
  import java.util.Locale;
  import java.util.Map;
  import java.util.TimeZone;
+ import java.util.concurrent.atomic.AtomicInteger;
+ import java.util.concurrent.atomic.AtomicLong;
 
  import javax.crypto.Mac;
  import javax.crypto.spec.SecretKeySpec;
@@ -96,7 +98,8 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
-     public String SDKVerison = "1.4.3";
+     public String SDKVerison = "1.4.4";
+     AtomicLong diffTime = new AtomicLong(0);
 
 
      void setcolor(Activity activity){
@@ -142,6 +145,7 @@
 
      public String  robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
      public String  manualBaseTail = ".livehelp.ilivedata.com";
+     public String  serverTimeURL = "https://jarvis.ilivedata.com/timestamp";
 
 //     public String  robotURL = "https://jarvis.ilivedata.com/edith/conversation";
 //     public String  manualBaseTail = ".jarvis.ilivedata.com";
@@ -380,10 +384,8 @@
          m_unreadURL = m_manualBaseURL + "/api/v1/jarvis/unread";
          m_userinfoURL = m_manualBaseURL + "/api/v1/jarvis/user/info";
          deviceId = Settings.Secure.getString(appContext.getContentResolver(), Settings.Secure.ANDROID_ID);
-
          getConfig(null);
       }
-
 
 
      public  Activity getActivity() throws ClassNotFoundException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException {
@@ -487,27 +489,35 @@
              return;
          }
 
-         httpRequest(m_userinfoURL + "?appId=" + m_appId, true, postjson.toString(), new RequestCallback() {
+         final long sendTime = System.currentTimeMillis();
+         getConfig(null);
+         httpRequest(serverTimeURL, false, "", new RequestCallback() {
              @Override
              public void onResult(int responseCode, String errMsg, JSONObject ret) {
-                 String msg = "";
-                 if (!errMsg.isEmpty()){
-                     msg = "post setUserInfo error " + errMsg + "postjson " + postjson.toString();
-                     errorRecord.recordError(msg);
+                 long recieveTime = System.currentTimeMillis();
+                 if (errMsg.isEmpty()) {
+                     double tt= ret.optDouble("result");
+                     long serverTime = (long) (tt*1000);
+                     long addtime = recieveTime - (recieveTime-sendTime) / 2 - serverTime;
+                     Log.i("sdktest", "difftime is:" + addtime);
+//                     diffTime.set(addtime);
                  }
-                 else{
-                     hasinitOk = true;
-                 }
-                 callback.onResult(msg);
+                 httpRequest(m_userinfoURL + "?appId=" + m_appId, true, postjson.toString(), new RequestCallback() {
+                     @Override
+                     public void onResult(int responseCode, String errMsg, JSONObject ret) {
+                         String msg = "";
+                         if (!errMsg.isEmpty()){
+                             msg = "post setUserInfo error " + errMsg + "postjson " + postjson.toString();
+                             errorRecord.recordError(msg);
+                         }
+                         else{
+                             hasinitOk = true;
+                         }
+                         callback.onResult(msg);
+                     }
+                 });
              }
          });
-
-
- //        m_vipLevel = vipLevel;
- //        m_gameId = gameId;
- //        m_serverId = serverId;
- //        m_tags = tags;
- //        m_customData = customData;
      }
 
      interface RequestCallback{
@@ -544,7 +554,6 @@
                      resultCode = conn.getResponseCode();
                      StringBuilder builder = new StringBuilder();
                      if (resultCode == HttpURLConnection.HTTP_OK) {
-
                          String readLine = null;
                          BufferedReader responseReader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                          while ((readLine = responseReader.readLine()) != null) {
@@ -677,11 +686,12 @@
          return  realUrl;
      }
 
-     static String getTime()
+     String getTime()
      {
          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
-         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-         String  restime = sdf.format(new Date());
+         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+//         String  restime = sdf.format(new Date());
+         String  restime = sdf.format(System.currentTimeMillis() - diffTime.get());
          return restime;
 
 //         Calendar cal = Calendar.getInstance(Locale.US);
@@ -849,7 +859,7 @@
              otherJson.put("osVersion",sysVersion);
              otherJson.put("networkType",m_networkType);
              otherJson.put("platform","ANDROID");
-             otherJson.put("sdkVersion","1.0.0");
+             otherJson.put("sdkVersion",SDKVerison);
              Locale locale = appContext.getResources().getConfiguration().locale;
              String language = locale.getLanguage();
              if (!locale.getCountry() .equals(""))
@@ -864,8 +874,7 @@
              if (m_customData != null)
                  obt.put("custom",m_customData.toString());
          }
-         catch (JSONException e)
-         {
+         catch (JSONException e) {
              errorRecord.recordError("sendUserDataToJS_infoeditor error " + e.getMessage());
          }
          return obt;

@@ -13,7 +13,7 @@
 - Add dependency in your module's build.gradle:
     ~~~
     dependencies {
-        implementation 'com.github.highras:livehelp-android:1.4.2'
+        implementation 'com.github.highras:livehelp-android:1.4.4'
     }
     ~~~
 

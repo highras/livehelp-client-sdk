@@ -17,6 +17,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.provider.Settings.Secure;
@@ -46,9 +47,12 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
     Activity mactivity;
     SharedPreferences sp;
     CustomeEdittext customProjectId, customUserid, customDomain,customprokey;
+    String userId ="", prokeys="",slang="", sdomain = "";
+    int pid;
 
     final String[] buttonNames = {"robot", "faq","manualMain","login","loginout","switchlan"};
     NiceSpinner lanspinner;
+    NiceSpinner testtype;
     boolean hasgetdefault = false;
     CustomLang langcode = new CustomLang();
 
@@ -99,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
                     LivehelpSupport.showConversation(MainActivity.this, UserInterface.ConversationType.BOT);
                     break;
                 case R.id.faq:
+//                    LivehelpSupport.unreadMessage(new UserInterface.IUnreadCallback() {
+//                        @Override
+//                        public void getMsg(String errmsg, int unreadCount) {
+//                            mylog.log("errmsg " + errmsg + " unreadCount:" + unreadCount);
+//                        }
+//                    });
                     LivehelpSupport.showAllFAQs(MainActivity.this);
                     break;
                 case R.id.manualMain:
@@ -120,40 +130,57 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
 
     boolean initCustome(){
         saveDB();
-        String userId, prokeys,slang, sdomain;
-        int pid = 0;
+        LivehelpSupport.resetUserInfo();
+        CustomLang.CItem kk = ((CustomLang.CItem)(testtype.getSelectedItem()));
+        if (kk.Value.equals("test")){
+            prokeys = "vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0=";
+            pid = 90900003;
+            sdomain = "funplus";
+            CustomerData.INSTANCE.robotURL = "https://jarvis.ilivedata.com/edith/conversation";
+            CustomerData.INSTANCE.manualBaseTail = ".jarvis.ilivedata.com";
+            CustomerData.INSTANCE.serverTimeURL = "https://jarvis.ilivedata.com/timestamp";
+        }
+        else if (kk.Value.equals("producation")){
+            prokeys = "61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=";
+            pid = 80900001;
+            sdomain = "funplus";
+            CustomerData.INSTANCE.robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
+            CustomerData.INSTANCE.manualBaseTail = ".livehelp.ilivedata.com";
+            CustomerData.INSTANCE.serverTimeURL = "https://livehelp.ilivedata.com/timestamp";
+        }
+
         userId = customUserid.getContent();
         slang = ((CustomLang.CItem)(lanspinner.getSelectedItem())).getValue();
         String android_id=Secure.getString(getContentResolver(),Secure.ANDROID_ID);
-        if (BuildConfig.BUILD_TYPE == "devTest" || BuildConfig.BUILD_TYPE == "production"){
-            prokeys = BuildConfig.key;
-            pid = BuildConfig.pid;
-            sdomain = "funplus";
-//            sdomain = "livedata";
-            CustomerData.INSTANCE.robotURL = BuildConfig.roboturl;
-            CustomerData.INSTANCE.manualBaseTail = BuildConfig.baseurl;
-        }
-        else
-        {
-            sdomain = customDomain.getContent();
-            if (sdomain == null || sdomain.isEmpty()){
-                alertDialog("please input domain");
-                return false;
-            }
-            prokeys = customprokey.getContent();
-
-            if(prokeys == null || prokeys.isEmpty()){
-                alertDialog("please input project key");
-                return false;
-            }
-
-            String spid = customProjectId.getContent();
-            if (spid == null || spid.isEmpty()){
-                alertDialog("please input project id");
-                return false;
-            }
-            pid = Integer.parseInt(spid);
-        }
+//        if (BuildConfig.BUILD_TYPE == "devTest" || BuildConfig.BUILD_TYPE == "production"){
+//            prokeys = BuildConfig.key;
+//            pid = BuildConfig.pid;
+//            sdomain = "funplus";
+////            sdomain = "livedata";
+//            CustomerData.INSTANCE.robotURL = BuildConfig.roboturl;
+//            CustomerData.INSTANCE.manualBaseTail = BuildConfig.baseurl;
+//        }
+//        else
+//        {
+//            sdomain = customDomain.getContent();
+//            if (sdomain == null || sdomain.isEmpty()){
+//                alertDialog("please input domain");
+//                return false;
+//            }
+//            prokeys = customprokey.getContent();
+//
+//            if(prokeys == null || prokeys.isEmpty()){
+//                alertDialog("please input project key");
+//                return false;
+//            }
+//
+//            String spid = customProjectId.getContent();
+//            if (spid == null || spid.isEmpty()){
+//                alertDialog("please input project id");
+//                return false;
+//            }
+//            pid = Integer.parseInt(spid);
+//        }
 
         if( userId.isEmpty() || sdomain.isEmpty() || pid ==0 || slang.isEmpty()){
             alertDialog("用户id 项目id 项目域名 语言 有空值");
@@ -239,6 +266,13 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         sp=getSharedPreferences("Logindb",MODE_PRIVATE);
 
         LinkedList<CustomLang.CItem> lanarray = langcode.getlangcode();
+        final LinkedList<CustomLang.CItem> testtypevalue = new LinkedList<CustomLang.CItem>(){{
+                add(new CustomLang.CItem("测试服","test"));
+                add(new CustomLang.CItem("正式服","producation"));
+                add(new CustomLang.CItem("发布版","release"));
+            }
+        };
+
 //        int ii = lanarray.indexOf(new CustomLang.CItem("English","en"));
         int ii = lanarray.indexOf(new CustomLang.CItem("Simplified Chinese","zh-CN"));
         lanspinner = findViewById(R.id.nice_spinner);
@@ -248,6 +282,10 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         if (ii > 0)
             lanspinner.setSelectedIndex(ii);
 
+
+        testtype = findViewById(R.id.testtype);
+        testtype.attachDataSource(testtypevalue);
+        testtype.setBackgroundResource(R.drawable.shape_nicespinner);
 
         customUserid = $(R.id.userID);
         customUserid.setOnSuccessListener(this);

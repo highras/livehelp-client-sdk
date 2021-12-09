@@ -24,37 +24,10 @@ android {
 
 
     buildTypes {
-        production.initWith(buildTypes.debug)
-        production {
-            buildConfigField("String", "roboturl", '"https://livehelp-edith.ilivedata.com/edith/conversation"')
-            buildConfigField("String", "baseurl", '".livehelp.ilivedata.com"')
-            buildConfigField("int", "pid", "80900001")
-            buildConfigField("String", "key", '"61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8="')
-        }
-        debug{
-            buildConfigField("String", "roboturl", '""')
-            buildConfigField("String", "baseurl", '""')
-            buildConfigField("int", "pid", "0")
-            buildConfigField("String", "key", '"0"')
-        }
         release {
-            buildConfigField("String", "roboturl", '""')
-            buildConfigField("String", "baseurl", '""')
-            buildConfigField("int", "pid", "0")
-            buildConfigField("String", "key", '"0"')
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
-        devTest.initWith(buildTypes.debug)
-        devTest {
-            buildConfigField("String", "roboturl", '"https://jarvis.ilivedata.com/edith/conversation"')
-            buildConfigField("String", "baseurl", '".jarvis.ilivedata.com"')
-            buildConfigField("int", "pid", "90900003")
-            buildConfigField("String", "key", '"vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0="')
-//            buildConfigField("int", "pid", "90900004")
-//            buildConfigField("String", "key", '"4lfk/V48mb/nFaW/lQ6fT3HJqPiyCwRrVGOPZYShXCk="')
-        }
+        production.initWith(buildTypes.debug)
     }
 }
 
@@ -64,5 +37,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation project(':livehelp-android')
     implementation 'com.github.arcadefire:nice-spinner:1.4'
-//    implementation 'com.github.highras:livehelp-android:1.4.2'
+//    implementation 'com.github.highras:livehelp-android:1.4.1'
 }
