@@ -501,6 +501,7 @@ public class RobotActivity extends Activity {
         String webViewUrl = instan.getRobotURL();
         if (!TextUtils.isEmpty(webViewUrl) && m_webView != null)
             m_webView.loadUrl(webViewUrl);
+//            m_webView.loadUrl("www.baidu.com");
     }
 
     @Override

@@ -65,7 +65,7 @@ public class ManualActivity extends Activity {
         mFilePathCallback = null;
         m_webView = null;
         super.onCreate(savedInstanceState);
-        getData();
+//        getData();
         setFinishOnTouchOutside(false);
         initViews();
 //        AndroidBug5497Workaround();
@@ -391,11 +391,11 @@ public class ManualActivity extends Activity {
         String webUrl = instan.getManualURL();
         if (!TextUtils.isEmpty(webUrl) && m_webView != null)
             m_webView.loadUrl(webUrl);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        config {
-            storeFile file('/Users/mayajun/Downloads/customservicedemo.jks')
-            storePassword 'myjopen421'
-            keyAlias 'customerkey'
-            keyPassword 'myjopen421'
+        release {
+            storeFile file('/Users/mayajun/Downloads/Bitbucket/infra-custom-service-android/CustomerService-Android/servicekey')
+            storePassword '123456'
+            keyAlias 'key-customService'
+            keyPassword '123456'
         }
     }
     compileSdkVersion 29
@@ -25,9 +25,11 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
-        production.initWith(buildTypes.debug)
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
 }
 
@@ -35,7 +37,7 @@ dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation project(':livehelp-android')
+//    implementation project(':livehelp-android')
     implementation 'com.github.arcadefire:nice-spinner:1.4'
-//    implementation 'com.github.highras:livehelp-android:1.4.1'
+    implementation 'com.github.highras:livehelp-android:1.4.5'
 }

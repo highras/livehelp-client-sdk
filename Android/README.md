@@ -13,13 +13,10 @@
 - Add dependency in your module's build.gradle:
     ~~~
     dependencies {
-<<<<<<< HEAD
-        implementation 'com.github.highras:livehelp-android:1.4.4'
-=======
-        implementation 'com.github.highras:livehelp-android:1.4.3'
->>>>>>> 2a9c750a8bb23a738b2ad5d33738cbdcfaba07be
+        implementation 'com.github.highras:livehelp-android:1.4.5'
     }
     ~~~
+
 
 ### 使用说明
 - 需要的权限
@@ -91,7 +88,7 @@
 
 ### 使用示例
  ~~~
-    LivehelpSupport.init(getApplicationContext(),projectid, projectkeys, projectdomain, lang);
+    LivehelpSupport.init(getApplicationContext(), projectid, projectkeys, projectdomain, lang);
 
     LivehelpSupport.setUserInfo(...)
 

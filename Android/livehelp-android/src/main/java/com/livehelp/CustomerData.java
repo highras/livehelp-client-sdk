@@ -98,7 +98,7 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
-     public String SDKVerison = "1.4.4";
+     public String SDKVerison = "1.4.5";
      AtomicLong diffTime = new AtomicLong(0);
 
 
@@ -225,7 +225,7 @@
                  FAQfile.createNewFile();
              readObject();
 
-             Intent intent = new Intent(appContext, FAQUnit.class);
+             Intent intent = new Intent(activity, FAQUnit.class);
              activity.startActivity(intent);
          }
          catch (Exception ex){
@@ -253,7 +253,7 @@
              @Override
              public void onResult(int code, String errMsg, JSONObject respondsDta) {
                  boolean issueExist = false;
-                 if (errMsg.isEmpty()){
+                 if (errMsg == null || errMsg.isEmpty()){
                      if (respondsDta.optInt("return_code", -1) == 0) {
                          if (respondsDta.has("data")) {
                              JSONObject responds1 = respondsDta.optJSONObject("data");
@@ -262,6 +262,9 @@
                              }
                          }
                      }
+                 }
+                 if (activity == null || activity.isDestroyed() || activity.isFinishing()) {
+                     return;
                  }
                  if (issueExist){
                      Intent intent = new Intent(activity, ManualActivity.class);
@@ -499,7 +502,7 @@
                      double tt= ret.optDouble("result");
                      long serverTime = (long) (tt*1000);
                      long addtime = recieveTime - (recieveTime-sendTime) / 2 - serverTime;
-                     Log.i("sdktest", "difftime is:" + addtime);
+//                     Log.i("sdktest", "difftime is:" + addtime);
 //                     diffTime.set(addtime);
                  }
                  httpRequest(m_userinfoURL + "?appId=" + m_appId, true, postjson.toString(), new RequestCallback() {

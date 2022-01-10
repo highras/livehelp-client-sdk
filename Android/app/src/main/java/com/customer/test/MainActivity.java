@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
     SharedPreferences sp;
     CustomeEdittext customProjectId, customUserid, customDomain,customprokey;
     String userId ="", prokeys="",slang="", sdomain = "";
-    int pid;
+    int pid = 0;
 
     final String[] buttonNames = {"robot", "faq","manualMain","login","loginout","switchlan"};
     NiceSpinner lanspinner;
@@ -131,62 +131,61 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
     boolean initCustome(){
         saveDB();
         LivehelpSupport.resetUserInfo();
-        CustomLang.CItem kk = ((CustomLang.CItem)(testtype.getSelectedItem()));
-        if (kk.Value.equals("test")){
-            prokeys = "vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0=";
-            pid = 90900003;
-            sdomain = "funplus";
-            CustomerData.INSTANCE.robotURL = "https://jarvis.ilivedata.com/edith/conversation";
-            CustomerData.INSTANCE.manualBaseTail = ".jarvis.ilivedata.com";
-            CustomerData.INSTANCE.serverTimeURL = "https://jarvis.ilivedata.com/timestamp";
-        }
-        else if (kk.Value.equals("producation")){
-            prokeys = "61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=";
-            pid = 80900001;
-            sdomain = "funplus";
-            CustomerData.INSTANCE.robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
-            CustomerData.INSTANCE.manualBaseTail = ".livehelp.ilivedata.com";
-            CustomerData.INSTANCE.serverTimeURL = "https://livehelp.ilivedata.com/timestamp";
-        }
 
-        userId = customUserid.getContent();
+        if(testtype.getVisibility() == View.VISIBLE) {
+            CustomLang.CItem kk = ((CustomLang.CItem) (testtype.getSelectedItem()));
+            if (kk.Value.equals("test")) {
+                prokeys = "vmolgNlPcKwu2fGPZcHL9BoTguixV/FM0hEa8ztVkB0=";
+                pid = 90900003;
+                sdomain = "funplus";
+                CustomerData.INSTANCE.robotURL = "https://jarvis.ilivedata.com/edith/conversation";
+                CustomerData.INSTANCE.manualBaseTail = ".jarvis.ilivedata.com";
+                CustomerData.INSTANCE.serverTimeURL = "https://jarvis.ilivedata.com/timestamp";
+            } else if (kk.Value.equals("producation")) {
+                prokeys = "61hMzMf0lNTnsccFKRbZGdA8E/qtT/O7HkujsYkaAE8=";
+                pid = 80900001;
+                sdomain = "funplus";
+                CustomerData.INSTANCE.robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
+                CustomerData.INSTANCE.manualBaseTail = ".livehelp.ilivedata.com";
+                CustomerData.INSTANCE.serverTimeURL = "https://livehelp.ilivedata.com/timestamp";
+            }
+            else{
+                if (!customProjectId.getContent().isEmpty())
+                    pid = Integer.parseInt(customProjectId.getContent().trim());
+                sdomain = customDomain.getContent();
+                prokeys = customprokey.getContent();
+            }
+        }
+        else
+        {
+            if (!customProjectId.getContent().isEmpty())
+                pid = Integer.parseInt(customProjectId.getContent().trim());
+            sdomain = customDomain.getContent();
+            prokeys = customprokey.getContent();
+        }
         slang = ((CustomLang.CItem)(lanspinner.getSelectedItem())).getValue();
-        String android_id=Secure.getString(getContentResolver(),Secure.ANDROID_ID);
-//        if (BuildConfig.BUILD_TYPE == "devTest" || BuildConfig.BUILD_TYPE == "production"){
-//            prokeys = BuildConfig.key;
-//            pid = BuildConfig.pid;
-//            sdomain = "funplus";
-////            sdomain = "livedata";
-//            CustomerData.INSTANCE.robotURL = BuildConfig.roboturl;
-//            CustomerData.INSTANCE.manualBaseTail = BuildConfig.baseurl;
-//        }
-//        else
-//        {
-//            sdomain = customDomain.getContent();
-//            if (sdomain == null || sdomain.isEmpty()){
-//                alertDialog("please input domain");
-//                return false;
-//            }
-//            prokeys = customprokey.getContent();
-//
-//            if(prokeys == null || prokeys.isEmpty()){
-//                alertDialog("please input project key");
-//                return false;
-//            }
-//
-//            String spid = customProjectId.getContent();
-//            if (spid == null || spid.isEmpty()){
-//                alertDialog("please input project id");
-//                return false;
-//            }
-//            pid = Integer.parseInt(spid);
-//        }
-
-        if( userId.isEmpty() || sdomain.isEmpty() || pid ==0 || slang.isEmpty()){
-            alertDialog("用户id 项目id 项目域名 语言 有空值");
+        userId = customUserid.getContent().trim();
+        if( userId.isEmpty()){
+            alertDialog("用户id 为空");
+            return false;
+        }
+        if (pid == 0 ){
+            alertDialog("项目id 为空");
+            return false;
+        }
+        if (sdomain.isEmpty()){
+            alertDialog("项目域名 为空");
             return false;
         }
 
+        if (slang.isEmpty()){
+            alertDialog("语言 为空");
+            return false;
+        }
+        if (prokeys.isEmpty()){
+            alertDialog("项目key 为空");
+            return false;
+        }
         List<String> tags = new LinkedList<>();
         Map<String, String> tcustomdata = new HashMap<>();
 
