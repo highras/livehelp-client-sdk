@@ -49,7 +49,7 @@
 
 
     <org.angmarch.views.NiceSpinner
-        android:visibility="visible"
+        android:visibility="invisible"
         android:id="@+id/testtype"
         android:layout_width="140dp"
         android:layout_height="50dp"
