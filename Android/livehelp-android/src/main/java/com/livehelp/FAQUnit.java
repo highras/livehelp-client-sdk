@@ -304,12 +304,12 @@ public class FAQUnit extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (instan.m_Lang.equals(instan.specailLan)){
             setContentView(R.layout.activity_faq_ar);
         }
         else
             setContentView(R.layout.activity_faq);
-
 
         ConstraintLayout layout = findViewById(R.id.mytitle);
         int color = Color.parseColor(instan.backgroundcolor);

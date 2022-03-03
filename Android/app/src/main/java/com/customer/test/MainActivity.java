@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
         });
         LivehelpSupport.init(getApplicationContext(),pid, prokeys, sdomain, slang);
 
-        LivehelpSupport.setUserInfo(userId,"tom","werwer.com","163.com",tags,tcustomdata,"werlkjwelr",
+        LivehelpSupport.setUserInfo(userId,"tom",slang,"werwer.com","163.com",tags,tcustomdata,"werlkjwelr",
                 new UserInterface.IUserCallback(){
                     @Override
                     public void onResult(final String errmsg) {

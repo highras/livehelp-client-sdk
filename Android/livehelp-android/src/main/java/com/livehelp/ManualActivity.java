@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -57,14 +58,15 @@ public class ManualActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         instan = CustomerData.INSTANCE;
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_manual);
         instan.setcolor(this);
 
         mUploadMessage = null;
         mFilePathCallback = null;
         m_webView = null;
-        super.onCreate(savedInstanceState);
 //        getData();
         setFinishOnTouchOutside(false);
         initViews();

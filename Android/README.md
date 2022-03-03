@@ -1,5 +1,5 @@
 ### 版本支持
-- 最低支持Android版本为4.4(api 19)
+- 最低支持Android版本为5.0(api 21)
 
 ### 依赖集成
 - Add maventral as your repository in project's build.gradle:
@@ -13,7 +13,7 @@
 - Add dependency in your module's build.gradle:
     ~~~
     dependencies {
-        implementation 'com.github.highras:livehelp-android:1.4.5'
+        implementation 'com.github.highras:livehelp-android:1.4.7'
     }
     ~~~
 
@@ -45,6 +45,7 @@
     /** 设定用户属性 (必须调用(需要在init之后调用) 否则无法调用其它接口)
      * @param userId    用户id（必传）
      * @param userName  用户名称
+     * @param lang  语言
      * @param avatar    用户头像url
      * @param email     用户邮箱
      * @param tags      用户标签 	用户身上的标签，用于分类，自动化过滤等
@@ -52,7 +53,7 @@
      * @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
      * @param deviceToken 推送token(可以再控制台设置推送)
      */
-    public static void  setUserInfo(String userId, String userName, String avatar, String email, List<String> tags,
+    public static void  setUserInfo(String userId, String userName, String lang,String avatar, String email, List<String> tags,
                             Map<String, String> customData, String deviceToken, UserInterface.IUserCallback callback );
 
     /**

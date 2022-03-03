@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -79,6 +80,7 @@ public class FAQBody extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (instan.m_Lang.equals(instan.specailLan))
             setContentView(R.layout.activity_faq_body_ar);
         else

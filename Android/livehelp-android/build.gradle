@@ -1,17 +1,10 @@
 apply plugin: 'com.android.library'
-ext {
-    PUBLISH_GROUP_ID = "com.github.highras"        //项目包名
-    PUBLISH_ARTIFACT_ID = 'livehelp-android'            //项目名
-    PUBLISH_VERSION = '1.4.5'                 //版本号
-}
-apply from: "${rootProject.projectDir}/publish-mavencentral.gradle"
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -33,7 +26,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
 }

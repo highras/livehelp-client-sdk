@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -79,6 +80,7 @@ public class RobotActivity extends Activity {
 //        _window.setAttributes(params);
 
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (instan.m_Lang.equals(instan.specailLan)){
             setContentView(R.layout.activity_robot_ar);
         }

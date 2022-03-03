@@ -9,7 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
+//import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -101,14 +101,17 @@ public class MyAdapter extends BaseExpandableListAdapter{
         groupViewHolder.tvTitle.setText(mGroup.get(groupPosition));
         groupViewHolder.tvTitle.setTextSize(16);
         if (isSearchFlag) {
-            groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.itemright));
+//            groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.itemright));
+            groupViewHolder.parent_image.setImageDrawable(mContext.getDrawable(R.drawable.itemright));
         }
         else {
             //如果是展开状态，
             if (isExpanded) {
-                groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.img_arrow_down));
+                groupViewHolder.parent_image.setImageDrawable(mContext.getDrawable(R.drawable.img_arrow_down));
+//                groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.img_arrow_down));
             } else {
-                groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.img_arrow_right));
+                groupViewHolder.parent_image.setImageDrawable(mContext.getDrawable(R.drawable.img_arrow_right));
+//                groupViewHolder.parent_image.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.img_arrow_right));
             }
         }
         return convertView;

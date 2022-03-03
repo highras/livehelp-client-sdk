@@ -6,7 +6,7 @@
 
     <application>
         <activity android:name=".RobotActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ManualActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity

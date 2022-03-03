@@ -10,6 +10,7 @@ public class LivehelpSupport {
     static CustomerData instanseData = CustomerData.INSTANCE;
 
     private LivehelpSupport(){};
+
     /**
      * @context             应用的appliaction(必传)
      * @param domain        后台配置的项目域名(必传)
@@ -26,14 +27,12 @@ public class LivehelpSupport {
     }
 
     /**
-     * 设置游戏语言
+     * 切换游戏语言
      * @param lang
      */
     public static void setLanguage(String lang, UserInterface.IUserCallback callback ){
         instanseData.m_Lang = lang;
         instanseData.m_greeting = "";
-//        if (instanseData.faqMap != null)
-//            instanseData.faqMap.clear();
         if (instanseData.showfaqList != null)
             instanseData.showfaqList.clear();
         instanseData.getConfig( callback );
@@ -43,6 +42,7 @@ public class LivehelpSupport {
     /** 设定用户属性 (必须调用(需要在init之后调用) 否则无法调用其它接口)
      * @param userId    用户id（必传）
      * @param userName  用户名称
+     * @param lang      语言
      * @param avatar    用户头像url
      * @param email     用户邮箱
      * @param tags      用户标签 	Stringoptional 	用户身上的标签，用于分类，自动化过滤等
@@ -50,9 +50,9 @@ public class LivehelpSupport {
      * @param customData 自定义K/V信息，将显示在用户客诉详情信息中，辅助客服解决问题
      * @param deviceToken 推送token(可以再控制台设置推送)
      */
-    public static void  setUserInfo(String userId, String userName, String avatar, String email, List<String> tags,
+    public static void  setUserInfo(String userId, String userName, String lang,String avatar, String email, List<String> tags,
                             Map<String, String> customData, String deviceToken, UserInterface.IUserCallback callback ){
-        instanseData.setUserInfo(userId, userName, avatar, email, tags, customData, deviceToken, callback);
+        instanseData.setUserInfo(userId, userName, lang, avatar, email, tags, customData, deviceToken, callback);
     }
 
     /**
@@ -74,7 +74,7 @@ public class LivehelpSupport {
      *
      * @param type 会话类型 BOT-机器人(如果有客诉未解决将直接跳转到人工服务) HUMAN-人工
      */
-    public static void showConversation( Activity activity,UserInterface.ConversationType type){
+    public static void showConversation( Activity activity, UserInterface.ConversationType type){
         if (type == UserInterface.ConversationType.BOT)
             instanseData.robotShow(activity);
         else

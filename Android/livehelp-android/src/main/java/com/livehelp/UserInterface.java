@@ -19,6 +19,7 @@ public class UserInterface {
 
     /**
      * 用户回调
+     *
      */
     public interface IUserCallback{
         void onResult(String errmsg); //若成功 errmsg为空

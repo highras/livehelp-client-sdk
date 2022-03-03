@@ -98,7 +98,7 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
-     public String SDKVerison = "1.4.5";
+     public String SDKVerison = "1.4.7";
      AtomicLong diffTime = new AtomicLong(0);
 
 
@@ -146,10 +146,9 @@
      public String  robotURL = "https://livehelp-edith.ilivedata.com/edith/conversation";
      public String  manualBaseTail = ".livehelp.ilivedata.com";
      public String  serverTimeURL = "https://jarvis.ilivedata.com/timestamp";
-
+//
 //     public String  robotURL = "https://jarvis.ilivedata.com/edith/conversation";
 //     public String  manualBaseTail = ".jarvis.ilivedata.com";
-
      private  String m_uId = "";
      String m_greeting=  "";
      private  String m_userName = "";
@@ -164,7 +163,7 @@
      private  String m_serverId = "";
      private  List<String>  m_tags = new ArrayList<String>();
      private  int m_vipLevel = 0;
-     private  Context appContext;
+     Context appContext;
      private Map<String, String> m_NonceMap = new HashMap<>();
      private Map<String, String> m_customData = new HashMap<>();
      private String m_session;
@@ -411,7 +410,6 @@
              }
          }
          return null;
-
      }
 
 
@@ -467,13 +465,15 @@
           });
       }
 
-     void setUserInfo(String userId, String userName, String avatar, String email, List<String> tags, Map<String, String> customData,
+     void setUserInfo(String userId, String userName, String lang, String avatar, String email, List<String> tags, Map<String, String> customData,
                       String deviceToken,final UserInterface.IUserCallback callback){
+//         clear();
          m_uId = userId;
          m_tags = tags;
          m_customData = new HashMap<>(customData);
          this.deviceToken = deviceToken;
          m_userName = userName;
+         m_Lang = lang;
 
          final JSONObject postjson = new JSONObject();
          try {
