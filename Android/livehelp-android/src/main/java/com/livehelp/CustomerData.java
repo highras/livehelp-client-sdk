@@ -3,8 +3,6 @@
  import android.app.Activity;
  import android.app.ActivityManager;
  import android.app.AlertDialog;
- import android.app.Application;
- import android.app.Dialog;
  import android.content.Context;
  import android.content.DialogInterface;
  import android.content.Intent;
@@ -17,7 +15,6 @@
  import android.os.Environment;
  import android.os.StatFs;
  import android.provider.Settings;
- import android.text.format.DateFormat;
  import android.text.format.Formatter;
  import android.util.Base64;
  import android.util.Log;
@@ -57,8 +54,6 @@
  import java.security.MessageDigest;
  import java.text.SimpleDateFormat;
  import java.util.ArrayList;
- import java.util.Calendar;
- import java.util.Date;
  import java.util.Dictionary;
  import java.util.Enumeration;
  import java.util.HashMap;
@@ -66,7 +61,6 @@
  import java.util.Locale;
  import java.util.Map;
  import java.util.TimeZone;
- import java.util.concurrent.atomic.AtomicInteger;
  import java.util.concurrent.atomic.AtomicLong;
 
  import javax.crypto.Mac;
@@ -98,7 +92,7 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
-     public String SDKVerison = "1.4.7";
+     public String SDKVerison = "1.4.8";
      AtomicLong diffTime = new AtomicLong(0);
 
 
@@ -875,7 +869,7 @@
              obt.put("other",otherJson);
              obt.put("tags",tagArray);
              if (m_customData != null)
-                 obt.put("custom",m_customData.toString());
+                 obt.put("custom",new JSONObject(m_customData));
          }
          catch (JSONException e) {
              errorRecord.recordError("sendUserDataToJS_infoeditor error " + e.getMessage());

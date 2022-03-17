@@ -9,8 +9,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//import androidx.core.content.ContextCompat;
-
 import java.util.ArrayList;
 
 public class MyAdapter extends BaseExpandableListAdapter{

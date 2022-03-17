@@ -187,7 +187,11 @@ public class MainActivity extends AppCompatActivity implements CustomeEdittext.O
             return false;
         }
         List<String> tags = new LinkedList<>();
-        Map<String, String> tcustomdata = new HashMap<>();
+        Map<String, String> tcustomdata = new HashMap<String, String>(){{
+            put("1111","2222");
+            put("2222","3333");
+            put("3333","4444");
+        }};
 
         LivehelpSupport.setErrorRecord(new ErrorRecord() {
 //        LivehelpSupport.setErrorRecoder(new ErrorRecorder() {

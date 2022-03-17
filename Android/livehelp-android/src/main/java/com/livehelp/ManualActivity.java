@@ -1,6 +1,5 @@
 package com.livehelp;
 
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
@@ -16,14 +15,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -32,11 +29,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.constraintlayout.widget.Constraints;
 
 import org.json.JSONObject;
 
@@ -292,19 +287,33 @@ public class ManualActivity extends Activity {
      * android 5.0(含) 系统自带的图片选择
      */
     private void openFileChooseProcess5(ValueCallback<Uri[]> filePathCallback, WebChromeClient.FileChooserParams fileChooserParams) {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        this.startActivityForResult(intent, PICK_CONTACT_REQUEST);
+        Intent intent = new Intent();
+        intent.setType("image/*|video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
+        startActivityForResult(intent, PICK_CONTACT_REQUEST);
+
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("image/*");
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//        this.startActivityForResult(intent, PICK_CONTACT_REQUEST);
     }
 
     /**
      * 5.0以下
      */
     private void openFileChooseProcess(ValueCallback<Uri> uploadMsg) {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        this.startActivityForResult(intent, PICK_CONTACT_REQUEST);
+        Intent intent = new Intent();
+        intent.setType("image/*|video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"image/*", "video/*"});
+        startActivityForResult(intent, PICK_CONTACT_REQUEST);
+
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("image/*");
+//        this.startActivityForResult(intent, PICK_CONTACT_REQUEST);
     }
 
     //选择文件后的回调
