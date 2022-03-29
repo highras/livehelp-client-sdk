@@ -3,6 +3,8 @@
  import android.app.Activity;
  import android.app.ActivityManager;
  import android.app.AlertDialog;
+ import android.app.Application;
+ import android.app.Dialog;
  import android.content.Context;
  import android.content.DialogInterface;
  import android.content.Intent;
@@ -15,6 +17,7 @@
  import android.os.Environment;
  import android.os.StatFs;
  import android.provider.Settings;
+ import android.text.format.DateFormat;
  import android.text.format.Formatter;
  import android.util.Base64;
  import android.util.Log;
@@ -54,6 +57,9 @@
  import java.security.MessageDigest;
  import java.text.SimpleDateFormat;
  import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Calendar;
+ import java.util.Date;
  import java.util.Dictionary;
  import java.util.Enumeration;
  import java.util.HashMap;
@@ -61,6 +67,7 @@
  import java.util.Locale;
  import java.util.Map;
  import java.util.TimeZone;
+ import java.util.concurrent.atomic.AtomicInteger;
  import java.util.concurrent.atomic.AtomicLong;
 
  import javax.crypto.Mac;
@@ -92,7 +99,7 @@
      String titileText = "";
      int   androidAPIVersion = Build.VERSION.SDK_INT;
      String backgroundcolor = "#49ADFF";
-     public String SDKVerison = "1.4.8";
+     public String SDKVerison = "1.5.0";
      AtomicLong diffTime = new AtomicLong(0);
 
 
@@ -612,6 +619,7 @@
          String path = "";
          String param = "";
          int index3 = url.indexOf("?", index1);
+         String newparam = "";
          if(index3 == -1)
          {
              path = url.substring(index1);
@@ -620,6 +628,14 @@
          {
              path = url.substring(index1, index3);
              param = url.substring(index3 + 1);
+             String[] array = param.split("&");
+             Arrays.sort(array);
+             for (String value: array){
+                 newparam = newparam + value + "&";
+             }
+             if (!newparam.isEmpty() && newparam.endsWith("&")){
+                 newparam = newparam.substring(0,newparam.length() - 1);
+             }
          }
          try {
              MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -630,7 +646,7 @@
                  data.append("GET").append("\n");
              data.append(host).append("\n");
              data.append(path).append("\n");
-             data.append(param).append("\n");
+             data.append(newparam).append("\n");
              if (isPost)
                  data.append(bytesToHex(digest.digest(body.getBytes("UTF-8")))).append("\n");
              data.append("X-TimeStamp:").append(time);
